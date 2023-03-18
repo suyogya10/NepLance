@@ -1,0 +1,176 @@
+.App {
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.login {
+  margin-top: 70px;
+} 
+
+.loginheading {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  color: black;
+}
+
+.bg-image{
+  width: 300px;
+  margin-top: 10px;
+  margin-left: 200px;
+}
+
+.addproduct{
+  background-image: url('./Components/Assets/addproduct.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 500px;
+  margin-top: 50px;
+}
+
+.logo{
+  width: 50px;
+  height: 50px;
+ 
+}
+
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+.card-img-top{
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+.card-text{
+  font-size: 0.9rem;
+  font-weight: 100;
+  color: black;
+}
+
+.broweseprod{
+  font-size: 25px;
+}
+
+.price{
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.active{
+  height: 500px;
+  width: 1920px;
+  padding: auto;
+  margin: auto;
+}
+
+.profilebtn{
+  margin-top: 10px;
+  margin-left: 0px;
+  width: 200px;
+}
+
+.profiletitle2{
+  font-size: 1.5rem;
+  font-weight: 500;
+  justify-content: flex-end;
+}
+
+.link{
+  margin-left: 15px;
+  margin-right: 15px;
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.link2{
+  margin-left: 15px;
+  margin-top: 3px;
+  margin-right: 15px;
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.link:hover{
+  color: #00ca1e;
+}
+
+.link2:hover{
+  color: #00ca1e;
+}
+
+.right-aligned{
+  justify-content: flex-end;
+}
+
+.product-wap .h3, .product-wap li, .product-wap i, .product-wap p {
+  font-size: 12px !important;
+}
+.product-wap .product-color-dot {
+  width: 6px;
+  height: 6px;
+}
+
+
+.landing-text{
+  color: black;
+  text-decoration: wavy;
+  margin-top: 280px;
+}
+
+.landimg{
+  margin-left: 200px;
+  margin-top: 80px;
+  width: 600px;  
+}
+
+.errorpage{
+  margin-top: 200px;
+}
+
+.error-text{
+  font-size: 100px;
+  font-weight: 500;
+}
