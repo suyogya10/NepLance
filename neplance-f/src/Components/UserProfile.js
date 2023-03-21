@@ -22,8 +22,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function UserProfile() {
-  var id = 1;
-  var sum = 0;
+
+  var sn = 1;
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const ApiHandler = async () => {
@@ -38,12 +38,24 @@ export default function UserProfile() {
   function AddProduct() {
     navigate("/addproduct");
   }
+
+  function  deleteProduct(id) {
+    fetch("http://localhost:8000/api/deleteProduct/" + id, {
+      method: "DELETE",
+    }).then((result) => {
+      result.json().then((resp) => {
+        alert("Product has been deleted");
+        ApiHandler();
+      });
+    });
+  }
+
   return (
     <motion.div
     initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}>
-      <div className="vh-100" style={{ backgroundColor: "#efefef" }}>
+      <div style={{ backgroundColor: "#efefef" }}>
         <MDBContainer>
           <MDBRow className="justify-content-left">
             <MDBCol md="9" lg="7" xl="5" className="mt-5">
@@ -51,7 +63,7 @@ export default function UserProfile() {
                 style={{
                   borderRadius: "15px",
                   width: "1300px",
-                  height: "600px",
+                  
                 }}
               >
                 <MDBCardBody className="p-4">
@@ -65,8 +77,20 @@ export default function UserProfile() {
                       />
                       <div>
                         <br></br>
-                        <MDBCardTitle>Danny McLoan</MDBCardTitle>
-                        <MDBCardText>Senior Journalist</MDBCardText>
+                        {
+                          localStorage.getItem("user-info") ? 
+                          <MDBCardTitle>{JSON.parse(localStorage.getItem("user-info")).user.name}</MDBCardTitle>
+                          :
+                          null
+                        }
+                        {
+                          localStorage.getItem("user-info") ?
+                          <MDBCardText>{JSON.parse(localStorage.getItem("user-info")).user.designation}</MDBCardText>
+                          :
+                          null
+
+                        }
+                        
 
                         <div
                           className="d-flex justify-content-left rounded-3 p-2 mb-2"
@@ -121,12 +145,13 @@ export default function UserProfile() {
                             <th scope="col" className="fw-bold">Actions</th>
                           </tr>
                         </MDBTableHead>
-                        {data.slice(0,5).map((item) => (
+                        { localStorage.getItem("user-info") ?
+                        data.filter((item) => item.userid === JSON.parse(localStorage.getItem("user-info")).user.id).map((item) => (
                           <MDBTableBody>
                             <tr>
                               <td>
                                 <MDBBadge color="secondary" pill>
-                                  {id++
+                                  {sn++
                                   }
                                 </MDBBadge>
                       
@@ -164,7 +189,7 @@ export default function UserProfile() {
                                   type="button"
                                   size="sm"
                                   color="danger"
-                              
+                                  onClick={() => deleteProduct(item.id) }
                                 >
                                   <MDBIcon fas icon="trash" />
                                 </MDBBtn>
@@ -172,7 +197,7 @@ export default function UserProfile() {
                               </td>
                             </tr>
                           </MDBTableBody>
-                        ))}
+                        )) : null}
                       </MDBTable>
                     </div>
                   </div>

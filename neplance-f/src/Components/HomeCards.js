@@ -6,7 +6,10 @@ import { motion } from "framer-motion";
 import webdev from "./Assets/webdev.jpg";
 import writing from "./Assets/writing.png";
 import video from "./Assets/video.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Product } from "./Product";
+
+
 
 function HomeCards() {
   const navigate = useNavigate();
@@ -31,16 +34,18 @@ function HomeCards() {
   }
 
   return (
+    
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      
       <div className="app">
-        <section class="container py-5">
-          <div class="row text-center pt-3">
-            <div class="col-lg-6 m-auto">
-              <h1 class="h1">Popular Categories</h1>
+        <section className="container py-5">
+          <div className="row text-center pt-3">
+            <div className="col-lg-6 m-auto">
+              <h1 className="h1">Popular Categories</h1>
               <p>
                 If you're looking for inspiration or guidance on what to explore
                 next, our popular categories section is the perfect place to
@@ -49,35 +54,35 @@ function HomeCards() {
               </p>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12 col-md-4 p-5 mt-3">
+          <div className="row">
+            <div className="col-12 col-md-4 p-5 mt-3">
               <a href="#">
-                <img src={webdev} class="rounded-circle img-fluid border" />
+                <img src={webdev} className="rounded-circle img-fluid border" />
               </a>
-              <h5 class="text-center mt-3 mb-3">Computer & IT</h5>
-              <p class="text-center">
+              <h5 className="text-center mt-3 mb-3">Computer & IT</h5>
+              <p className="text-center">
                 <MDBBtn rounded color="success" onClick={a}>
                   Browse
                 </MDBBtn>
               </p>
             </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
+            <div className="col-12 col-md-4 p-5 mt-3">
               <a href="#">
-                <img src={writing} class="rounded-circle img-fluid border" />
+                <img src={writing} className="rounded-circle img-fluid border" />
               </a>
-              <h2 class="h5 text-center mt-3 mb-3">Writing</h2>
-              <p class="text-center">
+              <h2 className="h5 text-center mt-3 mb-3">Writing</h2>
+              <p className="text-center">
                 <MDBBtn rounded color="success" onClick={b}>
                   Browse
                 </MDBBtn>
               </p>
             </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
+            <div className="col-12 col-md-4 p-5 mt-3">
               <a href="#">
-                <img src={video} class="rounded-circle img-fluid border" />
+                <img src={video} className="rounded-circle img-fluid border" />
               </a>
-              <h2 class="h5 text-center mt-3 mb-3">Design & Editing</h2>
-              <p class="text-center">
+              <h2 className="h5 text-center mt-3 mb-3">Design & Editing</h2>
+              <p className="text-center">
                 <MDBBtn rounded color="success" onClick={c}>
                   Browse
                 </MDBBtn>
@@ -86,42 +91,42 @@ function HomeCards() {
           </div>
         </section>
 
-        <section class="bg-light">
-          <div class="container py-5">
-            <div class="row text-center py-3">
-              <div class="col-lg-6 m-auto">
-                <h1 class="h1">Latest Products</h1>
+        <section className="bg-light">
+          <div className="container py-5">
+            <div className="row text-center py-3">
+              <div className="col-lg-6 m-auto">
+                <h1 className="h1">Latest Products</h1>
                 <p>
                   With new additions on a regular basis, there's always
                   something fresh and exciting to discover.
                 </p>
               </div>
             </div>
-            <div class="row">
+            <div className="row">
               {data.reverse().slice(0,6).map((item) => (
-                <div class="col-12 col-md-4 mb-4">
-                  <div class="card h-100 w-60">
-                    <a href="#">
+                <div className="col-12 col-md-4 mb-4">
+                  <div className="card h-100 w-60">
                       <img
                         src={"http://localhost:8000/" + item.file_path}
-                        class="card-img-top"
+                        className="card-img-top"
+                        onClick={() => Product(item.id)}
+                        style={{cursor: "pointer"}}
                       />
-                    </a>
-                    <div class="card-body">
-                      <ul class="list-unstyled d-flex justify-content-between">
+                    <div className="card-body">
+                      <ul className="list-unstyled d-flex justify-content-between">
                         <li>
-                          <i class="text-warning fa fa-star"></i>
-                          <i class="text-warning fa fa-star"></i>
-                          <i class="text-warning fa fa-star"></i>
-                          <i class="text-muted fa fa-star"></i>
-                          <i class="text-muted fa fa-star"></i>
+                          <i className="text-warning fa fa-star"></i>
+                          <i className="text-warning fa fa-star"></i>
+                          <i className="text-warning fa fa-star"></i>
+                          <i className="text-muted fa fa-star"></i>
+                          <i className="text-muted fa fa-star"></i>
                         </li>
-                        <li class="text-muted text-right">Rs.{item.price}</li>
+                        <li className="text-muted text-right">Rs.{item.price}</li>
                       </ul>
-                      <a href="" class="h3 text-decoration-none text-dark">
+                      <a href="" className="h3 text-decoration-none text-dark">
                         {item.name}
                       </a>
-                      <p class="card-text text-muted">{item.description}</p>
+                      <p className="card-text text-muted">{item.description}</p>
                     </div>
                   </div>
                 </div>

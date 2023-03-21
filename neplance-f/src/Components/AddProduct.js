@@ -9,12 +9,14 @@ function AddProduct() {
   const [category, setCategory] = useState("");
 
   function addProduct() {
+    const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
     let formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
     formData.append("description", description);
     formData.append("file", file);
     formData.append("category", category);
+    formData.append("userid", userid);
     fetch("http://localhost:8000/api/addproduct", {
       method: "POST",
       body: formData,

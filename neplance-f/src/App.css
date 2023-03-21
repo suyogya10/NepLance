@@ -54,6 +54,12 @@
   margin-left: 200px;
 }
 
+.bg-image-b{
+  width: 350px;
+  height: 600px;
+  margin-left: 200px;
+}
+
 .addproduct{
   background-image: url('./Components/Assets/addproduct.png');
   background-size: contain;
