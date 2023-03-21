@@ -15,6 +15,7 @@ class ProductController extends Controller
         $product->price = $req->input("price"); //getting the price from the request
         $product->description = $req->input("description"); //getting the description from the request
         $product->category = $req->input("category"); //getting the category from the request
+        $product->userid = $req->input("userid"); //getting the category from the request
         $product->file_path = $req->file("file")-> store("products"); //getting the image from the request
         
         $product->save(); //saving the product to the database
