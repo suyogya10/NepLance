@@ -19,12 +19,35 @@ class ProductController extends Controller
         $product->file_path = $req->file("file")-> store("products"); //getting the image from the request
         
         $product->save(); //saving the product to the database
-        return $product; //returning the product 
+        return $product; //returning the product
+        
+        if ($product->save()) {
+            return ["result" => "Product has been added"]; //returning a message if the product has been added
+        }
+        else {
+            return ["result" => "Operation failed"]; //returning a message if the product has not been added
+        }
     }
 
     function getProducts()
     {
         return Product::all(); //returning all the products in the database
+    }
+
+    function deleteProduct($id)
+    {
+        $result = Product::where("id", $id)->delete(); //deleting the product from the database
+        if ($result) {
+            return ["result" => "Product has been deleted"]; //returning a message if the product has been deleted
+        }
+        else {
+            return ["result" => "Operation failed"]; //returning a message if the product has not been deleted
+        }
+    }
+
+    function getSingleProduct($id){
+        
+        return Product::find($id); //returning the product with the id
     }
 }
  

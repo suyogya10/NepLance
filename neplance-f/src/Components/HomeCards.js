@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  MDBBtn
-} from "mdb-react-ui-kit";
+import { MDBBtn } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
 import webdev from "./Assets/webdev.jpg";
 import writing from "./Assets/writing.png";
 import video from "./Assets/video.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Product } from "./Product";
-
-
 
 function HomeCards() {
   const navigate = useNavigate();
@@ -22,7 +18,7 @@ function HomeCards() {
   useEffect(() => {
     ApiHandler();
   }, []);
-  
+
   function a() {
     navigate("/computer-it");
   }
@@ -34,13 +30,11 @@ function HomeCards() {
   }
 
   return (
-    
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      
       <div className="app">
         <section className="container py-5">
           <div className="row text-center pt-3">
@@ -68,7 +62,10 @@ function HomeCards() {
             </div>
             <div className="col-12 col-md-4 p-5 mt-3">
               <a href="#">
-                <img src={writing} className="rounded-circle img-fluid border" />
+                <img
+                  src={writing}
+                  className="rounded-circle img-fluid border"
+                />
               </a>
               <h2 className="h5 text-center mt-3 mb-3">Writing</h2>
               <p className="text-center">
@@ -103,34 +100,51 @@ function HomeCards() {
               </div>
             </div>
             <div className="row">
-              {data.reverse().slice(0,6).map((item) => (
-                <div className="col-12 col-md-4 mb-4">
-                  <div className="card h-100 w-60">
+              {data
+                .reverse()
+                .slice(0, 6)
+                .map((item) => (
+                  <div
+                    className="col-12 col-md-4 mb-4"
+                    onClick={() => {
+                      navigate(`/product/${item.id}`);
+                    }}
+                  >
+                    <div className="card h-100 w-60">
                       <img
                         src={"http://localhost:8000/" + item.file_path}
                         className="card-img-top"
-                        onClick={() => Product(item.id)}
-                        style={{cursor: "pointer"}}
+                        style={{ cursor: "pointer" }}
                       />
-                    <div className="card-body">
-                      <ul className="list-unstyled d-flex justify-content-between">
-                        <li>
-                          <i className="text-warning fa fa-star"></i>
-                          <i className="text-warning fa fa-star"></i>
-                          <i className="text-warning fa fa-star"></i>
-                          <i className="text-muted fa fa-star"></i>
-                          <i className="text-muted fa fa-star"></i>
-                        </li>
-                        <li className="text-muted text-right">Rs.{item.price}</li>
-                      </ul>
-                      <a href="" className="h3 text-decoration-none text-dark">
-                        {item.name}
-                      </a>
-                      <p className="card-text text-muted">{item.description}</p>
+                      <div className="card-body">
+                        <ul className="list-unstyled d-flex justify-content-between">
+                          <li>
+                            <i className="text-warning fa fa-star"></i>
+                            <i className="text-warning fa fa-star"></i>
+                            <i className="text-warning fa fa-star"></i>
+                            <i className="text-muted fa fa-star"></i>
+                            <i className="text-muted fa fa-star"></i>
+                          </li>
+                          <li className="text-muted text-right">
+                            Rs.{item.price}
+                          </li>
+                        </ul>
+                        <a
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            navigate(`/product/${item.id}`);
+                          }}
+                          className="h3 text-decoration-none text-dark"
+                        >
+                          {item.name}
+                        </a>
+                        <p className="card-text text-muted">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </section>

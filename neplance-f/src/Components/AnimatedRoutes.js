@@ -20,6 +20,7 @@ import EducationTraining from "./Collections/EducationTraining"
 import HrRecruit from "./Collections/HrRecruit";
 import MeidcalHealth from "./Collections/MedicalHealth";
 import Writing from "./Collections/Writing";
+import Product from "./Product";
 
 
 function AnimatedRoutes() {
@@ -50,6 +51,8 @@ function AnimatedRoutes() {
           <Route path="/hr-recruit" element={<HrRecruit/>} />
           <Route path="/medical-health" element={<MeidcalHealth/>} />
           <Route path="/writing" element={<Writing/>} />
+          <Route path="/product/:id" element={<Product/>} />
+          
         </Routes>
       </AnimatePresence>
     </div>

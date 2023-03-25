@@ -14,6 +14,7 @@ function DesignEditing() {
     ApiHandler();
   }, []);
   const d5 = data.filter((item) => item.category === "design-editing");
+  console.log(d5);
 
   return (
     <motion.div
