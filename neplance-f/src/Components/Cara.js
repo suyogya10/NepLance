@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBBtn, MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
+import { MDBBtn, MDBCarousel, MDBCarouselItem, MDBIcon } from "mdb-react-ui-kit";
 import img from "./Assets/banner2.png";
 import img2 from "./Assets/banner3.png";
 import { motion } from "framer-motion";

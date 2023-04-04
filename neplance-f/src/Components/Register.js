@@ -26,8 +26,8 @@ function Register() {
       },
     });
     result = await result.json();
-    localStorage.setItem("user-info", JSON.stringify(result)); // store the data in the local storage
-    navigate("/home"); // redirect to the homepage
+    // localStorage.setItem("user-info", JSON.stringify(result)); // store the data in the local storage
+    navigate("/login"); // redirect to the homepage
   }
 
   useEffect(() => {

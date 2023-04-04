@@ -5,7 +5,6 @@ import webdev from "./Assets/webdev.jpg";
 import writing from "./Assets/writing.png";
 import video from "./Assets/video.png";
 import { Link, useNavigate } from "react-router-dom";
-import { Product } from "./Product";
 
 function HomeCards() {
   const navigate = useNavigate();
@@ -35,7 +34,6 @@ function HomeCards() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="app">
         <section className="container py-5">
           <div className="row text-center pt-3">
             <div className="col-lg-6 m-auto">
@@ -50,46 +48,31 @@ function HomeCards() {
           </div>
           <div className="row">
             <div className="col-12 col-md-4 p-5 mt-3">
-              <a href="#">
-                <img src={webdev} className="rounded-circle img-fluid border" />
+              <a style={{cursor:"pointer"}}>
+                <img src={webdev} className="rounded-circle img-fluid border" onClick={a} />
               </a>
               <h5 className="text-center mt-3 mb-3">Computer & IT</h5>
-              <p className="text-center">
-                <MDBBtn rounded color="success" onClick={a}>
-                  Browse
-                </MDBBtn>
-              </p>
             </div>
             <div className="col-12 col-md-4 p-5 mt-3">
-              <a href="#">
+              <a style={{cursor:"pointer"}}>
                 <img
                   src={writing}
                   className="rounded-circle img-fluid border"
+                  onClick={b}
                 />
               </a>
               <h2 className="h5 text-center mt-3 mb-3">Writing</h2>
-              <p className="text-center">
-                <MDBBtn rounded color="success" onClick={b}>
-                  Browse
-                </MDBBtn>
-              </p>
             </div>
             <div className="col-12 col-md-4 p-5 mt-3">
-              <a href="#">
-                <img src={video} className="rounded-circle img-fluid border" />
+              <a style={{cursor:"pointer"}} >
+                <img src={video} className="rounded-circle img-fluid border"  onClick={c} />
               </a>
               <h2 className="h5 text-center mt-3 mb-3">Design & Editing</h2>
-              <p className="text-center">
-                <MDBBtn rounded color="success" onClick={c}>
-                  Browse
-                </MDBBtn>
-              </p>
             </div>
           </div>
         </section>
-
-        <section className="bg-light">
-          <div className="container py-5">
+        <section >
+          <div className="container">
             <div className="row text-center py-3">
               <div className="col-lg-6 m-auto">
                 <h1 className="h1">Latest Products</h1>
@@ -148,7 +131,6 @@ function HomeCards() {
             </div>
           </div>
         </section>
-      </div>
     </motion.div>
   );
 }

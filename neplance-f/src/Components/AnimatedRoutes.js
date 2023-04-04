@@ -21,7 +21,8 @@ import HrRecruit from "./Collections/HrRecruit";
 import MeidcalHealth from "./Collections/MedicalHealth";
 import Writing from "./Collections/Writing";
 import Product from "./Product";
-
+import Test from "./Test";
+import SearchComponent from "./SearchComponent";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -30,13 +31,13 @@ function AnimatedRoutes() {
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
           <Route path="/login" element={<Login />} />
-          <Route path="/test" element={<test/>} />
+          <Route path="/test" element={<Test/>} />
           <Route path="/explore" element={<Explore/>} />
           <Route path="*" element={<Errorpage/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/addproduct" element={<Protected Cmp={AddProduct} />} />
           <Route
-            path="/updateproduct"
+            path="/updateproduct/:id"
             element={<Protected Cmp={UpdateProduct} />}
           />
           <Route path="/user" element={<Protected Cmp={UserProfile} />} />
@@ -52,6 +53,8 @@ function AnimatedRoutes() {
           <Route path="/medical-health" element={<MeidcalHealth/>} />
           <Route path="/writing" element={<Writing/>} />
           <Route path="/product/:id" element={<Product/>} />
+          <Route path="/search" element={<SearchComponent/>} />
+          
           
         </Routes>
       </AnimatePresence>

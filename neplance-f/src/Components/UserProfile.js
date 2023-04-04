@@ -39,33 +39,15 @@ export default function UserProfile() {
     navigate("/addproduct");
   }
 
-  function  deleteProduct(id) {
-    fetch("http://localhost:8000/api/deleteProduct/" + id, {
-      method: "DELETE",
-    }).then((result) => {
-      result.json().then((resp) => {
-        alert("Product has been deleted");
-        ApiHandler();
-      });
-    });
-  }
-
   return (
     <motion.div
     initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}>
-      <div style={{ backgroundColor: "#efefef" }}>
+      <div>
         <MDBContainer>
           <MDBRow className="justify-content-left">
-            <MDBCol md="9" lg="7" xl="5" className="mt-5">
-              <MDBCard
-                style={{
-                  borderRadius: "15px",
-                  width: "1300px",
-                  
-                }}
-              >
+            <MDBCol >
                 <MDBCardBody className="p-4">
                   <div className="d-flex text-black">
                     <div className="flex-shrink-0">
@@ -134,19 +116,19 @@ export default function UserProfile() {
                       </div>
                     </div>
                     <div className="flex-grow-1 ms-3">
-                      <h1 className="profiletitle2">Your Products</h1>
-                      <MDBTable>
+                      <h3 className="profiletitle2">Your Products</h3>
+                      <MDBTable hover>
                         <MDBTableHead>
                           <tr>
                             <th scope="col" className="fw-bold">S.N</th>
                             <th scope="col" className="fw-bold">Title</th>
                             <th scope="col" className="fw-bold">Description</th>
                             <th scope="col" className="fw-bold">Price</th>
-                            <th scope="col" className="fw-bold">Actions</th>
+                            <th scope="col" className="fw-bold">Action</th>
                           </tr>
                         </MDBTableHead>
                         { localStorage.getItem("user-info") ?
-                        data.filter((item) => item.userid === JSON.parse(localStorage.getItem("user-info")).user.id).map((item) => (
+                        data.filter((item) => item.userid === JSON.parse(localStorage.getItem("user-info")).user.id).reverse().map((item) => (
                           <MDBTableBody>
                             <tr>
                               <td>
@@ -166,32 +148,17 @@ export default function UserProfile() {
                               </td>
                               <td>Rs. {item.price}</td>
                               <td>
-                              <MDBBtn
-                                  outline
-                                  rounded
-                                  type="button"
-                                  size="sm"
-                                  color="primary"
-                                >
-                                  <MDBIcon fas icon="eye" />
-                                </MDBBtn>
                                 <MDBBtn
                                   rounded
                                   type="button"
                                   size="sm"
                                   className="mx-1"
                                   color="success"
+                                  onClick={() => {
+                                    navigate(`/updateproduct/${item.id}`);
+                                  }}
                                 >
                                   <MDBIcon far icon="edit" />
-                                </MDBBtn>
-                                <MDBBtn                                 
-                                  rounded
-                                  type="button"
-                                  size="sm"
-                                  color="danger"
-                                  onClick={() => deleteProduct(item.id) }
-                                >
-                                  <MDBIcon fas icon="trash" />
                                 </MDBBtn>
                                 
                               </td>
@@ -202,7 +169,7 @@ export default function UserProfile() {
                     </div>
                   </div>
                 </MDBCardBody>
-              </MDBCard>
+              
             </MDBCol>
           </MDBRow>
         </MDBContainer>

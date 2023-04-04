@@ -16,6 +16,11 @@ function Login() {
     }
   }, [navigate]);
 
+  function register() {
+    localStorage.clear();
+    navigate("/register");
+  }
+
   async function login() {
     let item = { email, password };
     let result = await fetch("http://localhost:8000/api/login", {
@@ -38,12 +43,13 @@ function Login() {
       alert("Invalid Login");
       navigate("/login");
     }
+
   }
 
   return (
       <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 3 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}>
         <div className="container-fluid ps-md-0">
           <div className="row g-0">
@@ -96,13 +102,17 @@ function Login() {
                         </div>
 
                         <div className="d-grid">
-                          <MDBBtn color="primary" onClick={login}>Sign in</MDBBtn>
-                          
+                          <MDBBtn rounded color="primary" onClick={login}>Sign in</MDBBtn>
+                          <br></br>
                           <div className="text-center">
                           <a>OR</a>
-                          <br></br>
+                          </div>
+                          <div>
                             <a className="small" href="#">
-                              Forgot password?
+                              Forgot Password?
+                            </a>
+                            <a className="small" onClick={register} style={{marginLeft:"260px",cursor:"pointer"}}>
+                              Create an Account?
                             </a>
                           </div>
                         </div>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +29,12 @@ Route:: post('register', [UserController::class, 'register']); //register route
 Route:: post('addproduct', [ProductController::class, 'addProduct']); //add product route
 Route:: get('getProducts', [ProductController::class, 'getProducts']); //add product route
 Route:: delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct']); //delete product route
+Route:: put('updateProduct/{id}', [ProductController::class, 'updateProduct']); //update product route
 Route:: get('getSingleProduct/{id}', [ProductController::class, 'getSingleProduct']); //get single product route
 Route:: get('getUser/{userid}', [UserController::class, 'getUser']); //get single user
-
+Route:: post('reviewProduct', [ReviewController::class, 'reviewProduct']); //review product route
+Route:: get('getReviews/{id}', [ReviewController::class, 'getReviews']); //get reviews route
+Route::get('search/{key}', [ProductController::class, 'search']); //search route
 
 
 Route::post('login', [AuthController::class, 'login']);

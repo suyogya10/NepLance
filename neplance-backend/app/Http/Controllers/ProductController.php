@@ -49,5 +49,26 @@ class ProductController extends Controller
         
         return Product::find($id); //returning the product with the id
     }
+
+    function updateProduct($id,Request $req)
+    {
+        $product = Product::find($req->id); //finding the product with the id
+        $product->name = $req->name; //getting the name from the request
+        $product->price = $req->price; //getting the price from the request
+        $product->description = $req->description; //getting the description from the request
+        $product->category = $req->category; //getting the category from the request
+        $product->userid = $req->userid; //getting the category from the request
+        if ($req->file("file")) {
+            $product->file_path = $req->file("file")-> store("products"); //getting the image from the request
+        }
+        $product->save(); //saving the product to the database
+        return $product; //returning the product
+    }
+
+    function search($key)
+    {
+        return Product::where("name", "like", "%".$key."%")->get(); //returning the products with the name that contains the key
+    }
+
 }
  

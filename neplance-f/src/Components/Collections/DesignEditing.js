@@ -2,8 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
 
 function DesignEditing() {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const ApiHandler = async () => {
     let result = await fetch("http://localhost:8000/api/getProducts");
@@ -23,17 +26,17 @@ function DesignEditing() {
       exit={{ opacity: 0 }}
     >
       <section class="bg-light">
-        <div class="container py-5">
-          <div class="row text-center py-3">
-            <div class="col-lg-6 m-auto">
-              <h1 class="h1">Design & Editing</h1>
-            </div>
+        <div class="container">
+          <div class="row py-3">
+              <h3>Explore - Design & Editing</h3>
           </div>
           <div class="row">
             {d5.reverse().map((item) => (
               <div class="col-12 col-md-4 mb-4">
                 <div class="card h-100 w-60">
-                  <a href="#">
+                  <a onClick={() => {
+                      navigate(`/product/${item.id}`);
+                    }}>
                     <img
                       src={"http://localhost:8000/" + item.file_path}
                       class="card-img-top"
