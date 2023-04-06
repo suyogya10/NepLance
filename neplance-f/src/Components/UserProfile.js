@@ -29,7 +29,7 @@ export default function UserProfile() {
   const ApiHandler = async () => {
     let result = await fetch("http://localhost:8000/api/getProducts");
     result = await result.json();
-    setData(result);
+    setData(result.reverse());
   };
   useEffect(() => {
     ApiHandler();
@@ -96,7 +96,7 @@ export default function UserProfile() {
                              rounded className="profilebtn " color="primary" size="sm"
                             onClick={AddProduct}
                           >
-                            Add Product
+                            Add Service
                           </MDBBtn>
                         </div>
 
@@ -116,7 +116,7 @@ export default function UserProfile() {
                       </div>
                     </div>
                     <div className="flex-grow-1 ms-3">
-                      <h3 className="profiletitle2">Your Products</h3>
+                      <h3 className="profiletitle2">Your Listings</h3>
                       <MDBTable hover>
                         <MDBTableHead>
                           <tr>
@@ -128,8 +128,8 @@ export default function UserProfile() {
                           </tr>
                         </MDBTableHead>
                         { localStorage.getItem("user-info") ?
-                        data.filter((item) => item.userid === JSON.parse(localStorage.getItem("user-info")).user.id).reverse().map((item) => (
-                          <MDBTableBody>
+                        data.filter((item) => item.userid === JSON.parse(localStorage.getItem("user-info")).user.id).map((item) => (
+                          <MDBTableBody key={item.id}>
                             <tr>
                               <td>
                                 <MDBBadge color="secondary" pill>

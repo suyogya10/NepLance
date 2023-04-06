@@ -2,6 +2,7 @@ import React from "react";
 import { Form, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Alert } from "react-bootstrap";
 import {
   MDBBtn,
   MDBIcon,
@@ -15,8 +16,12 @@ import {
   MDBCardImage,
   MDBInput,
 } from "mdb-react-ui-kit";
+import { useNavigate } from "react-router-dom";
 
 export function Product() {
+
+  const navigate = useNavigate();
+  const [alert, setAlert] = useState(null);
   const [review, setReview] = useState("");
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -42,7 +47,7 @@ export function Product() {
   const ApiHandler3 = async () => {
     const result3 = await fetch("http://localhost:8000/api/getReviews/" + id);
     const resp3 = await result3.json();
-    setreviewData(resp3);
+    setreviewData(resp3.reverse());
   };
 
   useEffect(() => {
@@ -59,7 +64,9 @@ export function Product() {
     if ((data, userData)) {
       ApiHandler3();
     }
-  }, [data, userData]);
+  }, [data, userData, reviewData]);
+
+
 
   function addReview() {
     const userid_localstg = JSON.parse(localStorage.getItem("user-info")).user
@@ -75,15 +82,21 @@ export function Product() {
       body: formData,
     }).then((result) => {
       result.json().then((resp) => {
+        setAlert(true);
         console.warn(resp);
       });
+    }).catch((err) => {
+      console.log(err);
+      setAlert(false); 
     });
     document.getElementById("addreview").value = "";
-    alert("Review Added Successfully");
-    window.location.reload(false);
   }
 
+
+
+
   return (
+    <>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -114,7 +127,7 @@ export function Product() {
                     }}
                   />
                 </MDBCol>
-                <MDBCol>
+                <MDBCol key={data.id}>
                   <MDBCardBody style={{ marginTop: "40px", color: "black" }}>
                     <MDBCardTitle>
                       <h1>{data.name}</h1>
@@ -132,10 +145,10 @@ export function Product() {
                         marginTop: "10px",
                       }}
                       onClick={() => {
-                        alert("Added to Cart");
+                        navigate(`/Test/${data.id}`);
                       }}
                     >
-                      <MDBIcon fas icon="shopping-cart" /> Add to Cart
+                      <MDBIcon fas icon="shopping-cart" style={{marginRight:"10px"}} /> Order Now
                     </MDBBtn>
                     <h6 style={{ marginTop: "20px" }}>Listed By:</h6>
                     <MDBCard style={{ borderRadius: "15px", marginTop: "5px" }}>
@@ -174,8 +187,11 @@ export function Product() {
                                 outline
                                 color="success"
                                 className="me-1 flex-grow-1"
+                                onClick={() => {
+                                  navigate(`/chat/${userData.id}`);
+                                }}
                               >
-                                Email
+                                Chat
                               </MDBBtn>
                               <MDBBtn
                                 rounded
@@ -208,8 +224,9 @@ export function Product() {
         </MDBContainer>
         <MDBContainer>
           <MDBRow className="text-center d-flex align-items-stretch">
-            {reviewData.reverse().slice(0, 4).map((item) => (
+            {reviewData.slice(0, 4).map((item) => (
               <MDBCol
+                key={item.id}
                 md="3"
                 className="align-items-stretch"
               >
@@ -282,7 +299,22 @@ export function Product() {
           <></>
         )}
       </div>
+
     </motion.div>
+    {
+      alert && 
+      <Alert variant={"success"} closeLabel="Close alert" closeVariant="black" dismissible onClose={() => setAlert(null)}>
+        This is a alert—check it out!
+      </Alert>
+    }
+    {
+      (alert !== null && alert === false) && 
+      <Alert variant={"warning"} closeLabel="Close alert" closeVariant="black" dismissible onClose={() => setAlert(null)}>
+        This is a alert—check it out!
+      </Alert>
+    }
+    
+    </>
   );
 }
 

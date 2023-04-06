@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,9 @@ Route:: get('getUser/{userid}', [UserController::class, 'getUser']); //get singl
 Route:: post('reviewProduct', [ReviewController::class, 'reviewProduct']); //review product route
 Route:: get('getReviews/{id}', [ReviewController::class, 'getReviews']); //get reviews route
 Route::get('search/{key}', [ProductController::class, 'search']); //search route
+Route::post('addchat', [ChatController::class, 'addchat']); //add chat route
+Route::get('getchats/{id}', [ChatController::class, 'getchats']); //get chat route
+Route::post('addOrder', [OrderController::class, 'addOrder']); //add order route
 
 
 Route::post('login', [AuthController::class, 'login']);

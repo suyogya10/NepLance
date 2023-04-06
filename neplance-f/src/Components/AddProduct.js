@@ -119,7 +119,7 @@ function AddProduct() {
                                 color="success"
                                 onClick={addProduct} // onClick is used to call the function
                               >
-                                Add Product
+                                Add Service
                               </MDBBtn>
                             </div>
                           </div>

@@ -23,6 +23,7 @@ import Writing from "./Collections/Writing";
 import Product from "./Product";
 import Test from "./Test";
 import SearchComponent from "./SearchComponent";
+import Chat from "./Chat";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -31,7 +32,7 @@ function AnimatedRoutes() {
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
           <Route path="/login" element={<Login />} />
-          <Route path="/test" element={<Test/>} />
+          <Route path="/test/:id" element={<Test/>} />
           <Route path="/explore" element={<Explore/>} />
           <Route path="*" element={<Errorpage/>} />
           <Route path="/register" element={<Register />} />
@@ -54,6 +55,7 @@ function AnimatedRoutes() {
           <Route path="/writing" element={<Writing/>} />
           <Route path="/product/:id" element={<Product/>} />
           <Route path="/search" element={<SearchComponent/>} />
+          <Route path="/chat/:to_userid" element={<Chat/>} />
           
           
         </Routes>

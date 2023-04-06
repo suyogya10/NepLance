@@ -45,7 +45,7 @@ function UpdateProduct() {
     });
   }
 
-    async function updateProduct() {
+    function updateProduct() {
     const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
     let formData = new FormData();
     formData.append("name", name);
@@ -61,7 +61,7 @@ function UpdateProduct() {
         result.json().then((resp) => {
             console.warn(resp);
         });
-    });
+    }) ;
     alert("Product Updated Successfully");
     window.location.reload(false);
     
@@ -163,7 +163,7 @@ function UpdateProduct() {
 
                             <div className="mb-3">
                               <label
-                                for="formFileMultiple"
+                                htmlFor="formFileMultiple"
                                 className="form-label"
                               >
                                 Choose Product Images

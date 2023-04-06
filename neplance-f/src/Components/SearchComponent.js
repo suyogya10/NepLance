@@ -11,7 +11,7 @@ function SearchComponent() {
     if (key.length > 1) {
       let result = await fetch("http://localhost:8000/api/search/" + key);
       result = await result.json();
-      setD3(result);
+      setD3(result.reverse());
     }
   }
   return (
@@ -41,7 +41,7 @@ function SearchComponent() {
           <div className="row py-5">
             {
               d3.length > 0 ? 
-              d3.reverse().map((item) => (
+              d3.map((item) => (
               <div className="col-12 col-md-4 mb-4">
                 <div className="card h-100 w-60">
                   <a

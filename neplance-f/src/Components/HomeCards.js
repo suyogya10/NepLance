@@ -12,7 +12,7 @@ function HomeCards() {
   const ApiHandler = async () => {
     let result = await fetch("http://localhost:8000/api/getProducts");
     result = await result.json();
-    setData(result);
+    setData(result.reverse());
   };
   useEffect(() => {
     ApiHandler();
@@ -75,7 +75,7 @@ function HomeCards() {
           <div className="container">
             <div className="row text-center py-3">
               <div className="col-lg-6 m-auto">
-                <h1 className="h1">Latest Products</h1>
+                <h1 className="h1">Latest Listings</h1>
                 <p>
                   With new additions on a regular basis, there's always
                   something fresh and exciting to discover.
@@ -84,10 +84,10 @@ function HomeCards() {
             </div>
             <div className="row">
               {data
-                .reverse()
                 .slice(0, 6)
                 .map((item) => (
                   <div
+                    key={item.id}
                     className="col-12 col-md-4 mb-4"
                     onClick={() => {
                       navigate(`/product/${item.id}`);
