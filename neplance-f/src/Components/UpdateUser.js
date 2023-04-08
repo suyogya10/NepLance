@@ -14,23 +14,25 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-function UpdateProduct() {
+function UpdateUser() {
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
   const [basicModal2, setBasicModal2] = useState(false);
-  const toggleShow2 = () => setBasicModal2(!basicModal2);
-  const { id } = useParams();
+  const toggleShow2 = () => setBasicModal2(!basicModal);
+
+
+  const userid = localStorage.parse("user-info").user.id;
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
+  const [designation, setPrice] = useState("");
+  const [password, setDescription] = useState("");
   const [file, setFile] = useState("");
   const [category, setCategory] = useState("");
 
   const ApiHandler = async () => {
     const result = await fetch(
-      "http://localhost:8000/api/getSingleProduct/" + id
+      "http://localhost:8000/api/getUser/" + userid
     );
     const resp = await result.json();
     setData(resp);
@@ -64,13 +66,13 @@ function UpdateProduct() {
     const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
     let formData = new FormData();
     formData.append("name", name);
-    formData.append("price", price);
-    formData.append("description", description);
+    formData.append("designation", price);
+    formData.append("password", description);
     formData.append("file", file);
     formData.append("category", category);
     formData.append("userid", userid);
     fetch(
-      "http://localhost:8000/api/updateProduct/" + data.id + "?_method=PUT",
+      "http://localhost:8000/api/updateUser/" + data.id + "?_method=PUT",
       {
         method: "POST",
         body: formData,
@@ -78,11 +80,11 @@ function UpdateProduct() {
     ).then((result) => {
       result.json().then((resp) => {
         console.warn(resp);
-        alert("Product Updated Successfully");
-        ApiHandler();
       });
     });
+    alert("Product Updated Successfully");
     toggleShow();
+    window.location.reload(false);
   }
 
   return (
@@ -303,4 +305,4 @@ function UpdateProduct() {
   );
 }
 
-export default UpdateProduct;
+export default UpdateUser;

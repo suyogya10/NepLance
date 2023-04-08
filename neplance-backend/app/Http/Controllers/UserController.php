@@ -16,6 +16,7 @@ class UserController extends Controller
         $user->email = $req->input("email"); //getting the email from the request
         $user->password = Hash::make($req->input("password")); //getting the password from the request and hashing it or encrypting it
         $user->designation = $req->input("designation"); //getting the category from the request
+        $user->file_path = $req->file("file")-> store("users"); //getting the image from the request
         $user->save(); //saving the user to the database
         return $user; //returning the user
 

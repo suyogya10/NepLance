@@ -35,6 +35,7 @@ function Login() {
       body: JSON.stringify(item), // used to send the data to the server in JSON format
     }); // fetch is used to send the data to the backend
     result = await result.json();
+    console.warn("result", result);
     localStorage.setItem("user-info", JSON.stringify(result)); // store the data in the local storage
     navigate("/home"); // redirect to the homepage
 

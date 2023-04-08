@@ -21,4 +21,20 @@ class ReviewController extends Controller
         
         return Review::where("productid", $id)->get(); //returning the reviews with the product id
     }
+
+    function getReviewByUser($id){
+        
+        return Review::where("userid", $id)->get(); //returning the reviews with the user id
+    }
+
+    function deleteReview($sid){
+        $result = Review::where("review_id", $sid)->delete(); //deleting the product from the database
+        if ($result) {
+            return ["result" => "Product has been deleted"]; //returning a message if the product has been deleted
+        }
+        else {
+            return ["result" => "Operation failed"]; //returning a message if the product has not been deleted
+        }
+    }
+    
 }

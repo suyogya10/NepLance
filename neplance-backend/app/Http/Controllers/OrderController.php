@@ -18,12 +18,18 @@ class OrderController extends Controller
         // $order->payment_id = $req->input("payment_id");
         $order->token = $req->input("token");
         $order->status = $req->input("status");
+        $order->product_name = $req->input("product_name");
         $order->save();
         return $order;
     }
 
     function getOrders($id){
         
-        return Order::where("userid", $id)->get(); //returning the order with the id
+        return Order::where("client_id", $id)->get(); //returning the order with the id
+    }
+
+    function getRecievedOrders($sid){
+            
+            return Order::where("seller_id", $sid)->get(); //returning the order with the seller id
     }
 }

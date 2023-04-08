@@ -36,10 +36,16 @@ Route:: get('getSingleProduct/{id}', [ProductController::class, 'getSingleProduc
 Route:: get('getUser/{userid}', [UserController::class, 'getUser']); //get single user
 Route:: post('reviewProduct', [ReviewController::class, 'reviewProduct']); //review product route
 Route:: get('getReviews/{id}', [ReviewController::class, 'getReviews']); //get reviews route
+Route:: get('getReviewByUser/{id}', [ReviewController::class, 'getReviewByUser']); //get reviews by user route
+Route:: delete('deleteReview/{sid}', [ReviewController::class, 'deleteReview']); //delete review route
 Route::get('search/{key}', [ProductController::class, 'search']); //search route
 Route::post('addchat', [ChatController::class, 'addchat']); //add chat route
 Route::get('getchats/{id}', [ChatController::class, 'getchats']); //get chat route
+
+
 Route::post('addOrder', [OrderController::class, 'addOrder']); //add order route
+Route::get('getOrders/{id}', [OrderController::class, 'getOrders']); //get order route
+Route::get('getRecievedOrders/{sid}', [OrderController::class, 'getRecievedOrders']); //get order route
 
 
 Route::post('login', [AuthController::class, 'login']);

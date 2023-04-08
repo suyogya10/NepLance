@@ -10,19 +10,8 @@ import { MDBBtn, MDBInputGroup, MDBIcon } from "mdb-react-ui-kit";
 import img from "./Assets/logo.png";
 
 function Header() {
-  let user = JSON.parse(localStorage.getItem("user-info"));
   
   const navigate = useNavigate();
-  
-
-  function gohome() {
-    navigate("/home");
-  }
-
-  function logout() {
-    localStorage.clear();
-    window.location.reload(false);
-  }
 
   function login() {
     localStorage.clear();
@@ -33,7 +22,7 @@ function Header() {
     <div>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand onClick={gohome} href="" style={{cursor:"pointer"}}>
+          <Navbar.Brand onClick={() => {navigate("/home")}} href="" style={{cursor:"pointer"}}>
             <img src={img} alt="logo" />
           </Navbar.Brand>
           <Navbar.Collapse className="right-aligned">
@@ -50,7 +39,10 @@ function Header() {
                   </Link>
                   <Link to="/user" className="link">
                     <MDBIcon far icon="user-circle" />
-                    <a style={{ margin: "5px" }}>Profile</a>
+                    <a style={{ margin: "5px" }}>{
+                            JSON.parse(localStorage.getItem("user-info")).user
+                              .name
+                          }</a>
                   </Link>
                 </>
               ) : (
@@ -67,17 +59,6 @@ function Header() {
                   </Nav>
                 </>
               )}
-            </Nav>
-            <Nav>
-              {
-                localStorage.getItem("user-info") ? ( // if user is logged in
-                  <>
-                    <MDBBtn rounded color="danger" onClick={logout}>
-                      Logout
-                    </MDBBtn>
-                  </>
-                ) : null // if user is not logged in
-              }
             </Nav>
           </Navbar.Collapse>
         </Container>

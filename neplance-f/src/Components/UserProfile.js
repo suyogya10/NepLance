@@ -1,179 +1,133 @@
+import React from "react";
+import { useState } from "react";
 import {
   MDBCol,
   MDBContainer,
   MDBRow,
-  MDBCard,
-  MDBCardTitle,
   MDBCardText,
-  MDBCardBody,
+  MDBTypography,
   MDBCardImage,
   MDBBtn,
-  MDBIcon
-} from "mdb-react-ui-kit";
-import {
-  MDBBadge,
-  MDBTable,
-  MDBTableHead,
-  MDBTableBody,
+  MDBCard,
+  MDBIcon,
 } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserListings from "./UserListings";
+import UserOrders from "./UserOrders";
+import UserRecievedOrders from "./UserRecievedOrders";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 import { useEffect } from "react";
+import UserReviews from "./UserReviews";
 
 export default function UserProfile() {
-
-  var sn = 1;
-  const navigate = useNavigate();
+  const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
   const [data, setData] = useState([]);
   const ApiHandler = async () => {
-    let result = await fetch("http://localhost:8000/api/getProducts");
+    let result = await fetch("http://localhost:8000/api/getUser/" + userid);
     result = await result.json();
-    setData(result.reverse());
+    setData(result);
   };
   useEffect(() => {
     ApiHandler();
   }, []);
 
+  const [key, setKey] = useState("orders");
+  const navigate = useNavigate();
   function AddProduct() {
     navigate("/addproduct");
   }
 
+  function logout() {
+    localStorage.clear();
+    navigate("/home");
+    window.location.reload(false);
+  }
+
   return (
     <motion.div
-    initial={{ opacity: 0 }}
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}>
-      <div>
-        <MDBContainer>
-          <MDBRow className="justify-content-left">
-            <MDBCol >
-                <MDBCardBody className="p-4">
-                  <div className="d-flex text-black">
-                    <div className="flex-shrink-0">
-                      <MDBCardImage
-                        style={{ width: "200px", borderRadius: "10px" }}
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                        alt="Generic placeholder image"
-                        fluid
-                      />
-                      <div>
-                        <br></br>
-                        {
-                          localStorage.getItem("user-info") ? 
-                          <MDBCardTitle>{JSON.parse(localStorage.getItem("user-info")).user.name}</MDBCardTitle>
-                          :
-                          null
-                        }
-                        {
-                          localStorage.getItem("user-info") ?
-                          <MDBCardText>{JSON.parse(localStorage.getItem("user-info")).user.designation}</MDBCardText>
-                          :
-                          null
-
-                        }
-                        
-
-                        <div
-                          className="d-flex justify-content-left rounded-3 p-2 mb-2"
-                          style={{ backgroundColor: "#efefef", width: "200px" }}
-                        >
-                          <div>
-                            <p className="small text-muted mb-1">Products</p>
-                            <p className="mb-0">41</p>
-                          </div>
-                          <div className="px-3">
-                            <p className="small text-muted mb-1">Followers</p>
-                            <p className="mb-0">976</p>
-                          </div>
-                          <div>
-                            <p className="small text-muted mb-1">Rating</p>
-                            <p className="mb-0">8.5</p>
-                          </div>
-                        </div>
-                        <div>
-                          <MDBBtn
-                             rounded className="profilebtn " color="primary" size="sm"
-                            onClick={AddProduct}
-                          >
-                            Add Service
-                          </MDBBtn>
-                        </div>
-
-                        <div>
-                          <MDBBtn rounded className="profilebtn " color="secondary" size="sm">
-                            Edit Profile
-                          </MDBBtn>
-                        </div>
-
-                        <div>
-                          <MDBBtn
-                             rounded className="profilebtn " color="danger" size="sm"
-                          >
-                            Delete Profile
-                          </MDBBtn>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex-grow-1 ms-3">
-                      <h3 className="profiletitle2">Your Listings</h3>
-                      <MDBTable hover>
-                        <MDBTableHead>
-                          <tr>
-                            <th scope="col" className="fw-bold">S.N</th>
-                            <th scope="col" className="fw-bold">Title</th>
-                            <th scope="col" className="fw-bold">Description</th>
-                            <th scope="col" className="fw-bold">Price</th>
-                            <th scope="col" className="fw-bold">Action</th>
-                          </tr>
-                        </MDBTableHead>
-                        { localStorage.getItem("user-info") ?
-                        data.filter((item) => item.userid === JSON.parse(localStorage.getItem("user-info")).user.id).map((item) => (
-                          <MDBTableBody key={item.id}>
-                            <tr>
-                              <td>
-                                <MDBBadge color="secondary" pill>
-                                  {sn++
-                                  }
-                                </MDBBadge>
-                      
-                              </td>
-                              <td>
-                                <p className="fw-normal mb-2">{item.name}</p>
-                              </td>
-                              <td>
-                                <p className="fw-normal mb-2">
-                                  {item.description}
-                                </p>
-                              </td>
-                              <td>Rs. {item.price}</td>
-                              <td>
-                                <MDBBtn
-                                  rounded
-                                  type="button"
-                                  size="sm"
-                                  className="mx-1"
-                                  color="success"
-                                  onClick={() => {
-                                    navigate(`/updateproduct/${item.id}`);
-                                  }}
-                                >
-                                  <MDBIcon far icon="edit" />
-                                </MDBBtn>
-                                
-                              </td>
-                            </tr>
-                          </MDBTableBody>
-                        )) : null}
-                      </MDBTable>
-                    </div>
+      exit={{ opacity: 0 }}
+    >
+      
+      <MDBContainer className="py-2 h-100">
+        <MDBRow className="justify-content-center align-items-center h-100">
+          <MDBCol >
+            <MDBCard>
+            <div className="d-flex justify-content-end text-center py-1 gap-4">
+                    <MDBBtn onClick={logout} rounded  color="danger" style={{height: '36px', overflow: 'visible', marginRight:"2px"}}>
+                      <MDBIcon fas icon="sign-out-alt" className="me-2" />
+                      Logout
+                    </MDBBtn>
                   </div>
-                </MDBCardBody>
-              
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </div>
+              <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#00BF63', height: '200px' }}>
+                <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
+                  <MDBCardImage src={"http://localhost:8000/" + data.file_path}
+                    alt="Profile Picture" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
+                  <MDBBtn outline color="dark" style={{height: '36px', overflow: 'visible'}}>
+                    Edit profile
+                  </MDBBtn>
+                </div>
+                <div className="ms-3" style={{ marginTop: '130px' }}>
+                  <MDBTypography tag="h3">{data.name}</MDBTypography>
+                  <MDBTypography tag="h5">{data.designation}</MDBTypography>
+                </div>
+              </div>
+              <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+                <div className="d-flex justify-content-end text-center py-1 gap-4">
+                  <div>
+                  <MDBBtn onClick={AddProduct} rounded outline color="success" style={{height: '36px', overflow: 'visible'}}>
+                    <MDBIcon fas icon="plus" className="me-2" />
+                    Add Service
+                  </MDBBtn>
+                  </div>
+                  <div>
+                    <MDBCardText className="mb-1 h5">253</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Servies</MDBCardText>
+                  </div>
+                  <div className="px-3">
+                    <MDBCardText className="mb-1 h5">1026</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Followers</MDBCardText>
+                  </div>
+                  <div>
+                    <MDBCardText className="mb-1 h5">478</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Rating</MDBCardText>
+                  </div>
+                  
+                </div>
+              </div>
+              </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+      
+      <MDBContainer style={{ marginTop: "5px" }}>
+        <MDBRow className="justify-content-left">
+          <MDBCol>
+            <Tabs
+              id="controlled-tab-example"
+              activeKey={key}
+              onSelect={(k) => setKey(k)}
+              className="mb-3"
+            >
+              <Tab eventKey="orders" title="Ordered Services">
+                <UserOrders />
+              </Tab>
+              <Tab eventKey="listings" title="Your Services">
+                <UserListings />
+              </Tab>
+              <Tab eventKey="recieved" title="Recieved Orders">
+                <UserRecievedOrders />
+              </Tab>
+              <Tab eventKey="reviews" title="Your Reviews">
+                <UserReviews />
+              </Tab>
+            </Tabs>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     </motion.div>
   );
 }

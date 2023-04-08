@@ -1,9 +1,22 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MDBBtn } from "mdb-react-ui-kit";
+import {
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
+} from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
+
+  const [basicModal, setBasicModal] = useState(false);
+  const toggleShow = () => setBasicModal(!basicModal);
+
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -12,7 +25,6 @@ function AddProduct() {
   const [category, setCategory] = useState("");
 
   function addProduct() {
-    
     const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
     let formData = new FormData();
     formData.append("name", name);
@@ -27,6 +39,7 @@ function AddProduct() {
     }).then((result) => {
       result.json().then((resp) => {
         console.warn(resp);
+        console.log(result);
       });
     });
     document.getElementById("addprod").reset();
@@ -71,7 +84,7 @@ function AddProduct() {
                           <br></br>
 
                           <div className="mb-3">
-                            <input
+                            <textarea
                               type="text"
                               className="form-control"
                               id="floatingInput"
@@ -87,21 +100,40 @@ function AddProduct() {
                                 onChange={(e) => setCategory(e.target.value)}
                               >
                                 <option selected>Select</option>
-                                <option value="account-finance">Accounting & Finance</option>
-                                <option value="administrative">Administrative</option>
-                                <option value="computer-it">Computer & IT</option>
-                                <option value="customerservice">Customer Service</option>
-                                <option value="design-editing">Design & Editing</option>
-                                <option value="education-training">Education & Training</option>
-                                <option value="hr-recruit">HR & Recruiting</option>
-                                <option value="medical-health">Medical & Health</option>
-                                <option value="writing">Writing</option>  
+                                <option value="account-finance">
+                                  Accounting & Finance
+                                </option>
+                                <option value="administrative">
+                                  Administrative
+                                </option>
+                                <option value="computer-it">
+                                  Computer & IT
+                                </option>
+                                <option value="customerservice">
+                                  Customer Service
+                                </option>
+                                <option value="design-editing">
+                                  Design & Editing
+                                </option>
+                                <option value="education-training">
+                                  Education & Training
+                                </option>
+                                <option value="hr-recruit">
+                                  HR & Recruiting
+                                </option>
+                                <option value="medical-health">
+                                  Medical & Health
+                                </option>
+                                <option value="writing">Writing</option>
                               </select>
                               <br></br>
                             </div>
 
                             <div className="mb-3">
-                              <label for="formFileMultiple" className="form-label">
+                              <label
+                                for="formFileMultiple"
+                                className="form-label"
+                              >
                                 Choose Product Images
                               </label>
                               <input
@@ -115,13 +147,46 @@ function AddProduct() {
                             <div className="d-grid">
                               <MDBBtn
                                 rounded
-                                type="submit"
+                                type="button"
                                 color="success"
-                                onClick={addProduct} // onClick is used to call the function
+                                onClick={toggleShow}
                               >
                                 Add Service
                               </MDBBtn>
                             </div>
+                            <MDBModal
+                              show={basicModal}
+                              setShow={setBasicModal}
+                              tabIndex="-1"
+                            >
+                              <MDBModalDialog>
+                                <MDBModalContent>
+                                  <MDBModalHeader>
+                                    <MDBModalTitle>Add Service?</MDBModalTitle>
+                                    <MDBBtn
+                                      className="btn-close"
+                                      color="none"
+                                      onClick={toggleShow}
+                                      type="button"
+                                    ></MDBBtn>
+                                  </MDBModalHeader>
+                                  <MDBModalBody>
+                                    Are you sure you want to add this service ?
+                                  </MDBModalBody>
+
+                                  <MDBModalFooter>
+                                    <MDBBtn
+                                      color="secondary"
+                                      onClick={toggleShow}
+                                      type="button"
+                                    >
+                                      Close
+                                    </MDBBtn>
+                                    <MDBBtn type="submit" onClick={addProduct}>Add Service</MDBBtn>
+                                  </MDBModalFooter>
+                                </MDBModalContent>
+                              </MDBModalDialog>
+                            </MDBModal>
                           </div>
                         </div>
                       </div>

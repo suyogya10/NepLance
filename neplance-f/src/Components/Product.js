@@ -109,7 +109,7 @@ export function Product() {
               style={{
                 borderRadius: "15px",
                 width: "1300px",
-                height: "640px",
+                height: "700px",
                 marginTop: "20px",
               }}
             >
@@ -135,8 +135,9 @@ export function Product() {
                     <MDBCardText>{data.description}</MDBCardText>
                     <MDBCardText>Price: Rs. {data.price}</MDBCardText>
                     <MDBCardText>Category: {data.category}</MDBCardText>
-
-                    <MDBBtn
+                    {
+                      localStorage.getItem("user-info") ? (
+                        <MDBBtn
                       rounded
                       color="success"
                       style={{
@@ -145,21 +146,26 @@ export function Product() {
                         marginTop: "10px",
                       }}
                       onClick={() => {
-                        navigate(`/Test/${data.id}`);
+                        navigate(`/checkout/${data.id}`);
                       }}
                     >
                       <MDBIcon fas icon="shopping-cart" style={{marginRight:"10px"}} /> Order Now
                     </MDBBtn>
+                      ) : (
+                        <MDBBtn color="success" onClick={() => {navigate("/login")}}>Login to Order</MDBBtn>
+                      )
+                    }
+                    
                     <h6 style={{ marginTop: "20px" }}>Listed By:</h6>
                     <MDBCard style={{ borderRadius: "15px", marginTop: "5px" }}>
                       <MDBCardBody className="p-4">
                         <div className="d-flex text-black">
                           <div className="flex-shrink-0">
                             <MDBCardImage
-                              style={{ width: "180px", borderRadius: "10px" }}
-                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                              alt="Generic placeholder image"
-                              fluid
+                              style={{ width: "180px", borderRadius: "10px", maxHeight: "180px" }}
+                              src={"http://localhost:8000/" + userData.file_path}
+                              alt="Profile Picture"
+                              className="rounded-circle img-fluid"
                             />
                           </div>
                           <div className="flex-grow-1 ms-3">

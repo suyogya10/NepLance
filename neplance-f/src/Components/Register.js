@@ -9,11 +9,13 @@ function Register() {
   const [name, setName] = useState(""); // user is the state variable and setName is the function to update the state
   const [email, setEmail] = useState(""); // email is the state variable and setEmail is the function to update the state
   const [password, setPassword] = useState(""); // password is the state variable and setPassword is the function to update the state
+  const [designation, setDesignation] = useState(""); // designation is the state variable and setDesignation is the function to update the state
+  const [file, setFile] = useState("");
   const navigate = useNavigate(); // useNavigate is used to redirect to another page
 
   async function SignUp() {
     // async function is used to make the function asynchronous
-    let item = { name, email, password }; // item is an object with the values of the state variables
+    let item = { name, email, password, designation, file }; // item is an object with the values of the state variables
     console.warn(item);
     let result = await fetch("http://localhost:8000/api/register", {
       // await is used to wait for the response from the server
@@ -38,9 +40,10 @@ function Register() {
 
   return (
     <motion.div
-    initial={{ opacity: 0 }}
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}>
+      exit={{ opacity: 0 }}
+    >
       <div class="container-fluid ps-md-0">
         <div class="row g-0">
           <div class="d-none d-md-flex col-md-4 col-lg-6">
@@ -84,12 +87,33 @@ function Register() {
                         />
                         <label for="floatingPassword">Password</label>
                       </div>
+                      {/* <div class="form-floating mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          value={designation}
+                          placeholder="Designation"
+                          onChange={(e) => setDesignation(e.target.value)} // onChange event is used to update the state
+                        />
+                        <label for="floatingInput">Designation</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input
+                          className="form-control"
+                          type="file"
+                          id="formFileMultiple"
+                          multiple
+                          
+                          onChange={(e) => setFile(e.target.files[0])}
+                        ></input>
+                      </div> */}
 
                       <div class="d-grid">
-                        <MDBBtn color="primary" onClick={SignUp}>Register</MDBBtn>
+                        <MDBBtn color="primary" onClick={SignUp}>
+                          Register
+                        </MDBBtn>
                         <div class="text-center">
-                          <span>OR
-                          </span>
+                          <span>OR</span>
                           <br></br>
                           <a class="small" href="#">
                             <Link to="/login">

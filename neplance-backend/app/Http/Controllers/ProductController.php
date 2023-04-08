@@ -16,7 +16,7 @@ class ProductController extends Controller
         $product->description = $req->input("description"); //getting the description from the request
         $product->category = $req->input("category"); //getting the category from the request
         $product->userid = $req->input("userid"); //getting the category from the request
-        $product->file_path = $req->file("file")-> store("products"); //getting the image from the request
+        $product->file_path = $req->file("file")-> store("product"); //getting the image from the request
         
         $product->save(); //saving the product to the database
         return $product; //returning the product
@@ -59,7 +59,7 @@ class ProductController extends Controller
         $product->category = $req->category; //getting the category from the request
         $product->userid = $req->userid; //getting the category from the request
         if ($req->file("file")) {
-            $product->file_path = $req->file("file")-> store("products"); //getting the image from the request
+            $product->file_path = $req->file("file")-> store("product"); //getting the image from the request
         }
         $product->save(); //saving the product to the database
         return $product; //returning the product

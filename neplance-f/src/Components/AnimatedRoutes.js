@@ -11,12 +11,12 @@ import Landing from "./Landing";
 import Errorpage from "./Errorpage";
 import { AnimatePresence } from "framer-motion";
 import Explore from "./Collections/Explore";
-import AccountingFinance from "./Collections/AccountingFinance"
-import Administrative from "./Collections/Administrative"
-import ComputerIT from "./Collections/ComputerIT"
-import CustomerService from "./Collections/CustomerService"
-import DesignEditing from "./Collections/DesignEditing"
-import EducationTraining from "./Collections/EducationTraining"
+import AccountingFinance from "./Collections/AccountingFinance";
+import Administrative from "./Collections/Administrative";
+import ComputerIT from "./Collections/ComputerIT";
+import CustomerService from "./Collections/CustomerService";
+import DesignEditing from "./Collections/DesignEditing";
+import EducationTraining from "./Collections/EducationTraining";
 import HrRecruit from "./Collections/HrRecruit";
 import MeidcalHealth from "./Collections/MedicalHealth";
 import Writing from "./Collections/Writing";
@@ -24,6 +24,7 @@ import Product from "./Product";
 import Test from "./Test";
 import SearchComponent from "./SearchComponent";
 import Chat from "./Chat";
+import Checkout from "./Checkout";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -32,9 +33,10 @@ function AnimatedRoutes() {
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
           <Route path="/login" element={<Login />} />
-          <Route path="/test/:id" element={<Test/>} />
-          <Route path="/explore" element={<Explore/>} />
-          <Route path="*" element={<Errorpage/>} />
+          <Route path="/test/" element={<Test />} />
+          <Route path="/checkout/:id" element={<Checkout />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="*" element={<Errorpage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/addproduct" element={<Protected Cmp={AddProduct} />} />
           <Route
@@ -44,20 +46,19 @@ function AnimatedRoutes() {
           <Route path="/user" element={<Protected Cmp={UserProfile} />} />
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/accounting-finance" element={<AccountingFinance/>} />
-          <Route path="/administrative" element={<Administrative/>} />
-          <Route path="/computer-it" element={<ComputerIT/>} />
-          <Route path="/customer-service" element={<CustomerService/>} />
-          <Route path="/design-editing" element={<DesignEditing/>} />
-          <Route path="/education-training" element={<EducationTraining/>} />
-          <Route path="/hr-recruit" element={<HrRecruit/>} />
-          <Route path="/medical-health" element={<MeidcalHealth/>} />
-          <Route path="/writing" element={<Writing/>} />
-          <Route path="/product/:id" element={<Product/>} />
-          <Route path="/search" element={<SearchComponent/>} />
-          <Route path="/chat/:to_userid" element={<Chat/>} />
-          
-          
+          <Route path="/accounting-finance" element={<AccountingFinance />} />
+          <Route path="/administrative" element={<Administrative />} />
+          <Route path="/computer-it" element={<ComputerIT />} />
+          <Route path="/customer-service" element={<CustomerService />} />
+          <Route path="/design-editing" element={<DesignEditing />} />
+          <Route path="/education-training" element={<EducationTraining />} />
+          <Route path="/hr-recruit" element={<HrRecruit />} />
+          <Route path="/medical-health" element={<MeidcalHealth />} />
+          <Route path="/writing" element={<Writing />} />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/search" element={<SearchComponent />} />
+          <Route path="/chat/:to_userid" element={<Chat />} />
+
         </Routes>
       </AnimatePresence>
     </div>
