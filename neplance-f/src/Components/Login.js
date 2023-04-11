@@ -103,7 +103,7 @@ function Login() {
                         </div>
 
                         <div className="d-grid">
-                          <MDBBtn rounded color="primary" onClick={login}>Sign in</MDBBtn>
+                          <MDBBtn rounded color="success" onClick={login}>Sign in</MDBBtn>
                           <br></br>
                           <div className="text-center">
                           <a>OR</a>

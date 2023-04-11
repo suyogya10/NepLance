@@ -36,5 +36,10 @@ class ReviewController extends Controller
             return ["result" => "Operation failed"]; //returning a message if the product has not been deleted
         }
     }
+
+    function getReviewsAll(){
+        
+        return Review::all(); //returning all the reviews in the database
+    }
     
 }

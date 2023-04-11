@@ -10,6 +10,7 @@ import {
   MDBBtn,
   MDBCard,
   MDBIcon,
+  MDBCardBody
 } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -63,10 +64,12 @@ export default function UserProfile() {
                     </MDBBtn>
                   </div>
               <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#00BF63', height: '200px' }}>
-                <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
+                <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '180px' , maxHeight:"180px"}}>
                   <MDBCardImage src={"http://localhost:8000/" + data.file_path}
-                    alt="Profile Picture" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
-                  <MDBBtn outline color="dark" style={{height: '36px', overflow: 'visible'}}>
+                    alt="Profile Picture" className="mt-4 mb-2 img-thumbnail rounded-circle img-fluid" style={{ width: '180px', zIndex: '1', maxHeight:"190px" }} />
+                  <MDBBtn onClick={() => {
+                      navigate(`/updateuser/${userid}`);
+                    }} outline color="dark" style={{height: '36px', overflow: 'visible'}}>
                     Edit profile
                   </MDBBtn>
                 </div>
@@ -98,11 +101,21 @@ export default function UserProfile() {
                   
                 </div>
               </div>
+              <MDBCardBody className="text-black p-4">
+                <div className="mb-5">
+                  <p className="lead fw-normal mb-1">About</p>
+                  <div className="p-4" style={{ backgroundColor: '#f8f9fa' }}>
+                    <MDBCardText className="font-italic mb-1">Web Developer</MDBCardText>
+                    <MDBCardText className="font-italic mb-1">Lives in New York</MDBCardText>
+                    <MDBCardText className="font-italic mb-0">Photographer</MDBCardText>
+                  </div>
+                </div>
+              </MDBCardBody>
               </MDBCard>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-      
+
       <MDBContainer style={{ marginTop: "5px" }}>
         <MDBRow className="justify-content-left">
           <MDBCol>

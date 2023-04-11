@@ -4,10 +4,11 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { MDBBtn, MDBInputGroup, MDBIcon } from "mdb-react-ui-kit";
 import img from "./Assets/logo.png";
+import Footer from "./Footer";
 
 function Header() {
   
@@ -19,6 +20,7 @@ function Header() {
   }
 
   return (
+    <>
     <div>
       <Navbar bg="light" expand="lg">
         <Container>
@@ -64,7 +66,11 @@ function Header() {
         </Container>
       </Navbar>
     </div>
+    <Outlet/>
+    <Footer/>
+    </>
   );
+
 }
 
 export default Header;

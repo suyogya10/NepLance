@@ -49,6 +49,7 @@ function UserReviews() {
       });   
     });
   }
+  
   return (
     <div className="flex-grow-1 ms-3">
       <h3 className="profiletitle2">Posted Reviews</h3>

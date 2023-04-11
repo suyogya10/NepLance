@@ -36,4 +36,34 @@ class UserController extends Controller
         return User::find($userid); //returning the product with the id return User::all($userid); //returning all the users in the database
     }
 
+    function deleteUser($userid)
+    {
+        $result = User::where("id", $userid)->delete();
+         //deleting the user from the database
+        if ($result) {
+            return ["result" => "User has been deleted"]; //returning a message if the user has been deleted
+        }
+        else {
+            return ["result" => "Operation failed"]; //returning a message if the user has not been deleted
+        }
+    }
+
+    function UpdateUser($userid, Request $req)
+    {
+        $user = User::find($req->id); //finding the product with the id
+        $user->name = $req->name; //getting the name from the request
+        $user->designation = $req->designation; //getting the designation from the request
+
+        if ($req->file("file")) {
+            $user->file_path = $req->file("file")-> store("users"); //getting the image from the request
+        }
+        $user->save(); //saving the product to the database
+        return $user; //returning the product
+    }
+
+    function getUserAll()
+    {
+        return User::all(); //returning all the users in the database
+    }
+
 }

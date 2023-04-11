@@ -21,43 +21,72 @@ import HrRecruit from "./Collections/HrRecruit";
 import MeidcalHealth from "./Collections/MedicalHealth";
 import Writing from "./Collections/Writing";
 import Product from "./Product";
-import Test from "./Test";
 import SearchComponent from "./SearchComponent";
 import Chat from "./Chat";
 import Checkout from "./Checkout";
+import UpdateUser from "./UpdateUser";
+import Adminlogin from "./Adminlogin";
+import SidebarComponent from "../Components/Sidebar";
+import Headers from "../Components/Header";
+import ViewUsers from "./ViewUsers";
+import ViewReviews from "./ViewReviews";
+import ViewServices from "./ViewServices";
+import AdminUpdateProduct from "./AdminUpdateProduct";
+import AdminProtected from "./AdminProtected";
+import Adminhome from "./AdminHome";
+
 
 function AnimatedRoutes() {
   const location = useLocation();
+  
   return (
     <div>
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/test/" element={<Test />} />
-          <Route path="/checkout/:id" element={<Checkout />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="*" element={<Errorpage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/addproduct" element={<Protected Cmp={AddProduct} />} />
-          <Route
-            path="/updateproduct/:id"
-            element={<Protected Cmp={UpdateProduct} />}
-          />
-          <Route path="/user" element={<Protected Cmp={UserProfile} />} />
-          <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/accounting-finance" element={<AccountingFinance />} />
-          <Route path="/administrative" element={<Administrative />} />
-          <Route path="/computer-it" element={<ComputerIT />} />
-          <Route path="/customer-service" element={<CustomerService />} />
-          <Route path="/design-editing" element={<DesignEditing />} />
-          <Route path="/education-training" element={<EducationTraining />} />
-          <Route path="/hr-recruit" element={<HrRecruit />} />
-          <Route path="/medical-health" element={<MeidcalHealth />} />
-          <Route path="/writing" element={<Writing />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/search" element={<SearchComponent />} />
-          <Route path="/chat/:to_userid" element={<Chat />} />
+          {/* <Route path="*" element={<Errorpage />} /> */}
+  
+          
+
+        <Route element={<Headers/>}>
+            <Route path="*" element={<Errorpage />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/user" element={<Protected Cmp={UserProfile} />} />
+            <Route path="/updateuser/:id" element={<UpdateUser />} />
+
+            <Route path="/search" element={<SearchComponent />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/checkout/:id" element={<Checkout />} />
+            <Route path="/addproduct" element={<Protected Cmp={AddProduct} />} />
+            <Route
+              path="/updateproduct/:id"
+              element={<Protected Cmp={UpdateProduct} />}
+            />
+
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/accounting-finance" element={<AccountingFinance />} />
+            <Route path="/administrative" element={<Administrative />} />
+            <Route path="/computer-it" element={<ComputerIT />} />
+            <Route path="/customer-service" element={<CustomerService />} />
+            <Route path="/design-editing" element={<DesignEditing />} />
+            <Route path="/education-training" element={<EducationTraining />} />
+            <Route path="/hr-recruit" element={<HrRecruit />} />
+            <Route path="/medical-health" element={<MeidcalHealth />} />
+            <Route path="/writing" element={<Writing />} />
+
+            <Route path="/chat/:to_userid" element={<Chat />} />
+            </Route>
+
+          <Route path="/adminLogin" element={<AdminProtected Cmp={Adminlogin}/>} />
+            <Route  element={<SidebarComponent/>} >
+            <Route path="/adminhome" element={<AdminProtected Cmp={Adminhome}/>} />
+            <Route path="/viewusers" element={<AdminProtected Cmp={ViewUsers}/>} />
+            <Route path="/viewreviews" element={<AdminProtected Cmp={ViewReviews}/>} />
+            <Route path="/viewservices" element={<AdminProtected Cmp={ViewServices}/>} />
+            <Route path="/adminupdateproduct/:id" element={<AdminProtected Cmp={AdminUpdateProduct}/>} />
+          </Route>
 
         </Routes>
       </AnimatePresence>

@@ -109,7 +109,7 @@ function Register() {
                       </div> */}
 
                       <div class="d-grid">
-                        <MDBBtn color="primary" onClick={SignUp}>
+                        <MDBBtn color="success" onClick={SignUp}>
                           Register
                         </MDBBtn>
                         <div class="text-center">
