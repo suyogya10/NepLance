@@ -1,15 +1,16 @@
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdb-react-ui-kit';
-import AuthUser from "./AuthUser";
+import { MDBBtn } from "mdb-react-ui-kit";
 import img from "./Assets/LoginBG.png";
-
+import { Alert } from "react-bootstrap";
 
 function Login() {
   const navigate = useNavigate(); // useNavigate is used to redirect to another page
   const [email, setEmail] = useState(""); // useState is used to store the value of the input field
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState(null);
+
   useEffect(() => {
     if (localStorage.getItem("user-info")) {
       navigate("/");
@@ -30,7 +31,6 @@ function Login() {
         // headers are used to send the data in JSON format
         "Content-Type": "application/json",
         Accept: "application/json", // accept the data in JSON format
-        
       },
       body: JSON.stringify(item), // used to send the data to the server in JSON format
     }); // fetch is used to send the data to the backend
@@ -39,54 +39,64 @@ function Login() {
     localStorage.setItem("user-info", JSON.stringify(result)); // store the data in the local storage
     navigate("/home"); // redirect to the homepage
 
-    if (result.error) {
+    if (result.error === "User not verified") {
       localStorage.clear();
-      alert("Invalid Login");
+      navigate("/otp");
+    }
+    if (result.error === "User not found") {
+      localStorage.clear();
+      // alert("Invalid Username or Password");
+      setAlert(false);
       navigate("/login");
     }
-
+    if (result.error === "Password not match") {
+      localStorage.clear();
+      // alert("Invalid Username or Password");
+      setAlert(false);
+      navigate("/login");
+    }
   }
 
   return (
-      <motion.div
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}>
-        <div className="container-fluid ps-md-0">
-          <div className="row g-0">
-            <div className="d-none d-md-flex col-md-4 col-lg-6">
-              <img src={img} alt="login" className="img-fluid bg-image" />
-            </div>
-            <div className="col-md-8 col-lg-6">
-              <div className="login d-flex align-items-center py-5">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-md-9 col-lg-8 mx-auto">
-                      <h2 className="loginheading">Welcome back!</h2>
-                      <br></br>
-                      <form>
-                        <div className="form-floating mb-3">
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="floatingInput"
-                            placeholder="name@example.com"
-                            onChange={(e) => setEmail(e.target.value)} // onChange is used to get the value of the input field
-                          />
-                          <label for="floatingInput">Email address</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="floatingPassword"
-                            placeholder="Password"
-                            onChange={(e) => setPassword(e.target.value)}
-                          />
-                          <label for="floatingPassword">Password</label>
-                        </div>
+      exit={{ opacity: 0 }}
+    >
+      <div className="container-fluid ps-md-0">
+        <div className="row g-0">
+          <div className="d-none d-md-flex col-md-4 col-lg-6">
+            <img src={img} alt="login" className="img-fluid bg-image" />
+          </div>
+          <div className="col-md-8 col-lg-6">
+            <div className="login d-flex align-items-center py-5">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-9 col-lg-8 mx-auto">
+                    <h2 className="loginheading">Welcome back!</h2>
+                    <br></br>
+                    <form>
+                      <div className="form-floating mb-3">
+                        <input
+                          className="form-control"
+                          id="floatingInput"
+                          placeholder="username"
+                          onChange={(e) => setEmail(e.target.value)} // onChange is used to get the value of the input field
+                        />
+                        <label for="floatingInput">Username</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <input
+                          type="password"
+                          className="form-control"
+                          id="floatingPassword"
+                          placeholder="Password"
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <label for="floatingPassword">Password</label>
+                      </div>
 
-                        <div className="form-check mb-3">
+                      {/* <div className="form-check mb-3">
                           <input
                             className="form-check-input"
                             type="checkbox"
@@ -100,32 +110,49 @@ function Login() {
                           >
                             Remember password
                           </label>
-                        </div>
+                        </div> */}
 
-                        <div className="d-grid">
-                          <MDBBtn rounded color="success" onClick={login}>Sign in</MDBBtn>
-                          <br></br>
-                          <div className="text-center">
+                      <div className="d-grid">
+                        <MDBBtn type="button" rounded color="success" onClick={login}>
+                          Sign in
+                        </MDBBtn>
+                        <br></br>
+                        <div className="text-center">
                           <a>OR</a>
-                          </div>
-                          <div>
-                            <a className="small" href="#">
-                              Forgot Password?
-                            </a>
-                            <a className="small" onClick={register} style={{marginLeft:"260px",cursor:"pointer"}}>
-                              Create an Account?
-                            </a>
-                          </div>
                         </div>
-                      </form>
-                    </div>
+                        <div>
+                          {/* <a className="small" href="#">
+                              Forgot Password?
+                            </a> */}
+                          <a
+                            className="small"
+                            onClick={register}
+                            style={{ marginLeft: "190px", cursor: "pointer" }}
+                          >
+                            Create an Account?
+                          </a>
+                        </div>
+                        {alert !== null && alert === false && (
+                          <Alert
+                            variant={"warning"}
+                            closeLabel="Close alert"
+                            closeVariant="black"
+                            dismissible
+                            onClose={() => setAlert(null)}
+                          >
+                            Invalid Credientials! Please try again.
+                          </Alert>
+                        )}
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
+    </motion.div>
   );
 }
 

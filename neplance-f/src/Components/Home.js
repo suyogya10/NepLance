@@ -23,7 +23,7 @@ function Home() {
               style={{ borderRadius: "100px", textAlign: "center", width: "500px" }}
               onClick={() => navigate("/search")}
             >
-              Search for Skills
+              Search for Services
               <MDBIcon fas icon="search" className="ms-2" />
             </MDBBtn>
             <div style={{ color: "#00BF63", minHeight:"20px" }}>  </div>

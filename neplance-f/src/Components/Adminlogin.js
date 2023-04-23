@@ -98,8 +98,9 @@ function Adminlogin() {
               </MDBBtn>
             </div>
           </form>
-
-          {alert !== null && alert === false && (
+        </div>
+        <div>
+        {alert !== null && alert === false && (
             <Alert
               variant={"warning"}
               closeLabel="Close alert"

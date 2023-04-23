@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { MDBBtn } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
-import webdev from "./Assets/webdev.jpg";
 import writing from "./Assets/writing.png";
-import video from "./Assets/video.png";
+import webdev from "./Assets/webdev.jpg";
+import design from "./Assets/designedit.png";
 import { Link, useNavigate } from "react-router-dom";
 
 function HomeCards() {
@@ -65,7 +65,7 @@ function HomeCards() {
             </div>
             <div className="col-12 col-md-4 p-5 mt-3">
               <a style={{cursor:"pointer"}} >
-                <img src={video} className="rounded-circle img-fluid border"  onClick={c} />
+                <img src={design} className="rounded-circle img-fluid border"  onClick={c} />
               </a>
               <h2 className="h5 text-center mt-3 mb-3">Design & Editing</h2>
             </div>
@@ -84,7 +84,7 @@ function HomeCards() {
             </div>
             <div className="row">
               {data
-                .slice(0, 6)
+                .slice(0, 9)
                 .map((item) => (
                   <div
                     key={item.id}

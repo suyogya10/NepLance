@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { MDBIcon } from "mdb-react-ui-kit";
 
 function EducationTraining() {
   const navigate = useNavigate();
@@ -24,7 +25,10 @@ function EducationTraining() {
       exit={{ opacity: 0 }}
     >
       <section class="bg-light">
-        <div class="container">
+        <div class="container py-5">
+        <p style={{ cursor: "pointer" }} onClick={() => navigate("/explore")}>
+          <MDBIcon fas icon="angle-left" /> Back to Explore
+        </p>
           <div class="row py-3">
               <h3>Explore - Education & Training</h3>
           </div>

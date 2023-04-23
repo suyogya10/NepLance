@@ -27,18 +27,25 @@ function UpdateProduct() {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState("");
   const [category, setCategory] = useState("");
+  const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
+
+
 
   const ApiHandler = async () => {
     const result = await fetch(
       "http://localhost:8000/api/getSingleProduct/" + id
     );
     const resp = await result.json();
+    if (resp.userid != userid) {
+      navigate("*");
+    }
     setData(resp);
     setName(resp.name);
     setPrice(resp.price);
     setDescription(resp.description);
     setFile(resp.file_path);
     setCategory(resp.category);
+
   };
 
   useEffect(() => {
@@ -61,7 +68,7 @@ function UpdateProduct() {
   }
 
   function Update() {
-    const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
+    
     let formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
@@ -92,8 +99,12 @@ function UpdateProduct() {
       exit={{ opacity: 0 }}
     >
       <div className="container-fluid ps-md-0">
+      <p style={{ cursor: "pointer", marginTop:"50px", marginLeft:"100px" }} onClick={() => navigate(-1)}>
+              <MDBIcon fas icon="angle-left" /> Back
+            </p>
         <div className="row g-0">
-          <div className="d-none d-md-flex col-md-4 col-lg-6">
+
+          <div className="d-md-flex col-md-4 col-lg-6">
             <img
               src={"http://localhost:8000/" + data.file_path}
               alt="addproduct"
@@ -102,12 +113,12 @@ function UpdateProduct() {
                 width: "600px",
                 height: "500px",
                 marginLeft: "100px",
-                marginTop: "100px",
+                marginTop: "20px",
               }}
             />
           </div>
           <div className="col-md-8 col-lg-6">
-            <div className="login d-flex align-items-center py-5">
+            <div className="d-flex align-items-center">
               <div className="container">
                 <div className="row">
                   <div className="col-md-9 col-lg-8 mx-auto">

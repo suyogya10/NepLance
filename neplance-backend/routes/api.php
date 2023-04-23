@@ -29,7 +29,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route:: post('register', [UserController::class, 'register']); //register route
 Route ::delete('deleteUser/{userid}', [UserController::class, 'deleteUser']); //delete user route
 Route:: put('updateUser/{id}', [UserController::class, 'updateUser']); //update product route
-// Route:: post('login', [UserController::class, 'login']);  //login route
+Route:: post('login', [UserController::class, 'login']);  //login route
+Route:: post('verify/{otp}', [UserController::class, 'verify']); //verify route
+Route:: post('uploadCtzn', [UserController::class, 'uploadCtzn']); //upload ctzn route
+Route:: post('verifyCtzn/{id}', [UserController::class, 'verifyCtzn']); //verify ctzn route
+Route:: post('declineCtzn/{id}', [UserController::class, 'declineCtzn']); //decline ctzn route
+Route:: get('viewCtznReq', [UserController::class, 'viewCtznReq']); //upload ctzn route
 
 Route:: post('addproduct', [ProductController::class, 'addProduct']); //add product route
 Route:: get('getProducts', [ProductController::class, 'getProducts']); //add product route
@@ -51,13 +56,17 @@ Route::post('addchat', [ChatController::class, 'addchat']); //add chat route
 Route::get('getchats/{id}', [ChatController::class, 'getchats']); //get chat route
 
 
+
 Route::post('addOrder', [OrderController::class, 'addOrder']); //add order route
 Route::get('getOrders/{id}', [OrderController::class, 'getOrders']); //get order route
 Route::get('getRecievedOrders/{sid}', [OrderController::class, 'getRecievedOrders']); //get order route
+Route::put('sellerUpdateOrder/{oid}', [OrderController::class, 'sellerUpdateOrder']); //update order route
 
 
-Route::post('login', [AuthController::class, 'login']);
+// Route::post('login', [AuthController::class, 'login']);
 Route::post('Adminlogin', [AdminController::class, 'Adminlogin']);
+
+
 
 
 Route::group(['middleware' => 'auth:api'], function(){

@@ -34,6 +34,9 @@ import ViewServices from "./ViewServices";
 import AdminUpdateProduct from "./AdminUpdateProduct";
 import AdminProtected from "./AdminProtected";
 import Adminhome from "./AdminHome";
+import OTP from "./OTP";
+import ViewProfile from "./ViewProfile";
+import ViewRequests from "./ViewRequests";
 
 
 function AnimatedRoutes() {
@@ -43,7 +46,7 @@ function AnimatedRoutes() {
     <div>
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
-          {/* <Route path="*" element={<Errorpage />} /> */}
+          
   
           
 
@@ -52,10 +55,11 @@ function AnimatedRoutes() {
             <Route path="/" element={<Landing />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/otp" element={<OTP/>} />
             <Route path="/register" element={<Register />} />
             <Route path="/user" element={<Protected Cmp={UserProfile} />} />
             <Route path="/updateuser/:id" element={<UpdateUser />} />
-
+            <Route path="/viewprofile/:id" element={<ViewProfile />} />
             <Route path="/search" element={<SearchComponent />} />
             <Route path="/product/:id" element={<Product />} />
             <Route path="/checkout/:id" element={<Checkout />} />
@@ -85,6 +89,7 @@ function AnimatedRoutes() {
             <Route path="/viewusers" element={<AdminProtected Cmp={ViewUsers}/>} />
             <Route path="/viewreviews" element={<AdminProtected Cmp={ViewReviews}/>} />
             <Route path="/viewservices" element={<AdminProtected Cmp={ViewServices}/>} />
+            <Route path="/viewrequests" element={<AdminProtected Cmp={ViewRequests}/>} />
             <Route path="/adminupdateproduct/:id" element={<AdminProtected Cmp={AdminUpdateProduct}/>} />
           </Route>
 

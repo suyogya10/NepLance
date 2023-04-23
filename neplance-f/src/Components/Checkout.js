@@ -13,18 +13,18 @@ import {
   MDBTableHead,
 } from "mdb-react-ui-kit";
 import { useParams } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import KhaltiCheckout from "khalti-checkout-web";
 import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
-
   const navigate = useNavigate();
-  const {id}=useParams();
+  const { id } = useParams();
   const qnt = 1;
-  const[product, setProduct] = useState([]);
-  const[userData, setuserData] = useState([]);
-  const[clientMessage, setClientMessage] = useState("");
+  const [product, setProduct] = useState([]);
+  const [userData, setuserData] = useState([]);
+  const [clientMessage, setClientMessage] = useState("");
+  const [file_client, setFile] = useState("");
 
   const ApiHandler = async () => {
     const result = await fetch(
@@ -50,67 +50,69 @@ export default function Checkout() {
     ApiHandler1();
   }, [product]);
 
-
   let config = {
     // replace this key with yours
-    "publicKey": "test_public_key_71749511005c44e6b247ce9662b5e0c3",
-    "productIdentity": "1234567890",
-    "productName": "Drogon",
-    "productUrl": "http://gameofthrones.com/buy/Dragons",
-    "eventHandler": {
-        onSuccess (payload) {
-            // hit merchant api for initiating verfication
-            console.log(payload);
-            const seller_id = product.userid;
-            const client_id = JSON.parse(localStorage.getItem("user-info")).user.id;
-            let formData = new FormData();
-            formData.append("seller_id", seller_id);
-            formData.append("client_id", client_id);
-            formData.append("product_id", product.id);
-            formData.append("quantity", 1);
-            formData.append("price", product.price);
-            formData.append("comments", clientMessage);
-            formData.append("product_name", product.name);
-            // formData.append("payment_id", payload.paymentID);
-            formData.append("token", payload.token);
-            formData.append("status", "success");
+    publicKey: "test_public_key_71749511005c44e6b247ce9662b5e0c3",
+    productIdentity: "1234567890",
+    productName: "Drogon",
+    productUrl: "http://gameofthrones.com/buy/Dragons",
+    eventHandler: {
+      onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        console.log(payload);
+        const seller_id = product.userid;
+        const client_id = JSON.parse(localStorage.getItem("user-info")).user.id;
+        let formData = new FormData();
+        formData.append("seller_id", seller_id);
+        formData.append("client_id", client_id);
+        formData.append("product_id", product.id);
+        formData.append("quantity", 1);
+        formData.append("price", product.price);
+        formData.append("comments", clientMessage);
+        formData.append("product_name", product.name);
+        // formData.append("payment_id", payload.paymentID);
+        formData.append("token", payload.token);
+        formData.append("status", "success");
+        formData.append("file_client", file_client);
 
-            fetch("http://localhost:8000/api/addOrder", {
-                method: "POST",
-                body: formData,
-              }).then((result) => {
-                result.json().then((resp) => {
-                  console.warn(resp);
-                });
-              });
-              navigate("/user");
-              
-            
-        },
-        // onError handler is optional
-        onError (error) {
-            // handle errors
-            console.log(error);
-            alert("Payment Failed");
-        },
-        onClose () {
-            console.log('widget is closing');
-        }
+        fetch("http://localhost:8000/api/addOrder", {
+          method: "POST",
+          body: formData,
+        }).then((result) => {
+          result.json().then((resp) => {
+            console.warn(resp);
+          });
+        });
+        navigate("/user");
+      },
+      // onError handler is optional
+      onError(error) {
+        // handle errors
+        console.log(error);
+        alert("Payment Failed");
+      },
+      onClose() {
+        console.log("widget is closing");
+      },
     },
-    "paymentPreference": ["KHALTI", "EBANKING","MOBILE_BANKING", "CONNECT_IPS", "SCT"],
-};
-let checkout = new KhaltiCheckout(config);
-function pay () {
+    paymentPreference: [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+    ],
+  };
+  let checkout = new KhaltiCheckout(config);
+  function pay() {
     // minimum transaction amount must be 10, i.e 1000 in paisa.
-    checkout.show({amount: 1000});
-    
-}
+    checkout.show({ amount: 1000 });
+  }
 
   return (
     <section className="h-100 h-custom">
-      <MDBCard style={{marginTop:"2px"}}>
-      <MDBContainer className="py-5 h-100">
-        
+      <MDBCard style={{ marginTop: "2px" }}>
+        <MDBContainer className="py-5 h-100">
           <MDBRow className="justify-content-center align-items-center h-100">
             <MDBCol>
               <MDBTable responsive>
@@ -141,9 +143,19 @@ function pay () {
                       </div>
                     </th>
                     <td className="align-middle">
-                      <textarea type="text" defaultValue={"Write some instructions"} className="form-control" onChange={(e) => {
-                        setClientMessage(e.target.value);
-                      }}/>
+                      <textarea
+                        type="text"
+                        defaultValue={"Write some instructions"}
+                        className="form-control"
+                        onChange={(e) => {
+                          setClientMessage(e.target.value);
+                        }}
+                      />
+                      <input
+                        type="file"
+                        className="form-control"
+                        onChange={(e) => setFile(e.target.files[0])}
+                      />
                     </td>
                     <td className="align-middle">
                       <div class="d-flex flex-row align-items-center">
@@ -169,10 +181,10 @@ function pay () {
               className="shadow-2-strong mb-5 mb-lg-0"
               style={{ borderRadius: "20px" }}
             >
-              <MDBCardBody className="p-4" >
+              <MDBCardBody className="p-4">
                 <MDBRow>
                   <MDBCol md="8" lg="6" xl="9" className="mb-4 mb-md-0">
-                    <form >
+                    <form>
                       <div className="d-flex flex-row pb-3">
                         <div className="d-flex align-items-center pe-2">
                           <MDBRadio
@@ -205,7 +217,14 @@ function pay () {
                       <p className="mb-2">Rs. {product.price}</p>
                     </div>
                     <hr className="my-4" />
-                    <MDBBtn block size="lg" rounded id="payment-button" onClick={pay} style={{backgroundColor:"#5C2D91"}}>
+                    <MDBBtn
+                      block
+                      size="lg"
+                      rounded
+                      id="payment-button"
+                      onClick={pay}
+                      style={{ backgroundColor: "#5C2D91" }}
+                    >
                       <div className="d-flex justify-content-between">
                         <span>Pay With Khalti</span>
                         <span>Rs. {product.price}</span>
@@ -216,8 +235,7 @@ function pay () {
               </MDBCardBody>
             </MDBCard>
           </MDBRow>
-        
-      </MDBContainer>
+        </MDBContainer>
       </MDBCard>
     </section>
   );

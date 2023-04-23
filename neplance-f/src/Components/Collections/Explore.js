@@ -2,8 +2,14 @@ import React from "react";
 import webdev from "../Assets/webdev.jpg";
 import writing from "../Assets/writing.png";
 import video from "../Assets/video.png";
+import customerservice from "../Assets/customerservice.png";
+import designedit from "../Assets/designedit.png";
+import education from "../Assets/education.png";
+import hr from "../Assets/hr.png";
+import med from "../Assets/med.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { MDBIcon } from "mdb-react-ui-kit";
 
 function Explore() {
   const navigate = useNavigate();
@@ -51,6 +57,9 @@ function Explore() {
       exit={{ opacity: 0 }}
     >
       <section className="container py-5">
+        <p style={{ cursor: "pointer" }} onClick={() => navigate("/home")}>
+          <MDBIcon fas icon="angle-left" /> Back to Home
+        </p>
         <div className="row text-center pt-3">
           <div className="col-lg-6 m-auto">
             <h1 className="h1">Explore Categories</h1>
@@ -97,7 +106,7 @@ function Explore() {
 
           <div className="col-12 col-md-3 p-5 mt-3">
             <img
-              src={video}
+              src={customerservice}
               className="rounded-circle img-fluid border"
               style={{ cursor: "pointer" }}
               onClick={d}
@@ -108,7 +117,7 @@ function Explore() {
 
           <div className="col-12 col-md-3 p-5 mt-3">
             <img
-              src={video}
+              src={designedit}
               className="rounded-circle img-fluid border"
               style={{ cursor: "pointer" }}
               onClick={e}
@@ -119,7 +128,7 @@ function Explore() {
 
           <div className="col-12 col-md-3 p-5 mt-3">
             <img
-              src={video}
+              src={education}
               className="rounded-circle img-fluid border"
               style={{ cursor: "pointer" }}
               onClick={f}
@@ -130,7 +139,7 @@ function Explore() {
 
           <div className="col-12 col-md-3 p-5 mt-3">
             <img
-              src={video}
+              src={hr}
               className="rounded-circle img-fluid border"
               style={{ cursor: "pointer" }}
               onClick={g}
@@ -141,7 +150,7 @@ function Explore() {
 
           <div className="col-12 col-md-3 p-5 mt-3">
             <img
-              src={video}
+              src={med}
               className="rounded-circle img-fluid border"
               style={{ cursor: "pointer" }}
               onClick={h}

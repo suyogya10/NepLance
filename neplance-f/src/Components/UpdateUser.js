@@ -9,6 +9,7 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBIcon,
+  MDBInput
 } from "mdb-react-ui-kit";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +27,7 @@ function UpdateUser() {
   const [data, setData] = useState([]);
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState("");
+  const [bio, setBio] = useState("");
   const [file, setFile] = useState("");
 
   const ApiHandler = async () => {
@@ -36,6 +38,7 @@ function UpdateUser() {
     setData(resp);
     setName(resp.name);
     setDesignation(resp.designation);
+    setBio(resp.bio);
     setFile(resp.file_path);
   };
 
@@ -63,6 +66,7 @@ function UpdateUser() {
     formData.append("name", name);
     formData.append("designation", designation);
     formData.append("file_path", file);
+    formData.append("bio", bio);
     formData.append("userid", id);
     fetch(
       "http://localhost:8000/api/updateUser/" + id + "?_method=PUT",
@@ -86,8 +90,8 @@ function UpdateUser() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="container-fluid ps-md-0">
-        <div className="row g-0">
+      <div className="container">
+        <div className="row">
           <div className="d-none d-md-flex col-md-4 col-lg-6">
             
             <img
@@ -95,7 +99,7 @@ function UpdateUser() {
               alt="addproduct"
               className="img-fluid"
               style={{
-                width: "500px",
+                width: "400px",
                 height: "400px",
                 marginLeft: "100px",
                 marginTop: "100px",
@@ -106,26 +110,40 @@ function UpdateUser() {
             <div className="login d-flex align-items-center py-5">
               <div className="container">
                 <div className="row">
-                  <div className="col-md-9 col-lg-8 mx-auto">
-                    <h3 className="login-heading mb-4">Update Profile</h3>
+                  <div>
+                    
                     <form id="addprod">
+                    <h3 className="login-heading mb-4">Update Profile</h3>
                       <div className="mb-3">
-                        <input
+                        <MDBInput
                           type="text"
                           className="form-control"
                           id="floatingInput"
+                          label="Name"
                           placeholder={data.name}
                           onChange={(e) => setName(e.target.value)}
                         />
                         <br></br>
 
                         <div className="mb-3">
-                          <input
+                          <MDBInput
                             type="text"
                             className="form-control"
                             id="floatingInput"
+                            label="Designation"
                             placeholder={data.designation}
                             onChange={(e) => setDesignation(e.target.value)}
+                          />
+                          <br></br>
+
+                          <div className="mb-3">
+                          <MDBInput
+                            type="text"
+                            className="form-control"
+                            id="floatingInput"
+                            label="Bio"
+                            placeholder={data.bio}
+                            onChange={(e) => setBio(e.target.value)}
                           />
                           <br></br>
 
@@ -161,6 +179,7 @@ function UpdateUser() {
                             </div>
                           
                         </div>
+                        </div>
                       </div>
                     </form>
                     <MDBModal
@@ -171,7 +190,7 @@ function UpdateUser() {
                       <MDBModalDialog>
                         <MDBModalContent>
                           <MDBModalHeader>
-                            <MDBModalTitle>Update Service?</MDBModalTitle>
+                            <MDBModalTitle>Update Profile?</MDBModalTitle>
                             <MDBBtn
                               className="btn-close"
                               color="none"
@@ -180,7 +199,7 @@ function UpdateUser() {
                             ></MDBBtn>
                           </MDBModalHeader>
                           <MDBModalBody>
-                            Are you sure you want to update this service ?
+                            Are you sure you want to update this profile ?
                           </MDBModalBody>
 
                           <MDBModalFooter>
@@ -196,7 +215,7 @@ function UpdateUser() {
                               type="submit"
                               onClick={Update}
                             >
-                              Update Service
+                              Update Profile
                             </MDBBtn>
                           </MDBModalFooter>
                         </MDBModalContent>
@@ -211,7 +230,7 @@ function UpdateUser() {
                       <MDBModalDialog>
                         <MDBModalContent>
                           <MDBModalHeader>
-                            <MDBModalTitle>Delete Service?</MDBModalTitle>
+                            <MDBModalTitle>Delete Profile?</MDBModalTitle>
                             <MDBBtn
                               className="btn-close"
                               color="none"
@@ -220,7 +239,7 @@ function UpdateUser() {
                             ></MDBBtn>
                           </MDBModalHeader>
                           <MDBModalBody>
-                            Are you sure you want to delete this service ?
+                            Are you sure you want to delete this Profile ?
                           </MDBModalBody>
 
                           <MDBModalFooter>
@@ -236,7 +255,7 @@ function UpdateUser() {
                               type="submit"
                               onClick={deleteUser}
                             >
-                              Delete Service
+                              Delete Profile
                             </MDBBtn>
                           </MDBModalFooter>
                         </MDBModalContent>

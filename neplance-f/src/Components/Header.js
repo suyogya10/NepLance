@@ -56,7 +56,7 @@ function Header() {
                   </Link>
                   <Nav className="d-flex gap-2">
                     <MDBBtn rounded color="success" onClick={login}>
-                      Sign In
+                      Join
                     </MDBBtn>
                   </Nav>
                 </>
