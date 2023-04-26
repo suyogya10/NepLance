@@ -13,11 +13,12 @@ import {
 import { useState } from "react";
 import Errorpage from "./Errorpage";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Test() {
+function BecomeSeller() {
 
-    const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
-    const [data, setData] = useState([]);
+  const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
+  const [data, setData] = useState([]);
   const ApiHandler = async () => {
     let result = await fetch("http://localhost:8000/api/getUser/" + userid);
     result = await result.json();
@@ -32,8 +33,6 @@ function Test() {
     window.location.href = "*";
     <Errorpage />;
   }
-
-  
 
   const [designation, setDesignation] = useState("");
   const [bio, setBio] = useState("");
@@ -329,4 +328,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default BecomeSeller;

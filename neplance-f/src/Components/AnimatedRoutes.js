@@ -37,6 +37,8 @@ import Adminhome from "./AdminHome";
 import OTP from "./OTP";
 import ViewProfile from "./ViewProfile";
 import ViewRequests from "./ViewRequests";
+import Test from "./Test";
+import BecomeSeller from "./BecomeSeller";
 
 
 function AnimatedRoutes() {
@@ -52,6 +54,7 @@ function AnimatedRoutes() {
 
         <Route element={<Headers/>}>
             <Route path="*" element={<Errorpage />} />
+            <Route path="/test" element={<Test />} />
             <Route path="/" element={<Landing />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -68,6 +71,7 @@ function AnimatedRoutes() {
               path="/updateproduct/:id"
               element={<Protected Cmp={UpdateProduct} />}
             />
+            <Route path="/becomeseller" element={<Protected Cmp={BecomeSeller} />} />
 
             <Route path="/explore" element={<Explore />} />
             <Route path="/accounting-finance" element={<AccountingFinance />} />
@@ -79,6 +83,7 @@ function AnimatedRoutes() {
             <Route path="/hr-recruit" element={<HrRecruit />} />
             <Route path="/medical-health" element={<MeidcalHealth />} />
             <Route path="/writing" element={<Writing />} />
+
 
             <Route path="/chat/:to_userid" element={<Chat />} />
             </Route>

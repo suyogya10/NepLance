@@ -20,7 +20,7 @@ import {
   MDBModalFooter,
   MDBTable,
   MDBTableBody,
-  MDBTableHead
+  MDBTableHead,
 } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
@@ -53,7 +53,7 @@ export default function ViewProfile() {
   const userproduct = productdata.filter((item) => item.userid == userid);
 
   const navigate = useNavigate();
-  const[basicModal2,setBasicModal2] = useState(false);
+  const [basicModal2, setBasicModal2] = useState(false);
   const toggleShow2 = () => setBasicModal2(!basicModal2);
 
   return (
@@ -85,13 +85,16 @@ export default function ViewProfile() {
                   />
                 </div>
                 <div className="ms-3" style={{ marginTop: "130px" }}>
-                <MDBTypography tag="h3">
+                  <MDBTypography tag="h3">
                     {data.name}{" "}
-
                     {data.ctzn_verified === "yes" ? (
-                      <MDBIcon color="light" icon="check-circle" onClick={toggleShow2} style={{cursor:"pointer"}}/>
-                    ) : null}                
-                    {" "}
+                      <MDBIcon
+                        color="light"
+                        icon="check-circle"
+                        onClick={toggleShow2}
+                        style={{ cursor: "pointer" }}
+                      />
+                    ) : null}{" "}
                   </MDBTypography>
                   <MDBTypography tag="h5">{data.designation}</MDBTypography>
                 </div>
@@ -101,29 +104,34 @@ export default function ViewProfile() {
                 style={{ backgroundColor: "#f8f9fa" }}
               >
                 <div className="d-flex justify-content-end text-center py-1 gap-4">
-                  <div>
-                    <MDBBtn
-                      rounded
-                      outline
-                      color="success"
-                      style={{ height: "36px", overflow: "visible" }}
-                    >
-                      <MDBIcon fas icon="envelope" className="me-2" />
-                      Chat
-                    </MDBBtn>
-                  </div>
-                  <div>
-                    <MDBCardText className="mb-1 h5">253</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">
-                      Servies
-                    </MDBCardText>
-                  </div>
-                  <div>
-                    <MDBCardText className="mb-1 h5">478</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">
-                      Rating
-                    </MDBCardText>
-                  </div>
+                  {data.registered_as === "seller" ? (
+                    <>
+                      <div>
+                        <MDBBtn
+                          rounded
+                          outline
+                          color="success"
+                          style={{ height: "36px", overflow: "visible" }}
+                        >
+                          <MDBIcon fas icon="envelope" className="me-2" />
+                          Chat
+                        </MDBBtn>
+                      </div>
+
+                      <div>
+                        <MDBCardText className="mb-1 h5">3</MDBCardText>
+                        <MDBCardText className="small text-muted mb-0">
+                          Servies
+                        </MDBCardText>
+                      </div>
+                      <div>
+                        <MDBCardText className="mb-1 h5">4.5</MDBCardText>
+                        <MDBCardText className="small text-muted mb-0">
+                          Rating
+                        </MDBCardText>
+                      </div>
+                    </>
+                  ) : null}
                 </div>
               </div>
               <MDBCardBody className="text-black p-4">
@@ -177,20 +185,24 @@ export default function ViewProfile() {
         </MDBRow>
       </MDBContainer>
       <MDBModal show={basicModal2} setShow={setBasicModal2} tabIndex="-1">
-      <MDBModalDialog>
+        <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
               <MDBModalTitle>
-                <MDBIcon icon='check-circle' className='me-2' color="success" />
+                <MDBIcon icon="check-circle" className="me-2" color="success" />
                 Verified User
-                </MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleShow2}></MDBBtn>
+              </MDBModalTitle>
+              <MDBBtn
+                className="btn-close"
+                color="none"
+                onClick={toggleShow2}
+              ></MDBBtn>
             </MDBModalHeader>
-            <MDBModalBody>This user's citizenship has been verified by the admin.</MDBModalBody>
-            <MDBModalBody>You can verify your profile by clicking the "Get Verified" button.</MDBModalBody>
-
+            <MDBModalBody>
+              This user's citizenship has been verified by the admin.
+            </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={toggleShow2}>
+              <MDBBtn color="secondary" onClick={toggleShow2}>
                 Close
               </MDBBtn>
             </MDBModalFooter>

@@ -99,6 +99,22 @@ export default function ViewRequests() {
                     window.open("http://localhost:8000/" + item.ctznship);
                   }}
                 />
+                <MDBIcon
+                  style={{ cursor: "pointer" }}
+                  fas
+                  icon="file"
+                  onClick={() => {
+                    window.open("http://localhost:8000/" + item.cv);
+                  }}
+                />
+                <MDBIcon
+                  style={{ cursor: "pointer" }}
+                  fas
+                  icon="file"
+                  onClick={() => {
+                    window.open("http://localhost:8000/" + item.proof_degree);
+                  }}
+                />
               </td>
               <td>
                 <MDBBtn

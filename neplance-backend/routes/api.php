@@ -31,10 +31,10 @@ Route ::delete('deleteUser/{userid}', [UserController::class, 'deleteUser']); //
 Route:: put('updateUser/{id}', [UserController::class, 'updateUser']); //update product route
 Route:: post('login', [UserController::class, 'login']);  //login route
 Route:: post('verify/{otp}', [UserController::class, 'verify']); //verify route
-Route:: post('uploadCtzn', [UserController::class, 'uploadCtzn']); //upload ctzn route
 Route:: post('verifyCtzn/{id}', [UserController::class, 'verifyCtzn']); //verify ctzn route
 Route:: post('declineCtzn/{id}', [UserController::class, 'declineCtzn']); //decline ctzn route
 Route:: get('viewCtznReq', [UserController::class, 'viewCtznReq']); //upload ctzn route
+Route:: put('becomeSeller/{id}', [UserController::class, 'becomeSeller']); //become seller route
 
 Route:: post('addproduct', [ProductController::class, 'addProduct']); //add product route
 Route:: get('getProducts', [ProductController::class, 'getProducts']); //add product route

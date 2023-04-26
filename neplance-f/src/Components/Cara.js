@@ -10,7 +10,7 @@ function Cara() {
   const navigate = useNavigate();
 
   function post () {
-    navigate("/addproduct");
+    navigate("/user");
   }
 
   function getStarted() {
@@ -36,7 +36,7 @@ function Cara() {
               rippleColor="dark"
               onClick={post}
             >
-              Post Now
+              Visit Profile
             </MDBBtn>
           </MDBCarouselItem>
         ) : (

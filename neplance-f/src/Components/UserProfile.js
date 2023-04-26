@@ -31,16 +31,13 @@ import UserReviews from "./UserReviews";
 import { Alert } from "react-bootstrap";
 
 export default function UserProfile() {
-  const [basicModal, setBasicModal] = useState(false);
-  const toggleShow = () => setBasicModal(!basicModal);
 
   const [basicModal2, setBasicModal2] = useState(false);
   const toggleShow2 = () => setBasicModal2(!basicModal2);
 
-
   const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
   const [data, setData] = useState([]);
-  const [file, setFile] = useState("");
+
 
   const ApiHandler = async () => {
     let result = await fetch("http://localhost:8000/api/getUser/" + userid);
@@ -63,22 +60,6 @@ export default function UserProfile() {
     window.location.reload(false);
   }
 
-  function uploadCitizenship() {
-    let formdata = new FormData();
-    formdata.append("ctzn", file);
-    formdata.append("id", userid);
-    fetch("http://localhost:8000/api/uploadCtzn", {
-      method: "POST",
-      body: formdata,
-    })
-      .then((response) => response.json())
-
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    toggleShow();
-  }
-
   function closeAlert() {
     document.getElementById("messagealert").style.display = "none";
   }
@@ -94,16 +75,15 @@ export default function UserProfile() {
           <MDBCol>
             {data.admin_message ? (
               <Alert
-              variant={"warning"}
-              closeLabel="Close alert"
-              closeVariant="black"
-              id="messagealert"
-              dismissible
-              onClose={closeAlert}
-            >
-              {data.admin_message}
+                variant={"warning"}
+                closeLabel="Close alert"
+                closeVariant="black"
+                id="messagealert"
+                dismissible
+                onClose={closeAlert}
+              >
+                {data.admin_message}
               </Alert>
-
             ) : null}
             <MDBCard>
               <div className="d-flex justify-content-end text-center py-1 gap-4">
@@ -133,7 +113,7 @@ export default function UserProfile() {
                     src={"http://localhost:8000/" + data.file_path}
                     alt="Profile Picture"
                     className="mt-4 mb-2 img-thumbnail rounded-circle img-fluid"
-                    style={{ width: "180px", zIndex: "1", maxHeight: "190px" }}
+                    style={{ width: "180px", zIndex: "1", maxHeight: "190px", height: "190px" }}
                   />
                   <MDBBtn
                     onClick={() => {
@@ -167,45 +147,50 @@ export default function UserProfile() {
               >
                 <div className="d-flex justify-content-end text-center py-1 gap-4">
                   <div>
-                    <MDBBtn
-                      onClick={AddProduct}
-                      rounded
-                      outline
-                      color="success"
-                      style={{ height: "36px", overflow: "visible" }}
-                    >
-                      <MDBIcon fas icon="plus" className="me-2" />
-                      Add Service
-                    </MDBBtn>
-
-                    {data.ctzn_verified === "no" ? (
+                    {data.registered_as === "seller" && data.requested === "no" ? (
                       <MDBBtn
-                        onClick={toggleShow}
+                        onClick={AddProduct}
                         rounded
                         outline
-                        color="primary"
-                        style={{
-                          marginLeft: "10px",
-                          height: "36px",
-                          overflow: "visible",
-                        }}
+                        color="success"
+                        style={{ height: "36px", overflow: "visible" }}
                       >
-                        Get Verified
+                        <MDBIcon fas icon="plus" className="me-2" />
+                        Add Service
                       </MDBBtn>
-                    ) : null}
+                    ) : (
+                      <MDBBtn
+                        rounded
+                        outline
+                        color="success"
+                        style={{ height: "36px", overflow: "visible" }}
+                        onClick={() => {
+                          navigate("/becomeseller");
+                        }
+                        }
+                      >
+                        <MDBIcon fas icon="plus" className="me-2" />
+                        Become a Seller
+                      </MDBBtn>
+                    )}
                   </div>
-                  <div>
-                    <MDBCardText className="mb-1 h5">3</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">
-                      Servies
-                    </MDBCardText>
-                  </div>
-                  <div>
-                    <MDBCardText className="mb-1 h5">4.5</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">
-                      Rating
-                    </MDBCardText>
-                  </div>
+
+                  {data.registered_as === "seller" ? (
+                    <>
+                      <div>
+                        <MDBCardText className="mb-1 h5">3</MDBCardText>
+                        <MDBCardText className="small text-muted mb-0">
+                          Servies
+                        </MDBCardText>
+                      </div>
+                      <div>
+                        <MDBCardText className="mb-1 h5">4.5</MDBCardText>
+                        <MDBCardText className="small text-muted mb-0">
+                          Rating
+                        </MDBCardText>
+                      </div>
+                    </>
+                  ) : null}
                 </div>
               </div>
               <MDBCardBody className="text-black p-4">
@@ -226,63 +211,44 @@ export default function UserProfile() {
       <MDBContainer style={{ marginTop: "5px" }}>
         <MDBRow className="justify-content-left">
           <MDBCol>
-            <Tabs
-              id="controlled-tab-example"
-              activeKey={key}
-              onSelect={(k) => setKey(k)}
-              className="mb-3"
-            >
-              <Tab eventKey="orders" title="Ordered Services">
-                <UserOrders />
-              </Tab>
-              <Tab eventKey="listings" title="Your Services">
-                <UserListings />
-              </Tab>
-              <Tab eventKey="recieved" title="Recieved Orders">
-                <UserRecievedOrders />
-              </Tab>
-              <Tab eventKey="reviews" title="Your Reviews">
-                <UserReviews />
-              </Tab>
-            </Tabs>
+            {data.registered_as === "seller" ? (
+              <Tabs
+                id="controlled-tab-example"
+                activeKey={key}
+                onSelect={(k) => setKey(k)}
+                className="mb-3"
+              >
+                <Tab eventKey="orders" title="Ordered Services">
+                  <UserOrders />
+                </Tab>
+                <Tab eventKey="listings" title="Your Services">
+                  <UserListings />
+                </Tab>
+                <Tab eventKey="recieved" title="Recieved Orders">
+                  <UserRecievedOrders />
+                </Tab>
+                <Tab eventKey="reviews" title="Your Reviews">
+                  <UserReviews />
+                </Tab>
+              </Tabs>
+            ) : (
+              <Tabs
+                id="controlled-tab-example"
+                activeKey={key}
+                onSelect={(k) => setKey(k)}
+                className="mb-3"
+              >
+                <Tab eventKey="orders" title="Ordered Services">
+                  <UserOrders />
+                </Tab>
+                <Tab eventKey="reviews" title="Your Reviews">
+                  <UserReviews />
+                </Tab>
+              </Tabs>
+            )}
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-
-      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-        <MDBModalDialog>
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Upload your Citizenship</MDBModalTitle>
-              <MDBBtn
-                className="btn-close"
-                color="none"
-                onClick={toggleShow}
-              ></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
-              <input
-                className="form-control"
-                type="file"
-                id="formFileMultiple"
-                multiple
-                onChange={(e) => {
-                  setFile(e.target.files[0]);
-                }}
-              ></input>
-            </MDBModalBody>
-
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={toggleShow}>
-                Cancel
-              </MDBBtn>
-              <MDBBtn onClick={uploadCitizenship} color="success">
-                Request Verification
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
 
       <MDBModal show={basicModal2} setShow={setBasicModal2} tabIndex="-1">
         <MDBModalDialog>
@@ -299,10 +265,7 @@ export default function UserProfile() {
               ></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
-              This user's citizenship has been verified by the admin.
-            </MDBModalBody>
-            <MDBModalBody>
-              You can verify your profile by clicking the "Get Verified" button.
+              This user's details have been verified by the admin.
             </MDBModalBody>
 
             <MDBModalFooter>

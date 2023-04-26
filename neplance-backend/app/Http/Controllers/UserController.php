@@ -38,6 +38,7 @@ class UserController extends Controller
         // $user->file_path = $req->file("file")-> store("users"); //getting the image from the request
         $user->number = $req->input("phone"); //getting the phone number from the request
         $user->otp = $otpCode; //getting the otp from the request
+        $user->registered_as = "client";
         //dd($user->otp);
         $user->save(); 
 
@@ -125,6 +126,25 @@ class UserController extends Controller
         return $user; //returning the product
     }
 
+    function becomeSeller($id,Request $req)
+    {
+        $user = User::find($req->id); //finding the user with the id
+        $user->designation = $req->designation; //getting the designation from the request
+        $user->bio = $req->bio; //getting bio from request
+        $user->contact_email = $req->contact_email; //getting contact email from request
+        $user->cv = $req->file("cv")-> store("users"); //getting the image from the request  
+        $user->file_path = $req->file("file_path")-> store("users"); //getting the image from the request
+        $user->occupation = $req->occupation; //getting occupation from request
+        $user->occupation_since = $req->occupation_since; //getting occupation since from request
+        $user->degree = $req->degree; //getting degree from request
+        $user->graduation_date = $req->graduation_date; //getting graduation date from request
+        $user->proof_degree = $req->file("proof")-> store("users"); //getting the image from the request
+        $user->ctznship = $req->file("ctzn")-> store("users"); //getting the image from the request
+        $user->requested= "yes";  
+        $user->save(); //saving the product to the database
+        return $user; //returning the product
+    }
+
     function getUserAll()
     {
         return User::all(); //returning all the users in the database
@@ -147,18 +167,13 @@ class UserController extends Controller
         }
     }
 
-    function uploadCtzn(Request $req)
-    {
-        $user = User::find($req->id); //finding the user with the id
-        $user->ctznship = $req->file("ctzn")-> store("ctznship"); //getting the image from the request
-        $user->save(); //saving to the database
-        return $user; //returning the user
-    }
 
     function verifyCtzn($id, Request $req)
     {
         $user = User::find($req->id); //finding the user with the id
         $user->ctzn_verified = 'yes';
+        $user->registered_as = 'seller';
+        $user->requested = 'no';
         $user->admin_message = null;
         $user->save(); //saving to the database
         return $user; //returning the user
@@ -170,14 +185,17 @@ class UserController extends Controller
         $user->ctzn_verified = 'no';
         $user->admin_message = $req->admin_message;
         $user->ctznship = '';
+        $user->requested = 'no';
+        $user->registered_as = 'client';
         $user->save(); //saving to the database
         return $user; //returning the user
     }
 
     function viewCtznReq()
     {
-        return User::where('ctzn_verified', 'no')
-        ->where('ctznship', '!=', '')
+        return User::where('requested', 'yes')
+        // ->where('ctznship', '!=', '')
+        // ->where('requested', 'yes')
                     ->get(); //returning all the users in the database
     }
 
