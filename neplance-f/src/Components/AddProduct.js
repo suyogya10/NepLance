@@ -11,8 +11,25 @@ import {
   MDBModalFooter,
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function AddProduct() {
+  const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
+  const [data, setData] = useState([]);
+  const ApiHandler = async () => {
+    let result = await fetch("http://localhost:8000/api/getUser/" + userid);
+    result = await result.json();
+    setData(result);
+  };
+  useEffect(() => {
+    ApiHandler();
+  }, []);
+
+  if (data.registered_as == "client") {
+    window.location.display = "none";
+    window.location.href = "becomeseller";
+    // <Errorpage />;
+  }
 
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
