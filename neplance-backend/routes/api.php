@@ -9,6 +9,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,23 +36,29 @@ Route:: post('verifyCtzn/{id}', [UserController::class, 'verifyCtzn']); //verify
 Route:: post('declineCtzn/{id}', [UserController::class, 'declineCtzn']); //decline ctzn route
 Route:: get('viewCtznReq', [UserController::class, 'viewCtznReq']); //upload ctzn route
 Route:: put('becomeSeller/{id}', [UserController::class, 'becomeSeller']); //become seller route
+Route:: get('getUser/{userid}', [UserController::class, 'getUser']); //get single user
+Route:: get('getUserAll', [UserController::class, 'getUserAll']); //get all user
+Route:: put('putKeywords/{UserId}', [UserController::class, 'putKeywords']); //put keywords
+Route:: get('getRecommended/{userId}', [UserController::class, 'getRecommended']); //get recommended user
+
 
 Route:: post('addproduct', [ProductController::class, 'addProduct']); //add product route
 Route:: get('getProducts', [ProductController::class, 'getProducts']); //add product route
 Route:: delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct']); //delete product route
 Route:: put('updateProduct/{id}', [ProductController::class, 'updateProduct']); //update product route
 Route:: get('getSingleProduct/{id}', [ProductController::class, 'getSingleProduct']); //get single product route
-Route:: get('getUser/{userid}', [UserController::class, 'getUser']); //get single user
-Route:: get('getUserAll', [UserController::class, 'getUserAll']); //get all user
+Route::get('search/{key}', [ProductController::class, 'search']); //search route
+
 
 
 Route:: post('reviewProduct', [ReviewController::class, 'reviewProduct']); //review product route
 Route:: get('getReviews/{id}', [ReviewController::class, 'getReviews']); //get reviews route
 Route:: get('getReviewsAll', [ReviewController::class, 'getReviewsAll']); //get all reviews route
-
+Route:: get('getRatings', [ReviewController::class, 'getRatings']); //get all reviews route
 Route:: get('getReviewByUser/{id}', [ReviewController::class, 'getReviewByUser']); //get reviews by user route
 Route:: delete('deleteReview/{sid}', [ReviewController::class, 'deleteReview']); //delete review route
-Route::get('search/{key}', [ProductController::class, 'search']); //search route
+
+
 Route::post('addchat', [ChatController::class, 'addchat']); //add chat route
 Route::get('getchats/{id}', [ChatController::class, 'getchats']); //get chat route
 
@@ -61,6 +68,14 @@ Route::post('addOrder', [OrderController::class, 'addOrder']); //add order route
 Route::get('getOrders/{id}', [OrderController::class, 'getOrders']); //get order route
 Route::get('getRecievedOrders/{sid}', [OrderController::class, 'getRecievedOrders']); //get order route
 Route::put('sellerUpdateOrder/{oid}', [OrderController::class, 'sellerUpdateOrder']); //update order route
+Route::put('rateOrder/{orid}', [OrderController::class, 'rateOrder']); //rate order route
+
+
+Route::get('getRating/{usid}', [UserReviewController::class, 'getRating']); //get rating route
+Route:: post('reviewUser', [UserReviewController::class, 'reviewUser']); //review user route
+Route:: get('getUserReviews/{usid}', [UserReviewController::class, 'getUserReviews']); //get user reviews route
+Route:: get('topRated', [UserReviewController::class, 'topRated']); //get top rated route
+
 
 
 // Route::post('login', [AuthController::class, 'login']);

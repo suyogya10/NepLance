@@ -15,39 +15,39 @@ function Explore() {
   const navigate = useNavigate();
 
   function a() {
-    navigate("/accounting-finance");
+    navigate("/explore/accounting-finance");
   }
 
   function b() {
-    navigate("/administrative");
+    navigate("/explore/administrative");
   }
 
   function c() {
-    navigate("/computer-it");
+    navigate("/explore/computer-it");
   }
 
   function d() {
-    navigate("/customer-service");
+    navigate("/explore/customer-service");
   }
 
   function e() {
-    navigate("/design-editing");
+    navigate("/explore/design-editing");
   }
 
   function f() {
-    navigate("/education-training");
+    navigate("/explore/education-training");
   }
 
   function g() {
-    navigate("/hr-recruit");
+    navigate("/explore/hr-recruit");
   }
 
   function h() {
-    navigate("/medical-health");
+    navigate("/explore/medical-health");
   }
 
   function i() {
-    navigate("/writing");
+    navigate("/explore/writing");
   }
 
   return (
@@ -57,8 +57,8 @@ function Explore() {
       exit={{ opacity: 0 }}
     >
       <section className="container py-5">
-        <p style={{ cursor: "pointer" }} onClick={() => navigate("/home")}>
-          <MDBIcon fas icon="angle-left" /> Back to Home
+        <p style={{ cursor: "pointer" }} onClick={() => navigate(-1)}>
+          <MDBIcon fas icon="angle-left" /> Back
         </p>
         <div className="row text-center pt-3">
           <div className="col-lg-6 m-auto">

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash; // Using the Hash class provided by Laravel
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Product;
 
 
 
@@ -197,6 +198,22 @@ class UserController extends Controller
         // ->where('ctznship', '!=', '')
         // ->where('requested', 'yes')
                     ->get(); //returning all the users in the database
+    }
+
+    function putKeywords($UserId,Request $req)
+    {
+        $user = User::find($UserId); //finding the user with the id
+        $user->keywords = $req->keywords; //getting the keywords from the request
+        $user->save(); //saving to the database
+        return $user; //returning the user
+    }
+
+
+    function getRecommended($userId){
+        $user = User::find($userId);
+        $keywords = explode(',', $user->keywords);
+        $products = Product::whereIn('category', $keywords)->get();
+        return $products;
     }
 
 }

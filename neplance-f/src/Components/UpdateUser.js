@@ -9,7 +9,7 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBIcon,
-  MDBInput
+  MDBInput,
 } from "mdb-react-ui-kit";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,8 +21,7 @@ function UpdateUser() {
   const [basicModal2, setBasicModal2] = useState(false);
   const toggleShow2 = () => setBasicModal2(!basicModal);
 
-
-  const {id} = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [name, setName] = useState("");
@@ -31,9 +30,7 @@ function UpdateUser() {
   const [file, setFile] = useState("");
 
   const ApiHandler = async () => {
-    const result = await fetch(
-      "http://localhost:8000/api/getUser/" + id
-    );
+    const result = await fetch("http://localhost:8000/api/getUser/" + id);
     const resp = await result.json();
     setData(resp);
     setName(resp.name);
@@ -47,12 +44,9 @@ function UpdateUser() {
   }, []);
 
   function deleteUser() {
-    fetch(
-      "http://localhost:8000/api/deleteUser/" + id + "?_method=DELETE",
-      {
-        method: "DELETE",
-      }
-    ).then((result) => {
+    fetch("http://localhost:8000/api/deleteUser/" + id + "?_method=DELETE", {
+      method: "DELETE",
+    }).then((result) => {
       result.json().then((resp) => {
         alert("Product has been deleted");
         ApiHandler();
@@ -68,13 +62,10 @@ function UpdateUser() {
     formData.append("file_path", file);
     formData.append("bio", bio);
     formData.append("userid", id);
-    fetch(
-      "http://localhost:8000/api/updateUser/" + id + "?_method=PUT",
-      {
-        method: "POST",
-        body: formData,
-      }
-    ).then((result) => {
+    fetch("http://localhost:8000/api/updateUser/" + id + "?_method=PUT", {
+      method: "POST",
+      body: formData,
+    }).then((result) => {
       result.json().then((resp) => {
         console.warn(resp);
       });
@@ -93,7 +84,6 @@ function UpdateUser() {
       <div className="container">
         <div className="row">
           <div className="d-none d-md-flex col-md-4 col-lg-6">
-            
             <img
               src={"http://localhost:8000/" + data.file_path}
               alt="addproduct"
@@ -111,9 +101,8 @@ function UpdateUser() {
               <div className="container">
                 <div className="row">
                   <div>
-                    
                     <form id="addprod">
-                    <h3 className="login-heading mb-4">Update Profile</h3>
+                      <h3 className="login-heading mb-4">Update Profile</h3>
                       <div className="mb-3">
                         <MDBInput
                           type="text"
@@ -137,15 +126,14 @@ function UpdateUser() {
                           <br></br>
 
                           <div className="mb-3">
-                          <MDBInput
-                            type="text"
-                            className="form-control"
-                            id="floatingInput"
-                            label="Bio"
-                            placeholder={data.bio}
-                            onChange={(e) => setBio(e.target.value)}
-                          />
-                          <br></br>
+                            <textarea
+                              className="form-control"
+                              id="floatingInput"
+                              label="Bio"
+                              placeholder={data.bio}
+                              onChange={(e) => setBio(e.target.value)}
+                            />
+                            <br></br>
 
                             <div className="mb-3">
                               <label
@@ -177,8 +165,7 @@ function UpdateUser() {
                                 <MDBIcon fas icon="trash" />
                               </div>
                             </div>
-                          
-                        </div>
+                          </div>
                         </div>
                       </div>
                     </form>

@@ -9,6 +9,13 @@ import {
   MDBInput,
   MDBTextArea,
   MDBFile,
+  MDBModal,
+  MDBModalBody,
+  MDBModalHeader,
+  MDBModalFooter,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalTitle,
 } from "mdb-react-ui-kit";
 import { useState } from "react";
 import Errorpage from "./Errorpage";
@@ -17,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 function BecomeSeller() {
+  const navigate = useNavigate();
   const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
   const [data, setData] = useState([]);
   const ApiHandler = async () => {
@@ -46,6 +54,10 @@ function BecomeSeller() {
   const [graduation_date, setGraduation_date] = useState("");
   const [ctzn, setCtzn] = useState("");
 
+  const [basicModal, setBasicModal] = useState(false);
+
+  const toggleShow = () => setBasicModal(!basicModal);
+
   function BecomeSeller() {
     let formData = new FormData();
     formData.append("designation", designation);
@@ -63,12 +75,13 @@ function BecomeSeller() {
     fetch("http://localhost:8000/api/becomeSeller/" + userid + "?_method=PUT", {
       method: "POST",
       body: formData,
-    }).then((result) => {
-      result.json().then((resp) => {
-        console.warn(resp);
-        console.log(resp);
+    })
+      .then((result) => {
+        result.json().then((resp) => {});
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   }
   return (
     <>
@@ -322,7 +335,10 @@ function BecomeSeller() {
                     color="success"
                     className="my-4"
                     size="lg"
-                    onClick={BecomeSeller}
+                    onClick={() => {
+                      BecomeSeller();
+                      navigate("/userinterest");
+                    }}
                   >
                     Submit Application
                   </MDBBtn>
@@ -332,6 +348,28 @@ function BecomeSeller() {
           </MDBRow>
         </MDBContainer>
       </motion.div>
+      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBBtn
+                className="btn-close"
+                color="none"
+                onClick={toggleShow}
+              ></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>...</MDBModalBody>
+
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={toggleShow}>
+                Close
+              </MDBBtn>
+              <MDBBtn>Save changes</MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
     </>
   );
 }

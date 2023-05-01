@@ -15,7 +15,6 @@ class OrderController extends Controller
         $order->quantity = $req->input("quantity");
         $order->price = $req->input("price");
         $order->comments = $req->input("comments");
-        // $order->payment_id = $req->input("payment_id");
         $order->token = $req->input("token");
         $order->status = $req->input("status");
         $order->product_name = $req->input("product_name");
@@ -33,6 +32,13 @@ class OrderController extends Controller
         return $order;
     }
 
+    function rateOrder($orid, Request $req){
+        $order = Order::find($req->orid);
+        $order->rating = $req->rating;
+        $order->save();
+        return $order;
+    }
+
     function getOrders($id){
         
         return Order::where("client_id", $id)->get(); //returning the order with the id
@@ -40,6 +46,7 @@ class OrderController extends Controller
 
     function getRecievedOrders($sid){
             
-            return Order::where("seller_id", $sid)->get(); //returning the order with the seller id
+        return Order::where("seller_id", $sid)->get(); //returning the order with the seller id
     }
+
 }

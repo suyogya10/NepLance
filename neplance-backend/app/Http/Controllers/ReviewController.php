@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Review; // Using the Review model
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
@@ -13,6 +14,7 @@ class ReviewController extends Controller
         $review->productid = $req->input("id");
         $review->review = $req->input("review");
         $review->username = $req->input("username");
+        $review->rating = $req->input("rating");
         $review->save();
         return $review;
     }
@@ -40,6 +42,16 @@ class ReviewController extends Controller
     function getReviewsAll(){
         
         return Review::all(); //returning all the reviews in the database
+    }
+
+    function getRatings(){
+            
+        $averageRatings = Review::select('productId', DB::raw('ROUND(AVG(rating)) as average_rating'))
+        ->groupBy('productId')
+        ->get();
+
+    return $averageRatings;
+
     }
     
 }

@@ -164,8 +164,14 @@ function UserRecievedOrders() {
                 className="modal-title text-uppercase mb-5"
                 id="exampleModalLabel"
               >
-                Client ID: {client_id}
-                <br></br>
+                <p
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigate("/viewprofile/" + client_id);
+                  }}
+                >
+                  Client ID: {client_id}
+                </p>
                 Order ID: {order_id}
               </MDBTypography>
               <MDBTypography

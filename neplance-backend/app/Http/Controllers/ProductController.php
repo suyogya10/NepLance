@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product; // Using the Product model 
 // use Http\Controllers\UserController; // Using the UserController
 
+use Illuminate\Support\Facades\DB;
+
 class ProductController extends Controller
 {
     function addProduct(Request $req)
@@ -30,7 +32,7 @@ class ProductController extends Controller
     }
 
     function getProducts()
-    {
+    {   
         return Product::all(); //returning all the products in the database
     }
 
