@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import Recommended from "./Recommended";
+import { Container } from "react-bootstrap";
 
 function Home() {
   const navigate = useNavigate();
@@ -16,8 +17,14 @@ function Home() {
     >
       <div>
         <Cara />
-        <div style={{ backgroundColor: "#00BF63" }}>
-          <div className="col-sm-4 offset-sm-4 m-auto">
+        <div
+          style={{
+            backgroundColor: "#00BF63",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Container className="text-center">
             <MDBBtn
               rounded
               color="light"
@@ -32,8 +39,9 @@ function Home() {
               <MDBIcon fas icon="search" className="ms-2" />
             </MDBBtn>
             <div style={{ color: "#00BF63", minHeight: "20px" }}> </div>
-          </div>
+          </Container>
         </div>
+
         <div>
           <Recommended />
         </div>

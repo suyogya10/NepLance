@@ -18,7 +18,7 @@ import Checkout from "./Checkout";
 import UpdateUser from "./UpdateUser";
 import Adminlogin from "./Adminlogin";
 import SidebarComponent from "../Components/Sidebar";
-import Headers from "../Components/Header";
+import Header from "../Components/Header";
 import ViewUsers from "./ViewUsers";
 import ViewReviews from "./ViewReviews";
 import ViewServices from "./ViewServices";
@@ -32,6 +32,8 @@ import Test from "./Test";
 import BecomeSeller from "./BecomeSeller";
 import ViewCategory from "./Collections/ViewCategory";
 import UserInterest from "./UserInterest";
+import Chats from "./Chats";
+import Jobs from "./UserPostRequests";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -40,7 +42,7 @@ function AnimatedRoutes() {
     <div>
       <AnimatePresence>
         <Routes location={location} key={location.pathname}>
-          <Route element={<Headers />}>
+          <Route element={<Header />}>
             <Route path="*" element={<Errorpage />} />
             <Route path="/test" element={<Test />} />
             <Route path="/" element={<Landing />} />
@@ -62,6 +64,7 @@ function AnimatedRoutes() {
               path="/addproduct"
               element={<Protected Cmp={AddProduct} />}
             />
+            <Route path="/jobs" element={<Protected Cmp={Jobs} />} />
             <Route
               path="/updateproduct/:id"
               element={<Protected Cmp={UpdateProduct} />}
@@ -74,6 +77,7 @@ function AnimatedRoutes() {
             <Route path="/explore/:category" element={<ViewCategory />} />
             <Route path="/explore" element={<Explore />} />
 
+            <Route path="/chats/:id" element={<Chats />} />
             <Route path="/chat" element={<Chat />} />
           </Route>
 

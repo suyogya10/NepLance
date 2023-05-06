@@ -47,6 +47,7 @@ class UserReviewController extends Controller
         $seller->name = $user->name;
         $seller->designation = $user->designation;
         $seller->file_path = $user->file_path;
+        $seller->registered_as = $user->registered_as;
         return $seller;
     });
 

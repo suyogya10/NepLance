@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MDBContainer,
   MDBRow,
@@ -8,10 +8,30 @@ import {
   MDBIcon,
   MDBTypography,
   MDBInputGroup,
+  MDBBtn,
 } from "mdb-react-ui-kit";
 import { motion } from "framer-motion";
+import io from "socket.io-client";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Chat() {
+  const navigate = useNavigate();
+
+  const [recipentData, setRecipentData] = useState([]);
+  const ApiHandler2 = async () => {
+    let result4 = await fetch(
+      "http://localhost:8000/api/chat/recipients/" +
+        JSON.parse(localStorage.getItem("user-info")).user.id
+    );
+    result4 = await result4.json();
+    console.log(result4.recipients);
+    setRecipentData(result4.recipients.reverse());
+  };
+  useEffect(() => {
+    ApiHandler2();
+  }, []);
+
   return (
     <>
       <motion.div
@@ -45,106 +65,77 @@ export default function Chat() {
                         </MDBInputGroup>
                         <div style={{ height: "500px", overflow: "auto" }}>
                           <MDBTypography listUnStyled className="mb-0">
-                            <li className="p-2 border-bottom">
-                              <a
-                                href="#!"
-                                className="d-flex justify-content-between"
-                              >
-                                <div className="d-flex flex-row">
-                                  <div>
-                                    <img
-                                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                      alt="avatar"
-                                      className="d-flex align-self-center me-3"
-                                      width="60"
-                                    />
-                                  </div>
-                                  <div className="pt-1">
-                                    <p className="fw-bold mb-0">
-                                      Marie Horwitz
-                                    </p>
-                                    <p className="small text-muted">
-                                      Hello, Are you there?
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="pt-1">
-                                  <p className="small text-muted mb-1">
-                                    Just now
-                                  </p>
-                                  <span className="badge bg-danger rounded-pill float-end">
-                                    3
-                                  </span>
-                                </div>
-                              </a>
-                            </li>
+                            {recipentData.map((item) => {
+                              return (
+                                <li
+                                  className="p-2 border-bottom"
+                                  onClick={() => {
+                                    console.log("balls");
+                                    const roomId =
+                                      JSON.parse(
+                                        localStorage.getItem("user-info")
+                                      ).user.id +
+                                      "-" +
+                                      item.id;
+                                    navigate("/chats/" + roomId);
+                                  }}
+                                >
+                                  <a
+                                    style={{ cursor: "pointer" }}
+                                    className="d-flex justify-content-between"
+                                  >
+                                    <div className="d-flex flex-row">
+                                      <div>
+                                        <img
+                                          src={
+                                            "http://localhost:8000/" +
+                                            item.file_path
+                                          }
+                                          alt="avatar"
+                                          className="d-flex align-self-center me-3"
+                                          width="60"
+                                        />
+                                      </div>
+                                      <div className="pt-1 d-flex align-items-center">
+                                        <p className="fw-bold mb-0">
+                                          {item.name}
+                                        </p>
+                                        {/* <p className="small text-muted">
+                                          Hello, Are you there?
+                                        </p> */}
+                                      </div>
+                                    </div>
+                                    {/* <div className="pt-1">
+                                      <p className="small text-muted mb-1">
+                                        Just now
+                                      </p>
+                                    </div> */}
+                                  </a>
+                                </li>
+                              );
+                            })}
                           </MDBTypography>
                         </div>
                       </div>
                     </MDBCol>
-                    <MDBCol md="6" lg="7" xl="8">
-                      <div style={{ maxHeight: "500px", overflow: "auto" }}>
-                        <div className="d-flex flex-row justify-content-start">
-                          <img
-                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                            alt="avatar 1"
-                            style={{ width: "45px", height: "100%" }}
-                          />
-                          <div>
-                            <p
-                              className="small p-2 ms-3 mb-1 rounded-3"
-                              style={{ backgroundColor: "#f5f6f7" }}
-                            >
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua.
-                            </p>
-                            <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
-                              12:00 PM | Aug 13
-                            </p>
-                          </div>
-                        </div>
+                    <MDBCol
+                      md="6"
+                      className="text-center d-flex flex-column justify-content-center"
+                    >
+                      <h1 className="my-5 display-3 fw-bold ls-tight px-3">
+                        NepLance
+                        <br />
+                        <span className="text-success">Chat Room</span>
+                      </h1>
 
-                        <div className="d-flex flex-row justify-content-end">
-                          <div>
-                            <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-success">
-                              Ut enim ad minim veniam, quis nostrud exercitation
-                              ullamco laboris nisi ut aliquip ex ea commodo
-                              consequat.
-                            </p>
-                            <p className="small me-3 mb-3 rounded-3 text-muted">
-                              12:00 PM | Aug 13
-                            </p>
-                          </div>
-                          <img
-                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                            alt="avatar 1"
-                            style={{ width: "45px", height: "100%" }}
-                          />
-                        </div>
-                      </div>
-                      <div className="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
-                        <img
-                          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                          alt="avatar 3"
-                          style={{ width: "40px", height: "100%" }}
-                        />
-                        <input
-                          type="text"
-                          className="form-control form-control-lg"
-                          id="exampleFormControlInput2"
-                          placeholder="Type message"
-                        />
-                        <a className="ms-1 text-muted" href="#!">
-                          <MDBIcon fas icon="paperclip" />
-                        </a>
-                        <a className="ms-3 text-muted" href="#!">
-                          <MDBIcon fas icon="smile" />
-                        </a>
-                        <a className="ms-3" href="#!">
-                          <MDBIcon color="success" fas icon="paper-plane" />
-                        </a>
-                      </div>
+                      <p
+                        className="px-3"
+                        style={{ color: "hsl(217, 10%, 50.8%)" }}
+                      >
+                        Your messages apper here when you start a conversation
+                        with someone. Click on a contact to continue the chat
+                        with them.
+                      </p>
                     </MDBCol>
                   </MDBRow>
                 </MDBCardBody>

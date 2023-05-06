@@ -50,7 +50,8 @@ function UpdateUser() {
       result.json().then((resp) => {
         alert("Product has been deleted");
         ApiHandler();
-        navigate("/user");
+        localStorage.removeItem("user-info");
+        navigate("/login");
       });
     });
   }

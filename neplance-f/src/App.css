@@ -1,30 +1,30 @@
 .App {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
- .login {
+.login {
   margin-top: 70px;
-} 
+}
 
 .loginheading {
   font-weight: 600;
   color: black;
 }
 
-.bg-image{
+.bg-image {
   width: 350px;
   margin-top: 6px;
   margin-left: 200px;
 }
 
-.bg-image-b{
+.bg-image-b {
   width: 350px;
   height: 600px;
   margin-left: 200px;
-} 
+}
 
-.addproduct{
-  background-image: url('./Components/Assets/addproduct.png');
+.addproduct {
+  background-image: url("./Components/Assets/addproduct.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -32,70 +32,85 @@
   margin-top: 50px;
 }
 
-
-.card-img-top{
+.card-img-top {
   width: 100%;
   height: 15vw;
   object-fit: cover;
 }
 
-.card-text{
+.card-text {
   font-size: 0.9rem;
   font-weight: 100;
   color: black;
 }
 
-.broweseprod{
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  height: 150px;
+}
+
+.dashboard {
+  margin-top: 150px;
+  margin-left: 50px;
+}
+
+.broweseprod {
   font-size: 25px;
 }
 
-.price{
+.price {
   font-size: 1.2rem;
   font-weight: 500;
 }
 
-.profilebtn{
+.profilebtn {
   margin-top: 10px;
   margin-left: 0px;
   width: 200px;
 }
 
-.profiletitle2{
+.profiletitle2 {
   font-size: 1.5rem;
   font-weight: 500;
   justify-content: flex-end;
 }
 
-.link{
+.link {
   margin-left: 15px;
   margin-right: 15px;
   color: black;
   text-decoration: none;
-  font-size: 18px;
 }
 
-.link2{
+.link2 {
   margin-left: 15px;
   margin-top: 3px;
   margin-right: 15px;
   color: black;
   text-decoration: none;
-  font-size: 18px;
 }
 
-.link:hover{
+.link:hover {
   color: #00ca1e;
 }
 
-.link2:hover{
+.link2:hover {
   color: #00ca1e;
 }
 
-.right-aligned{
+.right-aligned {
   justify-content: flex-end;
 }
 
-.product-wap .h3, .product-wap li, .product-wap i, .product-wap p {
+.product-wap .h3,
+.product-wap li,
+.product-wap i,
+.product-wap p {
   font-size: 12px !important;
 }
 .product-wap .product-color-dot {
@@ -103,25 +118,28 @@
   height: 6px;
 }
 
-
-.landing-text{
+.landing-text {
   color: black;
   text-decoration: wavy;
   margin-top: 250px;
 }
 
-.landimg{
+.landimg {
   margin-left: 200px;
   margin-top: 60px;
-  width: 600px;  
+  width: 600px;
 }
 
-.errorpage{
+.errorpage {
   margin-top: 200px;
   text-align: center;
 }
 
-.error-text{
+.error-text {
   font-size: 100px;
   font-weight: 500;
+}
+
+.baulsdeep::-webkit-scrollbar {
+  display: none;
 }

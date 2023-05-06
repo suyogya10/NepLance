@@ -18,7 +18,6 @@ function Adminlogin() {
   }, []);
 
   async function Adminlogin() {
-
     let formData = new FormData();
     formData.append("username", username);
     formData.append("password", password);
@@ -28,17 +27,16 @@ function Adminlogin() {
     })
       .then((result) => {
         result.json().then((resp) => {
-            if (resp.error === "Invalid") {
-                setAlert(false);
-            } else {
-                localStorage.setItem("admin-info", JSON.stringify(resp));
-                navigate("/viewusers");
-            }
+          if (resp.error === "Invalid") {
+            setAlert(false);
+          } else {
+            localStorage.setItem("admin-info", JSON.stringify(resp));
+            navigate("/adminhome");
+          }
         });
       })
       .catch((error) => {
         console.log(error);
-        
       });
   }
 
@@ -93,14 +91,19 @@ function Adminlogin() {
             </div>
 
             <div className="d-grid">
-              <MDBBtn type="button" rounded color="success" onClick={Adminlogin}>
+              <MDBBtn
+                type="button"
+                rounded
+                color="success"
+                onClick={Adminlogin}
+              >
                 Sign in
               </MDBBtn>
             </div>
           </form>
         </div>
         <div>
-        {alert !== null && alert === false && (
+          {alert !== null && alert === false && (
             <Alert
               variant={"warning"}
               closeLabel="Close alert"

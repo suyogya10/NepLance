@@ -20,9 +20,6 @@ import { useNavigate } from "react-router-dom";
 
 export function Product() {
   const navigate = useNavigate();
-  const [alert, setAlert] = useState(null);
-  const [review, setReview] = useState("");
-  const [rating, setRating] = useState(0);
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [userData, setuserData] = useState([]);

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use BeyondCode\LaravelWebSockets\Http\Controllers\WebSocketsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::post('/broadcasting/auth', [WebSocketsController::class, 'authenticate']);
+Route::get('/ws', [WebSocketsController::class, 'index']);

@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User; // Using the User model provided by Laravel
 use Illuminate\Support\Facades\Hash; // Using the Hash class provided by Laravel
 use App\Http\Controllers\Controller;
-use Tymon\JWTAuth\Facades\JWTAuth;
+
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
-
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -98,20 +98,55 @@ class UserController extends Controller
 
     function getUser($userid)
     {
-        return User::find($userid); //returning the product with the id return User::all($userid); //returning all the users in the database
+        $user = User::find($userid);
+        $num_products = DB::table('products')
+            ->where('userid', $userid)
+            ->count();
+        $user->num_products = $num_products;
+        return $user;
     }
 
+    // function deleteUser($userid)
+    // {
+    //     $result = User::where("id", $userid)->delete();
+    //      //deleting the user from the database
+    //     if ($result) {
+    //         return ["result" => "User has been deleted"]; //returning a message if the user has been deleted
+    //     }
+    //     else {
+    //         return ["result" => "Operation failed"]; //returning a message if the user has not been deleted
+    //     }
+    // }
+
     function deleteUser($userid)
-    {
-        $result = User::where("id", $userid)->delete();
-         //deleting the user from the database
-        if ($result) {
-            return ["result" => "User has been deleted"]; //returning a message if the user has been deleted
-        }
-        else {
-            return ["result" => "Operation failed"]; //returning a message if the user has not been deleted
-        }
+{
+    // Deleting related records from the `products` table
+    DB::table('products')->where('userid', $userid)->delete();
+
+    // Deleting related records from the `orders` table
+    DB::table('orders')->where('seller_id', $userid)->delete();
+    DB::table('orders')->where('client_id', $userid)->delete();
+
+    // Deleting related records from the `reviews` table
+    DB::table('reviews')->where('userid', $userid)->delete();
+
+    // Deleting related records from the `user_reviews` table
+    DB::table('user_reviews')->where('userid', $userid)->delete();
+
+    // Deleting related records from the `chats` table
+    DB::table('chats')->where('sender_id', $userid)->delete();
+    DB::table('chats')->where('recipient_id', $userid)->delete();
+
+    // Deleting the user from the `users` table
+    $result = User::where('id', $userid)->delete();
+
+    if ($result) {
+        return ["result" => "User and related records have been deleted"];
+    } else {
+        return ["result" => "Operation failed"];
     }
+}
+
 
     function updateUser($id,Request $req)
     {
@@ -215,5 +250,6 @@ class UserController extends Controller
         $products = Product::whereIn('category', $keywords)->get();
         return $products;
     }
+
 
 }

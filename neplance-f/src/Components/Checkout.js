@@ -23,7 +23,7 @@ export default function Checkout() {
   const qnt = 1;
   const [product, setProduct] = useState([]);
   const [userData, setuserData] = useState([]);
-  const [clientMessage, setClientMessage] = useState("");
+  const [clientMessage, setClientMessage] = useState("N/A");
   const [file_client, setFile] = useState("");
 
   const ApiHandler = async () => {
@@ -106,7 +106,7 @@ export default function Checkout() {
   let checkout = new KhaltiCheckout(config);
   function pay() {
     // minimum transaction amount must be 10, i.e 1000 in paisa.
-    checkout.show({ amount: 1000 });
+    checkout.show({ amount: 50000 });
   }
 
   return (
@@ -145,7 +145,7 @@ export default function Checkout() {
                     <td className="align-middle">
                       <textarea
                         type="text"
-                        defaultValue={"Write some instructions"}
+                        placeholder="Enter your message here"
                         className="form-control"
                         onChange={(e) => {
                           setClientMessage(e.target.value);

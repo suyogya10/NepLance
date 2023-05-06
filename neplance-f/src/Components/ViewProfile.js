@@ -27,7 +27,11 @@ import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
+import io from "socket.io-client";
+const socket = io("http://localhost:3001");
+
 export default function ViewProfile() {
+  window.scrollTo(0, 0);
   var sn = 1;
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -74,7 +78,7 @@ export default function ViewProfile() {
   const ApiHandler4 = async () => {
     let result4 = await fetch("http://localhost:8000/api/getUserReviews/" + id);
     result4 = await result4.json();
-    setUserReviewData(result4);
+    setUserReviewData(result4.reverse());
   };
   useEffect(() => {
     ApiHandler4();
@@ -83,6 +87,10 @@ export default function ViewProfile() {
   const userproduct = productdata.filter((item) => item.userid == userid);
 
   const navigate = useNavigate();
+
+  const [basicModal, setBasicModal] = useState(false);
+  const toggleShow = () => setBasicModal(!basicModal);
+
   const [basicModal2, setBasicModal2] = useState(false);
   const toggleShow2 = () => setBasicModal2(!basicModal2);
 
@@ -105,12 +113,6 @@ export default function ViewProfile() {
     formData.append("review", review);
     formData.append("rating", rating);
 
-    console.log(userid_localstg);
-    console.log(username_localstg);
-    console.log(sellerid);
-    console.log(review);
-    console.log(rating);
-
     fetch("http://localhost:8000/api/reviewUser", {
       method: "POST",
       body: formData,
@@ -119,12 +121,36 @@ export default function ViewProfile() {
       .then((result) => {
         console.log("Success:", result);
         toggleShow3();
+        ApiHandler4();
       })
       .catch((error) => {
         console.error("Error:", error);
         console.log(error);
       });
     document.getElementById("reviewuser").disabled = true;
+  }
+
+  const [message, setMessage] = useState("");
+  function SendChat() {
+    const formData = new FormData();
+    formData.append(
+      "sender_id",
+      JSON.parse(localStorage.getItem("user-info")).user.id
+    );
+    formData.append("message", message);
+    fetch("http://localhost:8000/api/chat/" + sellerid + "/message", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("Success:", result);
+        toggleShow();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        console.log(error);
+      });
   }
 
   return (
@@ -189,7 +215,15 @@ export default function ViewProfile() {
                             outline
                             color="success"
                             style={{ height: "36px", overflow: "visible" }}
-                            onClick={() => navigate("/chat")}
+                            // onClick={() => {
+                            //   const id = JSON.parse(
+                            //     localStorage.getItem("user-info")
+                            //   ).user.id;
+                            //   const chatRoom = [id, userid].join("-");
+                            //   console.log(chatRoom);
+                            //   navigate(`/chats/${chatRoom}`);
+                            // }}
+                            onClick={toggleShow}
                           >
                             <MDBIcon fas icon="envelope" className="me-2" />
                             Chat
@@ -571,6 +605,54 @@ export default function ViewProfile() {
               <MDBModalFooter>
                 <MDBBtn color="secondary" onClick={toggleShow3}>
                   Close
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+          <MDBModalDialog>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>
+                  Request Chat with this freelancer?
+                </MDBModalTitle>
+                <MDBBtn
+                  className="btn-close"
+                  color="none"
+                  onClick={toggleShow}
+                ></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <div className="align-items-center">
+                  <p>
+                    This will send your message to the freelancer. If the
+                    freelancer replies, you will be able to chat with the them
+                    via the messages tab.
+                  </p>
+                  <textarea
+                    className="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                    placeholder="Write your message here..."
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                    }}
+                  ></textarea>
+                </div>
+              </MDBModalBody>
+
+              <MDBModalFooter>
+                <MDBBtn color="secondary" onClick={toggleShow}>
+                  Close
+                </MDBBtn>
+                <MDBBtn
+                  color="success"
+                  onClick={() => {
+                    SendChat();
+                  }}
+                >
+                  Send Chat
                 </MDBBtn>
               </MDBModalFooter>
             </MDBModalContent>

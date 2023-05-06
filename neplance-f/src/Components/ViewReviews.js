@@ -16,13 +16,13 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function ViewReviews() {
-
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
   const [deleteID, setdeleteID] = useState("");
-  const [deleteflag,setDeleteflag] = useState(false)
+  const [deleteflag, setDeleteflag] = useState(false);
 
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -41,89 +41,100 @@ export default function ViewReviews() {
       method: "DELETE",
     }).then((result) => {
       result.json().then((resp) => {
-        setDeleteflag(true)
-      });   
+        setDeleteflag(true);
+      });
     });
   }
 
   return (
     <>
-    <MDBTable align="middle">
-      <MDBTableHead>
-        <tr>
-          <th scope="col">From User</th>
-          <th scope="col">Review</th>
-          <th scope="col">Service id</th>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        <MDBTable align="middle">
+          <MDBTableHead>
+            <tr>
+              <th scope="col">From User</th>
+              <th scope="col">Review</th>
+              <th scope="col">Service id</th>
 
-          <th scope="col" style={{ textAlign: "center" }}>
-            Actions
-          </th>
-        </tr>
-      </MDBTableHead>
-      {data.map((item) => (
-        <MDBTableBody key={item.review_id}>
-          <tr>
-            <td>
-              <div className="d-flex align-items-center">
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{item.username}</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <p className="fw-normal mb-1">{item.review}</p>
-            </td>
-            <td
-              style={{ textAlign: "center", cursor: "pointer" }}
-              onClick={() => {
-                navigate(`/product/${item.productid}`);
-              }}
-            >
-              {item.productid}
-            </td>
-            <td>
-              <MDBBtn color="danger" rounded size="sm" onClick={() => {
-                    setdeleteID(item.review_id);
+              <th scope="col" style={{ textAlign: "center" }}>
+                Actions
+              </th>
+            </tr>
+          </MDBTableHead>
+          {data.map((item) => (
+            <MDBTableBody key={item.review_id}>
+              <tr>
+                <td>
+                  <div className="d-flex align-items-center">
+                    <div className="ms-3">
+                      <p className="fw-bold mb-1">{item.username}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <p className="fw-normal mb-1">{item.review}</p>
+                </td>
+                <td
+                  style={{ textAlign: "center", cursor: "pointer" }}
+                  onClick={() => {
+                    navigate(`/product/${item.productid}`);
+                  }}
+                >
+                  {item.productid}
+                </td>
+                <td>
+                  <MDBBtn
+                    color="danger"
+                    rounded
+                    size="sm"
+                    onClick={() => {
+                      setdeleteID(item.review_id);
+                      toggleShow();
+                    }}
+                  >
+                    <MDBIcon fas icon="trash" />
+                  </MDBBtn>
+                </td>
+              </tr>
+            </MDBTableBody>
+          ))}
+        </MDBTable>
+        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+          <MDBModalDialog>
+            <MDBModalContent style={{ textAlign: "center" }}>
+              <MDBModalHeader>
+                <MDBTypography tag="h5" variant="h5">
+                  Delete Review
+                </MDBTypography>
+                <MDBBtn color="none" onClick={toggleShow} type="button">
+                  <MDBIcon icon="times" fas />
+                </MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <p>Are you sure you want to delete this review?</p>
+                <MDBBtn color="secondary" onClick={toggleShow} type="button">
+                  Cancel
+                </MDBBtn>
+                <MDBBtn
+                  color="danger"
+                  onClick={() => {
+                    AdminDeleteReview(deleteID);
                     toggleShow();
-                }}>
-                <MDBIcon fas icon="trash" />
-              </MDBBtn>
-            </td>
-          </tr>
-        </MDBTableBody>
-      ))}
-    </MDBTable>
-    <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-    <MDBModalDialog>
-      <MDBModalContent style={{ textAlign: "center" }}>
-        <MDBModalHeader>
-          <MDBTypography tag="h5" variant="h5">
-            Delete Review
-          </MDBTypography>
-          <MDBBtn color="none" onClick={toggleShow} type="button">
-            <MDBIcon icon="times" fas />
-          </MDBBtn>
-        </MDBModalHeader>
-        <MDBModalBody>
-          <p>Are you sure you want to delete this review?</p>
-          <MDBBtn color="secondary" onClick={toggleShow} type="button">
-            Cancel
-          </MDBBtn>
-          <MDBBtn
-            color="danger"
-            onClick={() => {
-              AdminDeleteReview(deleteID);
-                toggleShow();
-            }}
-            style={{ marginLeft: "10px" }}
-            type="button"
-          >
-            Delete
-          </MDBBtn>
-        </MDBModalBody>
-      </MDBModalContent>
-    </MDBModalDialog>
-  </MDBModal>
-  </>
+                  }}
+                  style={{ marginLeft: "10px" }}
+                  type="button"
+                >
+                  Delete
+                </MDBBtn>
+              </MDBModalBody>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+      </motion.div>
+    </>
   );
 }

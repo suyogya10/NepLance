@@ -18,7 +18,11 @@ class OrderController extends Controller
         $order->token = $req->input("token");
         $order->status = $req->input("status");
         $order->product_name = $req->input("product_name");
-        $order->file_client = $req->file("file_client")-> store("file_client");
+
+        if ($req->hasFile("file_client")) {
+            $order->file_client = $req->file("file_client")-> store("file_client");
+        }
+        // $order->file_client = $req->file("file_client")-> store("file_client");
         $order->save();
         return $order;
     }
@@ -26,7 +30,9 @@ class OrderController extends Controller
     function sellerUpdateOrder($oid, Request $req){
         $order = Order::find($req->oid);
         $order->status = "Delivered";
-        $order->file_seller = $req->file_seller-> store("file_seller");
+        if ($req->hasFile("file_seller")) {
+            $order->file_seller = $req->file("file_seller")-> store("file_seller");
+        }
         $order->comments_seller = $req->comments_seller;
         $order->save();
         return $order;

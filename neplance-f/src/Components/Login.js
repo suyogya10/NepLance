@@ -113,7 +113,12 @@ function Login() {
                         </div> */}
 
                       <div className="d-grid">
-                        <MDBBtn type="button" rounded color="success" onClick={login}>
+                        <MDBBtn
+                          type="button"
+                          rounded
+                          color="success"
+                          onClick={login}
+                        >
                           Sign in
                         </MDBBtn>
                         <br></br>

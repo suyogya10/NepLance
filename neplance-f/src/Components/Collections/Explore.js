@@ -10,6 +10,7 @@ import med from "../Assets/med.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { MDBIcon } from "mdb-react-ui-kit";
+import Recommended from "./Recommended";
 
 function Explore() {
   const navigate = useNavigate();
@@ -70,8 +71,8 @@ function Explore() {
             </p>
           </div>
         </div>
-        <div className="row">
-          <div className="col-12 col-md-3 p-5 mt-3">
+        <div className="row d-flex">
+          <div className="col-md-3 p-5 mt-3">
             <img
               src={webdev}
               className="rounded-circle img-fluid border"
@@ -82,7 +83,7 @@ function Explore() {
             <h5 className="text-center mt-3 mb-3">Accounting & Finance</h5>
           </div>
 
-          <div className="col-12 col-md-3 p-5 mt-3">
+          <div className="col-md-3 p-5 mt-3">
             <img
               src={writing}
               className="rounded-circle img-fluid border"
@@ -93,7 +94,7 @@ function Explore() {
             <h2 className="h5 text-center mt-3 mb-3">Administrative</h2>
           </div>
 
-          <div className="col-12 col-md-3 p-5 mt-3">
+          <div className="col-md-3 p-5 mt-3">
             <img
               src={video}
               className="rounded-circle img-fluid border"
@@ -104,7 +105,7 @@ function Explore() {
             <h2 className="h5 text-center mt-3 mb-3">Computer & IT</h2>
           </div>
 
-          <div className="col-12 col-md-3 p-5 mt-3">
+          <div className="col-md-3 p-5 mt-3">
             <img
               src={customerservice}
               className="rounded-circle img-fluid border"
@@ -115,7 +116,7 @@ function Explore() {
             <h2 className="h5 text-center mt-3 mb-3">Customer Service</h2>
           </div>
 
-          <div className="col-12 col-md-3 p-5 mt-3">
+          <div className=" col-md-3 p-5 mt-3">
             <img
               src={designedit}
               className="rounded-circle img-fluid border"
@@ -126,7 +127,7 @@ function Explore() {
             <h2 className="h5 text-center mt-3 mb-3">Design & Editing</h2>
           </div>
 
-          <div className="col-12 col-md-3 p-5 mt-3">
+          <div className=" col-md-3 p-5 mt-3">
             <img
               src={education}
               className="rounded-circle img-fluid border"
@@ -137,7 +138,7 @@ function Explore() {
             <h2 className="h5 text-center mt-3 mb-3">Education & Training</h2>
           </div>
 
-          <div className="col-12 col-md-3 p-5 mt-3">
+          <div className=" col-md-3 p-5 mt-3">
             <img
               src={hr}
               className="rounded-circle img-fluid border"
@@ -148,7 +149,7 @@ function Explore() {
             <h2 className="h5 text-center mt-3 mb-3">HR & Recruiting</h2>
           </div>
 
-          <div className="col-12 col-md-3 p-5 mt-3">
+          <div className=" col-md-3 p-5 mt-3">
             <img
               src={med}
               className="rounded-circle img-fluid border"
@@ -159,17 +160,18 @@ function Explore() {
             <h2 className="h5 text-center mt-3 mb-3">Medical & Health</h2>
           </div>
 
-          <div className="col-12 col-md-3 p-5 mt-3">
+          <div className=" col-md-3 p-5 mt-3">
             <img
               src={writing}
               className="rounded-circle img-fluid border"
               style={{ cursor: "pointer" }}
               onClick={i}
             />
-            <h2 className="h5 text-center mt-3 mb-3">Writing</h2>
+            <h2 className="h5 text-center mt-3 ">Writing</h2>
           </div>
         </div>
       </section>
+      <Recommended />
     </motion.div>
   );
 }

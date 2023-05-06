@@ -5,7 +5,6 @@ import {
   MDBCardBody,
   MDBIcon,
   MDBCardImage,
-  MDBBtn,
   MDBCardTitle,
   MDBCardText,
 } from "mdb-react-ui-kit";
@@ -58,13 +57,115 @@ function Recommended() {
         <div className="container py-5">
           {localStorage.getItem("user-info") ? (
             <>
-              <div className="row">
+              <div className="row py-5 d-flex gap-2">
+                <h4>
+                  Highest rated freelancers <MDBIcon fas icon="chevron-right" />
+                </h4>
+                {freelancerData.slice(0, 8).map(
+                  (item) =>
+                    item.registered_as === "seller" && (
+                      <MDBCard
+                        key={item.sellerid}
+                        style={{
+                          borderRadius: "15px",
+                          maxWidth: "320px",
+                          maxHeight: "155px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          navigate("/viewprofile/" + item.sellerid);
+                        }}
+                      >
+                        <MDBCardBody>
+                          <div className="d-flex text-black">
+                            <div>
+                              <MDBCardImage
+                                style={{
+                                  maxWidth: "100px",
+                                  borderRadius: "20px",
+                                  maxHeight: "100px",
+                                }}
+                                src={"http://localhost:8000/" + item.file_path}
+                                alt="Generic placeholder image"
+                                fluid
+                              />
+                            </div>
+                            <div className="flex-grow-1 ms-2">
+                              <MDBCardTitle>{item.name}</MDBCardTitle>
+                              <MDBCardText>{item.designation}</MDBCardText>
+                              <ul className="list-unstyled d-flex justify-content-between">
+                                <li>
+                                  <i
+                                    className={`${
+                                      parseInt(
+                                        item.avg_rating >= 3.5
+                                          ? Math.ceil(item.avg_rating)
+                                          : Math.floor(item.avg_rating)
+                                      ) >= 1
+                                        ? "text-warning"
+                                        : "text-muted"
+                                    } fa fa-star `}
+                                  ></i>
+                                  <i
+                                    className={`${
+                                      parseInt(
+                                        item.avg_rating >= 3.5
+                                          ? Math.ceil(item.avg_rating)
+                                          : Math.floor(item.avg_rating)
+                                      ) >= 2
+                                        ? "text-warning"
+                                        : "text-muted"
+                                    } fa fa-star `}
+                                  ></i>
+                                  <i
+                                    className={`${
+                                      parseInt(
+                                        item.avg_rating >= 3.5
+                                          ? Math.ceil(item.avg_rating)
+                                          : Math.floor(item.avg_rating)
+                                      ) >= 3
+                                        ? "text-warning"
+                                        : "text-muted"
+                                    } fa fa-star `}
+                                  ></i>
+                                  <i
+                                    className={`${
+                                      parseInt(
+                                        item.avg_rating >= 3.5
+                                          ? Math.ceil(item.avg_rating)
+                                          : Math.floor(item.avg_rating)
+                                      ) >= 4
+                                        ? "text-warning"
+                                        : "text-muted"
+                                    } fa fa-star `}
+                                  ></i>
+                                  <i
+                                    className={`${
+                                      parseInt(
+                                        item.avg_rating >= 3.5
+                                          ? Math.ceil(item.avg_rating)
+                                          : Math.floor(item.avg_rating)
+                                      ) >= 5
+                                        ? "text-warning"
+                                        : "text-muted"
+                                    } fa fa-star `}
+                                  ></i>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </MDBCardBody>
+                      </MDBCard>
+                    )
+                )}
+              </div>
+              <div className="row d-flex">
                 <h4>
                   Recommended for you <MDBIcon fas icon="chevron-right" />
                 </h4>
               </div>
               <div className="row">
-                {data.slice(0, 3).map((item) => {
+                {data.slice(0, 9).map((item) => {
                   const rating = reviewData.filter(
                     (review) => review.productId === item.id
                   );
@@ -147,108 +248,6 @@ function Recommended() {
           ) : (
             <> </>
           )}
-          <div className="row py-5 d-flex gap-2">
-            <h4>
-              Highest rated freelancers <MDBIcon fas icon="chevron-right" />
-            </h4>
-            {freelancerData.slice(0, 4).map(
-              (item) =>
-                item.registered_as === "seller" && (
-                  <MDBCard
-                    key={item.sellerid}
-                    style={{
-                      borderRadius: "15px",
-                      maxWidth: "320px",
-                      maxHeight: "155px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      navigate("/viewprofile/" + item.sellerid);
-                    }}
-                  >
-                    <MDBCardBody>
-                      <div className="d-flex text-black">
-                        <div>
-                          <MDBCardImage
-                            style={{
-                              maxWidth: "100px",
-                              borderRadius: "20px",
-                              maxHeight: "100px",
-                            }}
-                            src={"http://localhost:8000/" + item.file_path}
-                            alt="Generic placeholder image"
-                            fluid
-                          />
-                        </div>
-                        <div className="flex-grow-1 ms-2">
-                          <MDBCardTitle>{item.name}</MDBCardTitle>
-                          <MDBCardText>{item.designation}</MDBCardText>
-                          <ul className="list-unstyled d-flex justify-content-between">
-                            <li>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 1
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 2
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 3
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 4
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 5
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
-                )
-            )}
-          </div>
         </div>
       </motion.div>
     </>

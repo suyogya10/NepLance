@@ -10,6 +10,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserReviewController;
+use App\Http\Controllers\UserRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route:: get('getUser/{userid}', [UserController::class, 'getUser']); //get singl
 Route:: get('getUserAll', [UserController::class, 'getUserAll']); //get all user
 Route:: put('putKeywords/{UserId}', [UserController::class, 'putKeywords']); //put keywords
 Route:: get('getRecommended/{userId}', [UserController::class, 'getRecommended']); //get recommended user
+Route:: get('getRecommendedSellers', [UserController::class, 'getRecommendedSellers']); //get all recommended user
 
 
 Route:: post('addproduct', [ProductController::class, 'addProduct']); //add product route
@@ -50,7 +52,6 @@ Route:: get('getSingleProduct/{id}', [ProductController::class, 'getSingleProduc
 Route::get('search/{key}', [ProductController::class, 'search']); //search route
 
 
-
 Route:: post('reviewProduct', [ReviewController::class, 'reviewProduct']); //review product route
 Route:: get('getReviews/{id}', [ReviewController::class, 'getReviews']); //get reviews route
 Route:: get('getReviewsAll', [ReviewController::class, 'getReviewsAll']); //get all reviews route
@@ -59,9 +60,9 @@ Route:: get('getReviewByUser/{id}', [ReviewController::class, 'getReviewByUser']
 Route:: delete('deleteReview/{sid}', [ReviewController::class, 'deleteReview']); //delete review route
 
 
-Route::post('addchat', [ChatController::class, 'addchat']); //add chat route
-Route::get('getchats/{id}', [ChatController::class, 'getchats']); //get chat route
-
+Route::post('/chat/{recipient}/message', [ChatController::class, 'sendMessage']); //send message route
+Route::get('/messages/{recipient}/{sender_id}', [ChatController::class, 'getMessages']);
+Route::get('chat/recipients/{sender_id}', [ChatController::class, 'getRecipients']);
 
 
 Route::post('addOrder', [OrderController::class, 'addOrder']); //add order route
@@ -77,12 +78,23 @@ Route:: get('getUserReviews/{usid}', [UserReviewController::class, 'getUserRevie
 Route:: get('topRated', [UserReviewController::class, 'topRated']); //get top rated route
 
 
-
 // Route::post('login', [AuthController::class, 'login']);
 Route::post('Adminlogin', [AdminController::class, 'Adminlogin']);
+Route:: get('getTotalCounts', [AdminController::class, 'getTotalCounts']); //get total counts route
 
 
-
+Route::post('addRequest/{userid}', [UserRequestController::class, 'addRequest']); //add request route
+Route::get('getRequests', [UserRequestController::class, 'getRequests']); //get request route
+Route::get('getRequestByUser/{id}', [UserRequestController::class, 'getRequestByUser']); //get request route
+Route::get('getRequestBySeller/{id}', [UserRequestController::class, 'getRequestBySeller']); //get request route
+Route::delete('deleteRequest/{id}', [UserRequestController::class, 'deleteRequest']); //delete request route
+Route::put('sellerAccept/{id}', [UserRequestController::class, 'sellerAccept']); //accept request route
+Route::put('sellerBid/{id}', [UserRequestController::class, 'sellerBid']); //bid request route
+Route::get('getCategorizedRequests/{category}', [UserRequestController::class, 'getCategorizedRequests']); //get categorized request route
+Route::put('userAccept/{id}', [UserRequestController::class, 'userAccept']); //accept request route
+Route::put('userReject/{id}', [UserRequestController::class, 'userReject']); //reject request route
+Route::put('Payment/{id}', [UserRequestController::class, 'Payment']); //payment request route
+Route::put('Delivery/{id}', [UserRequestController::class, 'Delivery']); //delivery request route
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('logout', 'AuthController@logout');

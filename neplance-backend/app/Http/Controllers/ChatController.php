@@ -2,23 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Chat; // Using the Chat model
+use App\Events\ChatMessageSent;
 
 class ChatController extends Controller
 {
-    function addchat(Request $req){
-        $chat = new Chat;
-        $chat->from_userid = $req->input("from_userid");
-        $chat->to_userid = $req->input("to_userid");
-        $chat->message = $req->input("message");
-        $chat->username = $req->input("username");
+    public function sendMessage(Request $request, User $recipient)
+    {
+        $message = $request->input('message');
+        $sender_id = $request->input('sender_id');
+
+        // Get the sender user instance based on the sender ID
+        $sender = User::find($sender_id);
+
+        // Create a new chat message and set the sender ID
+        $chat = new Chat([
+            'sender_id' => $sender_id,
+            'recipient_id' => $recipient->id,
+            'message' => $message,
+        ]);
         $chat->save();
-        return $chat;
+
+        // Broadcast the chat message to other users
+        event(new ChatMessageSent($message, $sender, $recipient));
+
+        return response()->json(['status' => 'Message sent!']);
     }
 
-    function getchats($id){
-        
-        return Chat::where("to_userid", $id)->get(); //returning the chat with the id
+    public function getMessages(User $recipient, $sender_id)
+    {
+        $messages = Chat::where(function ($query) use ($sender_id, $recipient) {
+            $query->where('sender_id', $sender_id)
+                ->where('recipient_id', $recipient->id);
+        })->orWhere(function ($query) use ($sender_id, $recipient) {
+            $query->where('sender_id', $recipient->id)
+                ->where('recipient_id', $sender_id);
+        })->orderBy('created_at', 'asc')->get();
+    
+        return response()->json(['messages' => $messages]);
     }
+
+
+    public function getRecipients($recipient_id)
+    {
+        $recipients = Chat::where('recipient_id', $recipient_id)
+            ->join('users', 'chats.sender_id', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.file_path')
+            ->distinct()
+            ->get();
+    
+        return response()->json(['recipients' => $recipients]);
+    }
+
 }

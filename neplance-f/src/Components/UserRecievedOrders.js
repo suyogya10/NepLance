@@ -226,7 +226,7 @@ function UserRecievedOrders() {
                 <p>{comments_client}</p>
               </div>
               <div className="d-flex justify-content-between">
-                <p>File attached by Client</p>
+                <p className="fw-bold">File attached by Client</p>
                 {file_client ? (
                   <MDBBtn
                     rounded

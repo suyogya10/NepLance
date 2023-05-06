@@ -30,6 +30,8 @@ import Tabs from "react-bootstrap/Tabs";
 import { useEffect } from "react";
 import UserReviews from "./UserReviews";
 import { Alert } from "react-bootstrap";
+import UserListedRequests from "./UserListedRequests";
+import SellerAcceptedRequests from "./SellerAcceptedRequests";
 
 export default function UserProfile() {
   const [basicModal2, setBasicModal2] = useState(false);
@@ -66,15 +68,10 @@ export default function UserProfile() {
   }, []);
 
   const [key, setKey] = useState("orders");
+  const [key2, setKey2] = useState("services");
   const navigate = useNavigate();
   function AddProduct() {
     navigate("/addproduct");
-  }
-
-  function logout() {
-    localStorage.removeItem("user-info");
-    navigate("/login");
-    window.location.reload(false);
   }
 
   function closeAlert() {
@@ -104,21 +101,6 @@ export default function UserProfile() {
                 </Alert>
               ) : null}
               <MDBCard>
-                <div className="d-flex justify-content-end text-center py-1 gap-4">
-                  <MDBBtn
-                    onClick={logout}
-                    rounded
-                    color="danger"
-                    style={{
-                      height: "36px",
-                      overflow: "visible",
-                      marginRight: "2px",
-                    }}
-                  >
-                    <MDBIcon fas icon="sign-out-alt" className="me-2" />
-                    Logout
-                  </MDBBtn>
-                </div>
                 <div
                   className="rounded-top text-white d-flex flex-row"
                   style={{ backgroundColor: "#00BF63", height: "200px" }}
@@ -361,11 +343,11 @@ export default function UserProfile() {
               {data.registered_as === "seller" ? (
                 <Tabs
                   id="controlled-tab-example"
-                  activeKey={key}
-                  onSelect={(k) => setKey(k)}
+                  activeKey={key2}
+                  onSelect={(k) => setKey2(k)}
                   className="mb-3"
                 >
-                  <Tab eventKey="listings" title="Your Services">
+                  <Tab eventKey="services" title="Your Services">
                     <UserListings />
                   </Tab>
                   <Tab eventKey="orders" title="Ordered Services">
@@ -373,6 +355,12 @@ export default function UserProfile() {
                   </Tab>
                   <Tab eventKey="recieved" title="Recieved Orders">
                     <UserRecievedOrders />
+                  </Tab>
+                  <Tab eventKey="recievedrequests" title="Request Status">
+                    <SellerAcceptedRequests />
+                  </Tab>
+                  <Tab eventKey="requests" title="Posted Requests">
+                    <UserListedRequests />
                   </Tab>
                   <Tab eventKey="reviews" title="Your Reviews">
                     <UserReviews />
@@ -387,6 +375,9 @@ export default function UserProfile() {
                 >
                   <Tab eventKey="orders" title="Ordered Services">
                     <UserOrders />
+                  </Tab>
+                  <Tab eventKey="requests" title="Posted Requests">
+                    <UserListedRequests />
                   </Tab>
                   <Tab eventKey="reviews" title="Your Reviews">
                     <UserReviews />
