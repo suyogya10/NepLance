@@ -10,7 +10,6 @@ import med from "../Assets/med.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { MDBIcon } from "mdb-react-ui-kit";
-import Recommended from "./Recommended";
 
 function Explore() {
   const navigate = useNavigate();
@@ -65,9 +64,8 @@ function Explore() {
           <div className="col-lg-6 m-auto">
             <h1 className="h1">Explore Categories</h1>
             <p>
-              Discover talented freelancers in a variety of categories. Connect
-              with experienced professionals from around the world. Find the
-              right freelancer for your budget and timeline.
+              Explore the right category for you and find the perfect service
+              for you.
             </p>
           </div>
         </div>
@@ -171,7 +169,6 @@ function Explore() {
           </div>
         </div>
       </section>
-      <Recommended />
     </motion.div>
   );
 }

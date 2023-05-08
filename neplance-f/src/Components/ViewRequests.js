@@ -70,6 +70,8 @@ export default function ViewRequests() {
               <th scope="col">Name</th>
               <th scope="col">Designation</th>
               <th scope="col">Citizenship</th>
+              <th scope="col">CV</th>
+              <th scope="col">Degree</th>
               <th scope="col" style={{ textAlign: "center" }}>
                 Actions
               </th>
@@ -105,6 +107,8 @@ export default function ViewRequests() {
                       window.open("http://localhost:8000/" + item.ctznship);
                     }}
                   />
+                </td>
+                <td>
                   <MDBIcon
                     style={{ cursor: "pointer" }}
                     fas
@@ -113,6 +117,8 @@ export default function ViewRequests() {
                       window.open("http://localhost:8000/" + item.cv);
                     }}
                   />
+                </td>
+                <td>
                   <MDBIcon
                     style={{ cursor: "pointer" }}
                     fas

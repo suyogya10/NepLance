@@ -38,7 +38,6 @@ function UserInterest() {
         console.warn(resp);
       });
     });
-    alert("Interests Updated Successfully");
     navigate("/home");
   }
 

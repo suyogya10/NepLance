@@ -43,18 +43,26 @@ function Header() {
               <Nav className="ml-auto align-items-center">
                 {localStorage.getItem("user-info") ? ( // if user is logged in
                   <>
-                    <Link to="/home" className="link">
+                    {/* <Link to="/home" className="link">
                       <MDBIcon fas icon="home" />
                       <a style={{ margin: "6px" }}>Home</a>
-                    </Link>
+                    </Link> */}
                     <Link to="/explore" className="link">
+                      <MDBIcon fas icon="th" />
+                      <a style={{ margin: "5px" }}>Categories</a>
+                    </Link>
+                    <Link to="/recommended" className="link2">
                       <MDBIcon fas icon="globe" />
                       <a style={{ margin: "5px" }}>Explore</a>
                     </Link>
-                    <Link to={"/chat"} className="link">
+                    <Link to="/aboutus" className="link2">
+                      <MDBIcon fas icon="info-circle" />
+                      <a style={{ margin: "5px" }}>About</a>
+                    </Link>
+                    {/* <Link to={"/chat"} className="link">
                       <MDBIcon far icon="comments" />
                       <a style={{ margin: "5px" }}>Messages</a>
-                    </Link>
+                    </Link> */}
                     <NavDropdown
                       title={
                         JSON.parse(localStorage.getItem("user-info")).user.name
@@ -69,6 +77,26 @@ function Header() {
                         Profile{" "}
                         <MDBIcon color="success" fas icon="user-circle" />
                       </NavDropdown.Item>
+                      <NavDropdown.Item
+                        onClick={() => {
+                          navigate("/chat");
+                        }}
+                      >
+                        Messages <MDBIcon color="success" far icon="comments" />
+                      </NavDropdown.Item>
+                      {JSON.parse(localStorage.getItem("user-info")).user
+                        .registered_as === "seller" ? (
+                        <NavDropdown.Item
+                          onClick={() => {
+                            navigate("/jobs");
+                          }}
+                        >
+                          Browse Jobs{" "}
+                          <MDBIcon color="success" fab icon="searchengin" />
+                        </NavDropdown.Item>
+                      ) : (
+                        <></>
+                      )}
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={logout}>
                         Logout{" "}
@@ -80,8 +108,16 @@ function Header() {
                   // if user is not logged in
                   <>
                     <Link to="/explore" className="link2">
+                      <MDBIcon fas icon="th" />
+                      <a style={{ margin: "5px" }}>Categories</a>
+                    </Link>
+                    {/* <Link to="/recommended" className="link2">
                       <MDBIcon fas icon="globe" />
                       <a style={{ margin: "5px" }}>Explore</a>
+                    </Link> */}
+                    <Link to="/aboutus" className="link2">
+                      <MDBIcon fas icon="info-circle" />
+                      <a style={{ margin: "5px" }}>About</a>
                     </Link>
                     <Nav className="d-flex gap-2">
                       <MDBBtn rounded color="success" onClick={login}>

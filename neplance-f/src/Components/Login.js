@@ -37,7 +37,6 @@ function Login() {
     result = await result.json();
     console.warn("result", result);
     localStorage.setItem("user-info", JSON.stringify(result)); // store the data in the local storage
-    navigate("/home"); // redirect to the homepage
 
     if (result.error === "User not verified") {
       localStorage.clear();
@@ -54,6 +53,11 @@ function Login() {
       // alert("Invalid Username or Password");
       setAlert(false);
       navigate("/login");
+    }
+    if (JSON.parse(result.user.profile_setup) != null) {
+      navigate("/home");
+    } else {
+      navigate("/test");
     }
   }
 

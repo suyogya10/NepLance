@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Recommended() {
+function RecommendedPage() {
   const navigate = useNavigate();
   const [freelancerData, setfreelancerData] = useState([]); // [
   const [data, setData] = useState([]);
@@ -55,6 +55,17 @@ function Recommended() {
         exit={{ opacity: 0 }}
       >
         <div className="container py-5">
+          <div className="row text-center pt-3">
+            <div className="col-lg-6 m-auto">
+              <h1 className="h1">Explore Neplance</h1>
+              <p>
+                Discover the highest highest rated freelancers on Neplance. Find
+                the right freelancer for your budget and timeline. Browse
+                various services recommended for you based on your interests.
+                You can change your interests in your profile settings any time.
+              </p>
+            </div>
+          </div>
           {localStorage.getItem("user-info") ? (
             <>
               <div className="row py-5 d-flex gap-2">
@@ -161,11 +172,12 @@ function Recommended() {
               </div>
               <div className="row d-flex">
                 <h4>
-                  Recommended for you <MDBIcon fas icon="chevron-right" />
+                  Services recommended for you{" "}
+                  <MDBIcon fas icon="chevron-right" />
                 </h4>
               </div>
               <div className="row">
-                {data.slice(0, 9).map((item) => {
+                {data.map((item) => {
                   const rating = reviewData.filter(
                     (review) => review.productId === item.id
                   );
@@ -254,4 +266,4 @@ function Recommended() {
   );
 }
 
-export default Recommended;
+export default RecommendedPage;

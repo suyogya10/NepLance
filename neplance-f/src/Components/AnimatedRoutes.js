@@ -34,6 +34,8 @@ import ViewCategory from "./Collections/ViewCategory";
 import UserInterest from "./UserInterest";
 import Chats from "./Chats";
 import Jobs from "./UserPostRequests";
+import AboutUs from "./AboutUs";
+import RecommendedPage from "./Collections/RecommendedPage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -50,6 +52,8 @@ function AnimatedRoutes() {
             <Route path="/login" element={<Login />} />
             <Route path="/otp" element={<OTP />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/recommended" element={<RecommendedPage />} />
             <Route
               path="/userinterest"
               element={<Protected Cmp={UserInterest} />}

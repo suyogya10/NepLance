@@ -106,7 +106,7 @@ export default function Checkout() {
   let checkout = new KhaltiCheckout(config);
   function pay() {
     // minimum transaction amount must be 10, i.e 1000 in paisa.
-    checkout.show({ amount: 50000 });
+    checkout.show({ amount: 1000 });
   }
 
   return (

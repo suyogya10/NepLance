@@ -59,8 +59,11 @@ function Recommended() {
           {localStorage.getItem("user-info") ? (
             <>
               <div className="row">
-                <h4>
-                  Recommended for you <MDBIcon fas icon="chevron-right" />
+                <h4
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate("/recommended")}
+                >
+                  Recommended for you <MDBIcon fas icon="chevron-right" />{" "}
                 </h4>
               </div>
               <div className="row">

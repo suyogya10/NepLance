@@ -239,6 +239,7 @@ class UserController extends Controller
     {
         $user = User::find($UserId); //finding the user with the id
         $user->keywords = $req->keywords; //getting the keywords from the request
+        $user->profile_setup = '1';
         $user->save(); //saving to the database
         return $user; //returning the user
     }

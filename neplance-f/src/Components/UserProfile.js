@@ -179,14 +179,31 @@ export default function UserProfile() {
                             }}
                             outline
                             rounded
+                            size="sm"
                             color="primary"
                             style={{ height: "36px", overflow: "visible" }}
                           >
                             Edit profile
                           </MDBBtn>
                           <MDBBtn
-                            rounded
+                            onClick={() => {
+                              navigate("/userinterest");
+                            }}
                             outline
+                            rounded
+                            size="sm"
+                            color="dark"
+                            style={{
+                              height: "36px",
+                              overflow: "visible",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            Choose Interests
+                          </MDBBtn>
+                          <MDBBtn
+                            rounded
+                            size="sm"
                             color="success"
                             style={{
                               height: "36px",
