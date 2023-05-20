@@ -58,13 +58,27 @@ function Recommended() {
         <div className="container py-5">
           {localStorage.getItem("user-info") ? (
             <>
-              <div className="row">
-                <h4
-                  style={{ cursor: "pointer" }}
+              <div
+                className="row"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderBottom: "1px solid",
+                  borderTop: "1px solid",
+                  borderColor: "#e5e5e5",
+                  paddingBottom: "30px",
+                  paddingTop: "30px",
+                  width: "100%",
+                  marginBottom: "30px",
+                }}
+              >
+                <h2
+                  style={{ cursor: "pointer", maxWidth: "29%" }}
                   onClick={() => navigate("/recommended")}
                 >
-                  Recommended for you <MDBIcon fas icon="chevron-right" />{" "}
-                </h4>
+                  Recommended Services
+                </h2>
               </div>
               <div className="row">
                 {data.slice(0, 3).map((item) => {
@@ -150,107 +164,141 @@ function Recommended() {
           ) : (
             <> </>
           )}
-          <div className="row py-5 d-flex gap-2">
-            <h4>
-              Highest rated freelancers <MDBIcon fas icon="chevron-right" />
-            </h4>
-            {freelancerData.slice(0, 4).map(
-              (item) =>
-                item.registered_as === "seller" && (
-                  <MDBCard
-                    key={item.sellerid}
-                    style={{
-                      borderRadius: "15px",
-                      maxWidth: "320px",
-                      maxHeight: "155px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      navigate("/viewprofile/" + item.sellerid);
-                    }}
-                  >
-                    <MDBCardBody>
-                      <div className="d-flex text-black">
-                        <div>
-                          <MDBCardImage
-                            style={{
-                              maxWidth: "100px",
-                              borderRadius: "20px",
-                              maxHeight: "100px",
-                            }}
-                            src={"http://localhost:8000/" + item.file_path}
-                            alt="Generic placeholder image"
-                            fluid
-                          />
+          <div
+            className="py-5 d-flex gap-2"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderBottom: "1px solid",
+              borderTop: "1px solid",
+              borderColor: "#e5e5e5",
+              paddingBottom: "30px",
+              paddingTop: "30px",
+              width: "100%",
+              marginBottom: "30px",
+            }}
+          >
+            <div
+              style={{
+                width: "40%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Highest rated freelancers
+              </h2>
+            </div>
+            <div
+              className="d-flex flex-wrap gap-2 justify-content-center align-items-center"
+              style={{
+                width: "60%",
+              }}
+            >
+              {freelancerData.slice(0, 4).map(
+                (item) =>
+                  item.registered_as === "seller" && (
+                    <MDBCard
+                      key={item.sellerid}
+                      style={{
+                        borderRadius: "15px",
+                        minWidth: "350px",
+                        maxHeight: "155px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        navigate("/viewprofile/" + item.sellerid);
+                      }}
+                    >
+                      <MDBCardBody>
+                        <div className="d-flex text-black">
+                          <div>
+                            <MDBCardImage
+                              style={{
+                                maxWidth: "100px",
+                                borderRadius: "20px",
+                                maxHeight: "100px",
+                              }}
+                              src={"http://localhost:8000/" + item.file_path}
+                              alt="Generic placeholder image"
+                              fluid
+                            />
+                          </div>
+                          <div className="flex-grow-1 ms-2">
+                            <MDBCardTitle>{item.name}</MDBCardTitle>
+                            <MDBCardText>{item.designation}</MDBCardText>
+                            <ul className="list-unstyled d-flex justify-content-between">
+                              <li>
+                                <i
+                                  className={`${
+                                    parseInt(
+                                      item.avg_rating >= 3.5
+                                        ? Math.ceil(item.avg_rating)
+                                        : Math.floor(item.avg_rating)
+                                    ) >= 1
+                                      ? "text-warning"
+                                      : "text-muted"
+                                  } fa fa-star `}
+                                ></i>
+                                <i
+                                  className={`${
+                                    parseInt(
+                                      item.avg_rating >= 3.5
+                                        ? Math.ceil(item.avg_rating)
+                                        : Math.floor(item.avg_rating)
+                                    ) >= 2
+                                      ? "text-warning"
+                                      : "text-muted"
+                                  } fa fa-star `}
+                                ></i>
+                                <i
+                                  className={`${
+                                    parseInt(
+                                      item.avg_rating >= 3.5
+                                        ? Math.ceil(item.avg_rating)
+                                        : Math.floor(item.avg_rating)
+                                    ) >= 3
+                                      ? "text-warning"
+                                      : "text-muted"
+                                  } fa fa-star `}
+                                ></i>
+                                <i
+                                  className={`${
+                                    parseInt(
+                                      item.avg_rating >= 3.5
+                                        ? Math.ceil(item.avg_rating)
+                                        : Math.floor(item.avg_rating)
+                                    ) >= 4
+                                      ? "text-warning"
+                                      : "text-muted"
+                                  } fa fa-star `}
+                                ></i>
+                                <i
+                                  className={`${
+                                    parseInt(
+                                      item.avg_rating >= 3.5
+                                        ? Math.ceil(item.avg_rating)
+                                        : Math.floor(item.avg_rating)
+                                    ) >= 5
+                                      ? "text-warning"
+                                      : "text-muted"
+                                  } fa fa-star `}
+                                ></i>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
-                        <div className="flex-grow-1 ms-2">
-                          <MDBCardTitle>{item.name}</MDBCardTitle>
-                          <MDBCardText>{item.designation}</MDBCardText>
-                          <ul className="list-unstyled d-flex justify-content-between">
-                            <li>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 1
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 2
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 3
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 4
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                              <i
-                                className={`${
-                                  parseInt(
-                                    item.avg_rating >= 3.5
-                                      ? Math.ceil(item.avg_rating)
-                                      : Math.floor(item.avg_rating)
-                                  ) >= 5
-                                    ? "text-warning"
-                                    : "text-muted"
-                                } fa fa-star `}
-                              ></i>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
-                )
-            )}
+                      </MDBCardBody>
+                    </MDBCard>
+                  )
+              )}
+            </div>
           </div>
         </div>
       </motion.div>

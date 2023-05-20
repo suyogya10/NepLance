@@ -62,39 +62,89 @@ function Cara() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="cara"
       >
-        <MDBCarousel>
+        <div
+          style={{
+            height: "500px",
+          }}
+        >
           {localStorage.getItem("user-info") ? ( // if user is logged in}
-            <MDBCarouselItem className="d-block " itemId={1} src={img2}>
-              <h5>Start Earning Today</h5>
-              <p>Post your skills, sell them and earn money!</p>
-              <MDBBtn
-                rounded
-                color="light"
-                rippleColor="dark"
-                onClick={toggleShow}
+            <div
+              className="d-flex flex-column justify-content-center align-items-center"
+              itemId={1}
+              style={{
+                backgroundImage: `url(${img2})`,
+                height: "500px",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+              }}
+            >
+              <div
+                className="d-flex flex-column justify-content-center align-items-center"
+                style={{
+                  marginTop: "300px",
+                }}
               >
-                Post a request
-              </MDBBtn>
-            </MDBCarouselItem>
+                <h5
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  Start Earning Today
+                </h5>
+                <p
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  Post your skills, sell them and earn money!
+                </p>
+                <MDBBtn
+                  rounded
+                  color="light"
+                  rippleColor="dark"
+                  onClick={toggleShow}
+                >
+                  Post a request
+                </MDBBtn>
+              </div>
+            </div>
           ) : (
-            <MDBCarouselItem className="d-block " itemId={1} src={img}>
-              <h5>Join us Today!</h5>
-              <p>
-                Find the best freelancers in Nepal or sell your skills and earn!
-              </p>
-              <MDBBtn
-                rounded
-                color="light"
-                rippleColor="dark"
-                onClick={() => navigate("/register")}
+            <div
+              className="d-flex flex-column justify-content-center align-items-center"
+              itemId={1}
+              style={{
+                backgroundImage: `url(${img})`,
+                height: "500px",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                className="d-flex flex-column justify-content-center align-items-center"
+                style={{
+                  marginTop: "300px",
+                  color: "white",
+                }}
               >
-                Register Now
-              </MDBBtn>
-            </MDBCarouselItem>
+                <h5>Join us Today!</h5>
+                <p>
+                  Find the best freelancers in Nepal or sell your skills and
+                  earn!
+                </p>
+                <MDBBtn
+                  rounded
+                  color="light"
+                  rippleColor="dark"
+                  onClick={() => navigate("/register")}
+                >
+                  Register Now
+                </MDBBtn>
+              </div>
+            </div>
           )}
-        </MDBCarousel>
+        </div>
       </motion.div>
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
         <MDBModalDialog>

@@ -123,7 +123,7 @@ function Register() {
                         <MDBBtn type="button" color="success" onClick={SignUp}>
                           Register
                         </MDBBtn>
-                        <div class="text-center">
+                        <div class="text-center mt-3">
                           <span>OR</span>
                           <br></br>
                           <a class="small" href="#">

@@ -6,6 +6,7 @@ use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Events\ChatMessageSent;
+use App\Models\NotificationHistory;
 
 class ChatController extends Controller
 {
@@ -24,6 +25,11 @@ class ChatController extends Controller
             'message' => $message,
         ]);
         $chat->save();
+
+        $notification = new NotificationHistory;
+        $notification->user_id = $recipient->id;
+        $notification->notification = "You have a new message from " . $sender->name;
+        $notification->save();
 
         // Broadcast the chat message to other users
         event(new ChatMessageSent($message, $sender, $recipient));

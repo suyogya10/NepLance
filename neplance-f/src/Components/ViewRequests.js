@@ -12,6 +12,8 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBTypography,
+  MDBModalTitle,
+  MDBModalFooter,
 } from "mdb-react-ui-kit";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -19,12 +21,14 @@ import { motion } from "framer-motion";
 
 export default function ViewRequests() {
   const [data, setData] = useState([]);
-  const [basicModal, setBasicModal] = useState(false);
-  const toggleShow = () => setBasicModal(!basicModal);
+
   const [deleteID, setdeleteID] = useState("");
   const [deleteflag, setDeleteflag] = useState(false);
   const [reason, setReason] = useState("");
 
+  const [basicModal, setBasicModal] = useState(false);
+
+  const toggleShow = () => setBasicModal(!basicModal);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("http://localhost:8000/api/viewCtznReq");
@@ -156,45 +160,46 @@ export default function ViewRequests() {
             </MDBTableBody>
           ))}
         </MDBTable>
-        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-          <MDBModalDialog>
-            <MDBModalContent style={{ textAlign: "center" }}>
-              <MDBModalHeader>
-                <MDBTypography tag="h5" variant="h5">
-                  Delete Request?
-                </MDBTypography>
-                <MDBBtn color="none" onClick={toggleShow} type="button">
-                  <MDBIcon icon="times" fas />
-                </MDBBtn>
-              </MDBModalHeader>
-              <MDBModalBody>
-                <p>Reason for Decline?</p>
-                <textarea
-                  onChange={(e) => {
-                    setReason(e.target.value);
-                  }}
-                  className="form-control"
-                  rows="3"
-                ></textarea>
-                <MDBBtn color="secondary" onClick={toggleShow} type="button">
-                  Cancel
-                </MDBBtn>
-                <MDBBtn
-                  color="danger"
-                  onClick={() => {
-                    Decline(deleteID);
-                    toggleShow();
-                  }}
-                  style={{ marginLeft: "10px" }}
-                  type="button"
-                >
-                  Delete
-                </MDBBtn>
-              </MDBModalBody>
-            </MDBModalContent>
-          </MDBModalDialog>
-        </MDBModal>
       </motion.div>
+      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+        <MDBModalDialog>
+          <MDBModalContent style={{ textAlign: "center" }}>
+            <MDBModalHeader>
+              <MDBTypography tag="h5" variant="h5">
+                Delete Request?
+              </MDBTypography>
+              <MDBBtn color="none" onClick={toggleShow} type="button">
+                <MDBIcon icon="times" fas />
+              </MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <p>Reason for Decline?</p>
+              <textarea
+                onChange={(e) => {
+                  setReason(e.target.value);
+                }}
+                className="form-control"
+                rows="3"
+              ></textarea>
+              <br></br>
+              <MDBBtn color="secondary" onClick={toggleShow} type="button">
+                Cancel
+              </MDBBtn>
+              <MDBBtn
+                color="danger"
+                onClick={() => {
+                  Decline(deleteID);
+                  toggleShow();
+                }}
+                style={{ marginLeft: "10px" }}
+                type="button"
+              >
+                Delete
+              </MDBBtn>
+            </MDBModalBody>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
     </>
   );
 }

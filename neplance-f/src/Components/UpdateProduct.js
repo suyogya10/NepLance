@@ -99,8 +99,11 @@ function UpdateProduct() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      style={{
+        marginTop: "100px",
+      }}
     >
-      <div className="container-fluid ps-md-0">
+      <div className="container-fluid ps-md-0 ">
         <p
           style={{ cursor: "pointer", marginTop: "50px", marginLeft: "100px" }}
           onClick={() => navigate(-1)}
@@ -108,13 +111,22 @@ function UpdateProduct() {
           <MDBIcon fas icon="angle-left" /> Back
         </p>
         <div className="row g-0">
-          <div className="d-md-flex col-md-4 col-lg-6">
+          <div
+            className="d-md-flex col-md-4 col-lg-6"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRight: "1px solid #e0e0e0",
+              paddingRight: "50px",
+            }}
+          >
             <img
               src={"http://localhost:8000/" + data.file_path}
               alt="addproduct"
               className="img-fluid"
               style={{
-                width: "600px",
+                width: "500px",
                 height: "500px",
                 marginLeft: "100px",
                 marginTop: "20px",
@@ -125,7 +137,12 @@ function UpdateProduct() {
             <div className="d-flex align-items-center">
               <div className="container">
                 <div className="row">
-                  <div className="col-md-9 col-lg-8 mx-auto">
+                  <div
+                    className="col-md-9 col-lg-8 mx-auto d-flex flex-column justify-content-center align-items-centers"
+                    style={{
+                      height: "500px",
+                    }}
+                  >
                     <h3 className="login-heading mb-4">Update Product</h3>
                     <form id="addprod">
                       <div className="mb-3">

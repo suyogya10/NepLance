@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order; // Using the Order model
+use App\Models\NotificationHistory;
 
 class OrderController extends Controller
 {
@@ -24,6 +25,12 @@ class OrderController extends Controller
         }
         // $order->file_client = $req->file("file_client")-> store("file_client");
         $order->save();
+
+        $notification = new NotificationHistory;
+        $notification->user_id = $req->input("seller_id");
+        $notification->notification = "You have a new order from " . $req->input("clientname");
+        $notification->save();
+
         return $order;
     }
 
@@ -35,6 +42,12 @@ class OrderController extends Controller
         }
         $order->comments_seller = $req->comments_seller;
         $order->save();
+
+        $notification = new NotificationHistory;
+        $notification->user_id = $req->input("client_id");
+        $notification->notification = "Your order from " . $req->input("seller_name") . " has been delivered";
+        $notification->save();
+        
         return $order;
     }
 

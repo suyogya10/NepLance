@@ -76,7 +76,11 @@ function UserListedRequests() {
 
   function UserAccept(key) {
     let formData = new FormData();
+    let clientname = JSON.parse(localStorage.getItem("user-info")).user.name;
     formData.append("price", bid);
+    formData.append("clientname", clientname);
+    formData.append("sellerid", sellerid);
+    console.log(formData);
     fetch("http://localhost:8000/api/userAccept/" + key + "?_method=PUT", {
       method: "POST",
       body: formData,

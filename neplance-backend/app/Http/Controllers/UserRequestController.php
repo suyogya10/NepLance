@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserRequest;
+use App\Models\NotificationHistory;
+use App\Models\User;
 
 class UserRequestController extends Controller
 {
@@ -22,7 +24,7 @@ class UserRequestController extends Controller
 
     function getRequests()
     {
-        return UserRequest::all();
+        return UserRequest::where('status', 'Not accepted yet')->get();
     }
 
     function getRequestByUser($id)
@@ -49,11 +51,17 @@ class UserRequestController extends Controller
     {
         $result = UserRequest::where('id', $id)
             ->update(['sellerid' => $req->sellerid, 'status' => 'Accepted', 'seller_bid' => null]);
-        if ($result) {
+
+            $notification = new NotificationHistory;
+            $notification->user_id = $req->input("clientid");
+            $notification->notification = "Your latest request has been accepted by " . $req->input("sellername");
+            $notification->save();
+        if ($result) { 
             return ["result" => "Request has been accepted"];
         } else {
             return ["result" => "Operation failed"];
         }
+
     }
 
     function userAccept($id, Request $req)
@@ -61,6 +69,10 @@ class UserRequestController extends Controller
         $result = UserRequest::where('id', $id)
             ->update(['status' => 'Accepted', 'price' => $req->price, 'seller_bid' => null]);
         if ($result) {
+            $notification = new NotificationHistory;
+            $notification->user_id = $req->input("sellerid");
+            $notification->notification = "Your bid has been accepted " . $req->input("clientname");
+            $notification->save();
             return ["result" => "Request has been accepted"];
         } else {
             return ["result" => "Operation failed"];
@@ -82,6 +94,10 @@ class UserRequestController extends Controller
     {
         $result = UserRequest::where('id', $id)
             ->update(['seller_bid' => $req->seller_bid, 'sellerid' => $req->sellerid]);
+            $notification = new NotificationHistory;
+            $notification->user_id = $req->input("clientid");
+            $notification->notification = "Your latest request has a new bid by " . $req->input("sellername");
+            $notification->save();
         if ($result) {
             return ["result" => "Bid has been placed"];
         } else {
@@ -110,6 +126,10 @@ class UserRequestController extends Controller
             $result->file_seller = $req->file("file_seller")-> store("file_seller");
         }
         $result->comments_seller = $req->comments_seller;
+        $notification = new NotificationHistory;
+            $notification->user_id = $req->input("clientid");
+            $notification->notification = "One of your requests has been delivered by " . $req->input("sellername");
+            $notification->save();
         $result->save();
         return $result;
     }

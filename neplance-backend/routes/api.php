@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\FrequentlyAskedController;
+use App\Http\Controllers\NotificationHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,6 +107,10 @@ Route::put('Delivery/{id}', [UserRequestController::class, 'Delivery']); //deliv
 Route::post('addFAQ',[FrequentlyAskedController::class,'addFAQ']);
 Route::get('getFAQ',[FrequentlyAskedController::class,'getFAQ']);
 Route::delete('deleteFAQ/{id}',[FrequentlyAskedController::class,'deleteFAQ']);
+
+
+Route::post('addNotification',[NotificationHistoryController::class,'addNotification']);
+Route::get('getNotification/{id}',[NotificationHistoryController::class,'getNotification']);
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('logout', 'AuthController@logout');

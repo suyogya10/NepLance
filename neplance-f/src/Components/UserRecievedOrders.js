@@ -47,9 +47,12 @@ function UserRecievedOrders() {
   const [comments_seller, setcomments] = useState("");
 
   function Delivery() {
+    let seller_name = JSON.parse(localStorage.getItem("user-info")).user.name;
     let formData = new FormData();
     formData.append("file_seller", file_seller);
     formData.append("comments_seller", comments_seller);
+    formData.append("seller_name", seller_name);
+    formData.append("client_id", client_id);
     fetch(
       "http://localhost:8000/api/sellerUpdateOrder/" +
         order_id +

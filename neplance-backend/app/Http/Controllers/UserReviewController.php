@@ -11,7 +11,7 @@ class UserReviewController extends Controller
 {
     function reviewUser(Request $req){
         $review = new UserReview;
-        $review->userid = $req->input("userid");
+        $review->userid = $req->input("userid"); //getting the user id from the request
         $review->username = $req->input("username");
         $review->sellerid = $req->input("sellerid");
         $review->review = $req->input("review");
@@ -31,7 +31,7 @@ class UserReviewController extends Controller
     }
 
     function topRated() {
-        $sellers = UserReview::select('sellerid', DB::raw('ROUND(AVG(rating),2) as avg_rating'))
+        $sellers = UserReview::select('sellerid', DB::raw('ROUND(AVG(rating),2) as avg_rating')) // Using the DB facade to fetch the data from the database table 'user_reviews' and calculate the average rating for each seller and round it to 2 decimal places 
         ->groupBy('sellerid')
         ->orderBy('avg_rating', 'desc')
         ->take(5) // change this to the number of sellers you want to fetch

@@ -34,6 +34,7 @@ function SellerAcceptedRequests() {
   const [postStatus, setPostStatus] = useState("");
   const [bid, setBid] = useState("");
   const [token, setToken] = useState("");
+  const [clientid, setClientId] = useState("");
 
   const ApiHandler = async () => {
     let result = await fetch(
@@ -51,9 +52,12 @@ function SellerAcceptedRequests() {
   const [delivery_id, setDelivery_id] = useState("");
 
   function Delivery(key) {
+    let sellername = JSON.parse(localStorage.getItem("user-info")).user.name;
     let formData = new FormData();
     formData.append("file_seller", file_seller);
     formData.append("comments_seller", comments_seller);
+    formData.append("clientid", clientid);
+    formData.append("sellername", sellername);
     fetch("http://localhost:8000/api/Delivery/" + key + "?_method=PUT", {
       method: "POST",
       body: formData,
@@ -105,6 +109,7 @@ function SellerAcceptedRequests() {
                   setBid(item.seller_bid);
                   setToken(item.payment_token);
                   setDelivery_id(item.id);
+                  setClientId(item.userid);
                 }}
               >
                 <td>
@@ -143,7 +148,7 @@ function SellerAcceptedRequests() {
                     <></>
                   )}
                 </td>
-                {item.file_seller === null ? (
+                {item.comments_seller === null ? (
                   <td>
                     <MDBBadge color="warning" pill>
                       Not Delivered

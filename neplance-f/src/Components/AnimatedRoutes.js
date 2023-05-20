@@ -33,7 +33,7 @@ import BecomeSeller from "./BecomeSeller";
 import ViewCategory from "./Collections/ViewCategory";
 import UserInterest from "./UserInterest";
 import Chats from "./Chats";
-import Jobs from "./UserPostRequests";
+import Jobs from "./ViewPostRequests";
 import AboutUs from "./AboutUs";
 import RecommendedPage from "./Collections/RecommendedPage";
 import { io } from "socket.io-client";

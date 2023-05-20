@@ -94,14 +94,24 @@ function HomeCards() {
       <section>
         <div className="container">
           <div className="row py-3">
-            <div className="colm-auto">
-              <h4>
-                Latest Listings <MDBIcon fas icon="chevron-right" />
-              </h4>
+            <div
+              className="colm-auto"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderBottom: "1px solid",
+                borderTop: "1px solid",
+                borderColor: "#e5e5e5",
+                paddingBottom: "30px",
+                paddingTop: "30px",
+              }}
+            >
+              <h2>Latest Listings</h2>
             </div>
           </div>
           <div className="row">
-            {data.slice(0, 6).map((item) => {
+            {data.slice(0, 9).map((item) => {
               const rating = reviewData.filter(
                 (review) => review.productId === item.id
               );

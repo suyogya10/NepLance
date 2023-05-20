@@ -60,10 +60,35 @@ function Header() {
     window.location.reload(false);
   }
 
+  const [data, setData] = useState([]);
+
+  const ApiHandler = async () => {
+    let userid = JSON.parse(localStorage.getItem("user-info")).user.id;
+    let result = await fetch(
+      "http://localhost:8000/api/getNotification/" + userid,
+      {
+        method: "GET",
+      }
+    );
+    result = await result.json();
+    setData(result);
+  };
+  useEffect(() => {
+    ApiHandler();
+  }, []);
+
   return (
     <>
       <div style={{ marginBottom: "65px" }}>
-        <Navbar bg="light" expand="sm" fixed="top">
+        <Navbar
+          bg="light"
+          expand="sm"
+          fixed="top"
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Container>
             <Navbar.Brand
               onClick={() => {
@@ -82,6 +107,32 @@ function Header() {
                       <MDBIcon fas icon="home" />
                       <a style={{ margin: "6px" }}>Home</a>
                     </Link> */}
+                    <NavDropdown
+                      id="navbarScrollingDropdown"
+                      drop="down"
+                      title={
+                        <MDBIcon
+                          fas
+                          icon="bell"
+                          style={{ fontSize: "0.9rem" }}
+                        />
+                      }
+                    >
+                      {data.map((item) => (
+                        <NavDropdown.Item
+                          key={item.id}
+                          style={{
+                            whiteSpace: "normal",
+                            wordWrap: "break-word",
+                            border: "1px solid #e5e5e5",
+                            width: "280px",
+                          }}
+                        >
+                          <MDBIcon fas className="mr-2" gap={2} />
+                          {`${item.notification}`}
+                        </NavDropdown.Item>
+                      ))}
+                    </NavDropdown>
                     <Link to="/explore" className="link">
                       <MDBIcon fas icon="th" />
                       <a style={{ margin: "5px" }}>Categories</a>
@@ -98,6 +149,7 @@ function Header() {
                       <MDBIcon far icon="comments" />
                       <a style={{ margin: "5px" }}>Messages</a>
                     </Link> */}
+
                     <NavDropdown
                       title={
                         JSON.parse(localStorage.getItem("user-info")).user.name

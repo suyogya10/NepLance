@@ -62,6 +62,8 @@ export default function Checkout() {
         console.log(payload);
         const seller_id = product.userid;
         const client_id = JSON.parse(localStorage.getItem("user-info")).user.id;
+        const clientname = JSON.parse(localStorage.getItem("user-info")).user
+          .name;
         let formData = new FormData();
         formData.append("seller_id", seller_id);
         formData.append("client_id", client_id);
@@ -74,6 +76,7 @@ export default function Checkout() {
         formData.append("token", payload.token);
         formData.append("status", "success");
         formData.append("file_client", file_client);
+        formData.append("clientname", clientname);
 
         fetch("http://localhost:8000/api/addOrder", {
           method: "POST",

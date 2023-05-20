@@ -58,12 +58,22 @@ function UserOrders() {
     formData.append("username", username);
     formData.append("review", review);
     formData.append("rating", rating);
+    console.log(userid_localstg);
+    console.log(productid);
+    console.log(username);
+    console.log(review);
+    console.log(rating);
+
     fetch("http://localhost:8000/api/reviewProduct", {
       method: "POST",
       body: formData,
     })
       .then((result) => {
-        result.json().then((resp) => {});
+        result.json().then((resp) => {
+          console.log(resp);
+          setisRating(true);
+          toggleShow();
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -335,8 +345,8 @@ function UserOrders() {
                           size="sm"
                           onClick={() => {
                             addReview();
-                            alert("Review added successfully");
-                            navigate("/product/" + productid);
+                            // alert("Review added successfully");
+                            // navigate("/product/" + productid);
                           }}
                         >
                           <MDBIcon far icon="edit" /> Submit
