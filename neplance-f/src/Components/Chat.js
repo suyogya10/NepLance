@@ -19,6 +19,7 @@ export default function Chat() {
   const navigate = useNavigate();
 
   const [recipentData, setRecipentData] = useState([]);
+  const [recipentList, setRecipentList] = useState([]);
   const ApiHandler2 = async () => {
     let result4 = await fetch(
       "http://localhost:8000/api/chat/recipients/" +
@@ -27,10 +28,19 @@ export default function Chat() {
     result4 = await result4.json();
     console.log(result4.recipients);
     setRecipentData(result4.recipients.reverse());
+    setRecipentList(result4.recipients);
   };
   useEffect(() => {
     ApiHandler2();
   }, []);
+
+  function Search(e) {
+    let search = e.target.value;
+    let result = recipentList.filter((item) => {
+      return item.name.toLowerCase().includes(search.toLowerCase()); //searching by name
+    });
+    setRecipentData(result);
+  }
 
   return (
     <>
@@ -48,13 +58,14 @@ export default function Chat() {
                     <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
                       <div className="p-3">
                         <div className="d-flex justify-content-between align-items-center mb-3">
-                          <h2 className="mb-0">Messages</h2>
+                          <h2 className="mb-0">Inbox</h2>
                         </div>
                         <MDBInputGroup className="rounded mb-3">
                           <input
                             className="form-control rounded"
                             placeholder="Search"
                             type="search"
+                            onChange={(e) => Search(e)}
                           />
                           <span
                             className="input-group-text border-0"
@@ -92,12 +103,15 @@ export default function Chat() {
                                             item.file_path
                                           }
                                           alt="avatar"
-                                          className="d-flex align-self-center me-3"
+                                          className="d-flex img-thumbnail rounded-circle img-fluid"
                                           width="60"
                                         />
                                       </div>
                                       <div className="pt-1 d-flex align-items-center">
-                                        <p className="fw-bold mb-0">
+                                        <p
+                                          className="fw-bold mb-0"
+                                          style={{ marginLeft: "5px" }}
+                                        >
                                           {item.name}
                                         </p>
                                         {/* <p className="small text-muted">

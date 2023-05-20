@@ -2,8 +2,27 @@ import React from "react";
 import about1 from "./Assets/About1.png";
 import about2 from "./Assets/About2.png";
 import about3 from "./Assets/About3.png";
-
+import {
+  MDBCol,
+  MDBContainer,
+  MDBIcon,
+  MDBRow,
+  MDBTypography,
+} from "mdb-react-ui-kit";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const AboutUs = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:8000/api/getFAQ");
+      const jsonData = await response.json();
+      setData(jsonData);
+    };
+    fetchData();
+  });
   return (
     <>
       <div>
@@ -70,6 +89,34 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+      <MDBContainer>
+        <section>
+          <MDBTypography
+            tag="h3"
+            className="text-center mb-4 pb-2 text-primary fw-bold"
+          >
+            FAQ
+          </MDBTypography>
+          <p className="text-center mb-5">
+            Find the answers for the most frequently asked questions below
+          </p>
+
+          <MDBRow className="d-flex">
+            {data.map((item) => (
+              <MDBCol key={item.id} md="6" lg="4" className="mb-4">
+                <MDBTypography tag="h6" className="mb-3 text-primary">
+                  <MDBIcon far icon="question-circle text-primary pe-2" />
+                  {item.question}
+                </MDBTypography>
+                {item.answer}
+                <>
+                  <a href={item.link}> Learn More</a>
+                </>
+              </MDBCol>
+            ))}
+          </MDBRow>
+        </section>
+      </MDBContainer>
     </>
   );
 };

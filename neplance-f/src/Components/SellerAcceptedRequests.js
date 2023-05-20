@@ -145,13 +145,13 @@ function SellerAcceptedRequests() {
                 </td>
                 {item.file_seller === null ? (
                   <td>
-                    <MDBBadge color="primary" pill>
+                    <MDBBadge color="warning" pill>
                       Not Delivered
                     </MDBBadge>
                   </td>
                 ) : (
                   <td>
-                    <MDBBadge color="success" pill>
+                    <MDBBadge color="primary" pill>
                       Delivered
                     </MDBBadge>
                   </td>
@@ -256,7 +256,7 @@ function SellerAcceptedRequests() {
               <MDBBtn color="secondary" onClick={toggleShow}>
                 Close
               </MDBBtn>
-              {token != null ? (
+              {token != null && comments_seller != "" ? (
                 <MDBBtn
                   color="success"
                   onClick={() => {

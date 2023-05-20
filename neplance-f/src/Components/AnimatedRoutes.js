@@ -36,6 +36,12 @@ import Chats from "./Chats";
 import Jobs from "./UserPostRequests";
 import AboutUs from "./AboutUs";
 import RecommendedPage from "./Collections/RecommendedPage";
+import { io } from "socket.io-client";
+import ForgotPassword from "./ForgotPassword";
+
+import AdminFAQ from "./AdminFAQ";
+
+const socket = io("http://localhost:3001");
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -49,11 +55,11 @@ function AnimatedRoutes() {
             <Route path="/test" element={<Test />} />
             <Route path="/" element={<Landing />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/otp" element={<OTP />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/aboutus" element={<AboutUs />} />
-            <Route path="/recommended" element={<RecommendedPage />} />
             <Route
               path="/userinterest"
               element={<Protected Cmp={UserInterest} />}
@@ -80,6 +86,7 @@ function AnimatedRoutes() {
 
             <Route path="/explore/:category" element={<ViewCategory />} />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/recommended" element={<RecommendedPage />} />
 
             <Route path="/chats/:id" element={<Chats />} />
             <Route path="/chat" element={<Chat />} />
@@ -110,6 +117,7 @@ function AnimatedRoutes() {
               path="/viewrequests"
               element={<AdminProtected Cmp={ViewRequests} />}
             />
+            <Route path="/faq" element={<AdminProtected Cmp={AdminFAQ} />} />
             <Route
               path="/adminupdateproduct/:id"
               element={<AdminProtected Cmp={AdminUpdateProduct} />}

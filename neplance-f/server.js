@@ -2,6 +2,8 @@ const { json } = require("express");
 
 const app = require("express")();
 
+const backend_id = 6969;
+
 app.use(json());
 
 const http = require("http").Server(app);
@@ -14,6 +16,11 @@ const io = require("socket.io")(http, {
 
 io.on("connection", function (socket) {
   console.log("a user connected");
+
+  socket.on("join-notification", (room) => {
+    console.log("joined room", room);
+    socket.join(room);
+  });
   socket.on("disconnect", function () {
     console.log("user disconnected");
   });
@@ -29,6 +36,13 @@ io.on("connection", function (socket) {
     console.log("room: " + room);
     console.log("message: " + JSON.stringify(msg));
     io.to(room).emit("receive-message", msg, room);
+    io.to(parseInt(backend_id) + parseInt(msg.receiver_id)).emit(
+      "notification",
+      msg,
+      room
+    );
+
+    console.log("message sent");
     callback(msg);
   });
 });

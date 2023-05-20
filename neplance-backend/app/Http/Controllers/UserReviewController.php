@@ -53,4 +53,14 @@ class UserReviewController extends Controller
 
     return $sellers;
     }
+
+    function getReviewsbyUser($usid){
+        return UserReview::where("userid", $usid)->get(); //returning the reviews with the user id
+    }
+
+    function deleteUserReview($sid){
+        $review = UserReview::find($sid);
+        $review->delete();
+        return $review;
+    }
 }

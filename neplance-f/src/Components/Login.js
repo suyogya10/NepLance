@@ -54,7 +54,10 @@ function Login() {
       setAlert(false);
       navigate("/login");
     }
-    if (JSON.parse(result.user.profile_setup) != null) {
+
+    if (
+      JSON.parse(localStorage.getItem("user-info")).user.profile_setup != null
+    ) {
       navigate("/home");
     } else {
       navigate("/test");
@@ -130,13 +133,17 @@ function Login() {
                           <a>OR</a>
                         </div>
                         <div>
-                          {/* <a className="small" href="#">
-                              Forgot Password?
-                            </a> */}
+                          <a
+                            className="small"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => navigate("/forgotpassword")}
+                          >
+                            Forgot Password?
+                          </a>
                           <a
                             className="small"
                             onClick={register}
-                            style={{ marginLeft: "190px", cursor: "pointer" }}
+                            style={{ marginLeft: "250px", cursor: "pointer" }}
                           >
                             Create an Account?
                           </a>

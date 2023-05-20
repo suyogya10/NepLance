@@ -13,8 +13,10 @@ import {
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useNotification } from "use-toast-notification";
 
 function UpdateProduct() {
+  const notification = useNotification();
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
   const [basicModal2, setBasicModal2] = useState(false);
@@ -28,8 +30,6 @@ function UpdateProduct() {
   const [file, setFile] = useState("");
   const [category, setCategory] = useState("");
   const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
-
-
 
   const ApiHandler = async () => {
     const result = await fetch(
@@ -45,7 +45,6 @@ function UpdateProduct() {
     setDescription(resp.description);
     setFile(resp.file_path);
     setCategory(resp.category);
-
   };
 
   useEffect(() => {
@@ -68,7 +67,6 @@ function UpdateProduct() {
   }
 
   function Update() {
-    
     let formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
@@ -85,7 +83,11 @@ function UpdateProduct() {
     ).then((result) => {
       result.json().then((resp) => {
         console.warn(resp);
-        alert("Product Updated Successfully");
+        notification.show({
+          message: `Service has been updated.`,
+          title: "Service Updated",
+          variant: "success",
+        });
         ApiHandler();
       });
     });
@@ -99,11 +101,13 @@ function UpdateProduct() {
       exit={{ opacity: 0 }}
     >
       <div className="container-fluid ps-md-0">
-      <p style={{ cursor: "pointer", marginTop:"50px", marginLeft:"100px" }} onClick={() => navigate(-1)}>
-              <MDBIcon fas icon="angle-left" /> Back
-            </p>
+        <p
+          style={{ cursor: "pointer", marginTop: "50px", marginLeft: "100px" }}
+          onClick={() => navigate(-1)}
+        >
+          <MDBIcon fas icon="angle-left" /> Back
+        </p>
         <div className="row g-0">
-
           <div className="d-md-flex col-md-4 col-lg-6">
             <img
               src={"http://localhost:8000/" + data.file_path}

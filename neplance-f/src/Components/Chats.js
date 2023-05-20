@@ -23,10 +23,9 @@ export default function Chats() {
   const [message, setMessage] = useState([]);
   const [textMessage, setTextMessage] = useState("");
   const { id: roomId } = useParams();
-
   const userData = roomId.split("-");
   const room = roomId.split("-").sort().join("-");
-  console.log(room);
+  // console.log(room);
 
   const ApiHandler = async () => {
     let resultReceive = await fetch(
@@ -57,7 +56,7 @@ export default function Chats() {
   useEffect(() => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     messagesEndRef.current.scrollTo(0, messagesEndRef.current.scrollHeight);
-  });
+  }, []);
 
   useEffect(() => {
     socket.emit("chat-room", room);
@@ -70,13 +69,14 @@ export default function Chats() {
     return () => {
       socket.off("receive-message");
     };
-  }, []);
+  }, [message]);
 
   const sendMessage = (e) => {
     e.preventDefault();
     socket.emit(
       "chat-message",
       {
+        username: JSON.parse(localStorage.getItem("user-info")).user.name,
         message: textMessage,
         sender_id: userData[0],
         receiver_id: userData[1],
@@ -108,6 +108,18 @@ export default function Chats() {
     // const message = textMessage;
   };
 
+  const [recipentName, setRecipentName] = useState("");
+  const ApiHandler3 = async () => {
+    let result5 = await fetch(
+      "http://localhost:8000/api/getUser/" + userData[1]
+    );
+    result5 = await result5.json();
+    setRecipentName(result5);
+  };
+  useEffect(() => {
+    ApiHandler3();
+  }, []);
+
   return (
     <>
       <motion.div
@@ -124,7 +136,7 @@ export default function Chats() {
                     <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
                       <div className="p-3">
                         <div className="d-flex justify-content-between align-items-center mb-3">
-                          <h2 className="mb-0">Messages</h2>
+                          <h2 className="mb-0">Inbox</h2>
                         </div>
                         <MDBInputGroup className="rounded mb-3">
                           <input
@@ -146,13 +158,13 @@ export default function Chats() {
                                 <li
                                   className="p-2 border-bottom"
                                   onClick={() => {
-                                    console.log("balls");
                                     const roomId =
                                       JSON.parse(
                                         localStorage.getItem("user-info")
                                       ).user.id +
                                       "-" +
                                       item.id;
+
                                     navigate("/chats/" + roomId);
                                   }}
                                 >
@@ -168,12 +180,15 @@ export default function Chats() {
                                             item.file_path
                                           }
                                           alt="avatar"
-                                          className="d-flex align-self-center me-3"
+                                          className="d-flex img-thumbnail rounded-circle img-fluid"
                                           width="60"
                                         />
                                       </div>
                                       <div className="pt-1 d-flex align-items-center">
-                                        <p className="fw-bold mb-0">
+                                        <p
+                                          className="fw-bold mb-0"
+                                          style={{ marginLeft: "5px" }}
+                                        >
                                           {item.name}
                                         </p>
                                         {/* <p className="small text-muted">
@@ -196,6 +211,17 @@ export default function Chats() {
                     </MDBCol>
 
                     <MDBCol md="6" lg="7" xl="8">
+                      <div className="d-flex align-items-center">
+                        <img
+                          src={
+                            "http://localhost:8000/" + recipentName.file_path
+                          }
+                          alt="avatar"
+                          className="d-flex mb-2 align-self-center me-3 img-thumbnail rounded-circle img-fluid"
+                          width="60"
+                        />
+                        <h3>{recipentName.name}</h3>
+                      </div>
                       <div
                         className="p-3 baulsdeep"
                         ref={messagesEndRef}
@@ -203,11 +229,11 @@ export default function Chats() {
                           minHeight: "550px",
                           maxHeight: "550px",
                           overflow: "auto",
+                          borderLeft: "1px solid #e0e0e0",
+                          borderTop: "1px solid #e0e0e0",
                         }}
                       >
                         {message.map((msg) => {
-                          console.log(msg.sender_id);
-
                           return msg.sender_id.toString() === userData[1] ? (
                             <div>
                               <div className="d-flex flex-row justify-content-start">
@@ -219,7 +245,17 @@ export default function Chats() {
                                     {msg.message}
                                   </p>
                                   <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
-                                    12:00 PM | Aug 13
+                                    {/* {msg.created_at
+                                      ? msg.created_at
+                                          .split("T")[1]
+                                          .split(".")[0]
+                                          .split(":")[0] +
+                                        ":" +
+                                        msg.created_at
+                                          .split("T")[1]
+                                          .split(".")[0]
+                                          .split(":")[1]
+                                      : "000"} */}
                                   </p>
                                 </div>
                               </div>
@@ -231,7 +267,17 @@ export default function Chats() {
                                   {msg.message}
                                 </p>
                                 <p className="small me-3 mb-3 rounded-3 text-muted">
-                                  12:00 PM | Aug 13
+                                  {/* {msg.created_at
+                                    ? msg.created_at
+                                        .split("T")[1]
+                                        .split(".")[0]
+                                        .split(":")[0] +
+                                      ":" +
+                                      msg.created_at
+                                        .split("T")[1]
+                                        .split(".")[0]
+                                        .split(":")[1]
+                                    : "000"} */}
                                 </p>
                               </div>
                             </div>

@@ -12,8 +12,10 @@ import {
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useNotification } from "use-toast-notification";
 
 function AddProduct() {
+  const notification = useNotification();
   const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
   const [data, setData] = useState([]);
   const ApiHandler = async () => {
@@ -55,13 +57,17 @@ function AddProduct() {
       body: formData,
     }).then((result) => {
       result.json().then((resp) => {
-        console.warn(resp);
-        console.log(result);
+        // console.warn(resp);
+        // console.log(result);
       });
     });
-    document.getElementById("addprod").reset();
-    alert("Product Added Successfully");
+    toggleShow();
     navigate("/user");
+    notification.show({
+      message: `Service has been posted. Check your profile and select "Your Services" to view your posted services.`,
+      title: "Service Posted",
+      variant: "success",
+    });
   }
 
   return (
@@ -161,7 +167,35 @@ function AddProduct() {
                                 onChange={(e) => setFile(e.target.files[0])}
                               ></input>
                             </div>
-                            <div className="d-grid">
+                            {name == "" ||
+                            price == "" ||
+                            description == "" ||
+                            category == "" ||
+                            file == "" ? (
+                              <div className="d-grid">
+                                <MDBBtn
+                                  rounded
+                                  type="button"
+                                  color="success"
+                                  onClick={toggleShow}
+                                  disabled
+                                >
+                                  Add Service
+                                </MDBBtn>
+                              </div>
+                            ) : (
+                              <div className="d-grid">
+                                <MDBBtn
+                                  rounded
+                                  type="button"
+                                  color="success"
+                                  onClick={toggleShow}
+                                >
+                                  Add Service
+                                </MDBBtn>
+                              </div>
+                            )}
+                            {/* <div className="d-grid">
                               <MDBBtn
                                 rounded
                                 type="button"
@@ -170,7 +204,7 @@ function AddProduct() {
                               >
                                 Add Service
                               </MDBBtn>
-                            </div>
+                            </div> */}
                             <MDBModal
                               show={basicModal}
                               setShow={setBasicModal}
@@ -199,7 +233,9 @@ function AddProduct() {
                                     >
                                       Close
                                     </MDBBtn>
-                                    <MDBBtn type="submit" onClick={addProduct}>Add Service</MDBBtn>
+                                    <MDBBtn type="button" onClick={addProduct}>
+                                      Add Service
+                                    </MDBBtn>
                                   </MDBModalFooter>
                                 </MDBModalContent>
                               </MDBModalDialog>

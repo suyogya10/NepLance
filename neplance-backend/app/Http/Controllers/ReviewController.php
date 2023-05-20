@@ -49,7 +49,7 @@ class ReviewController extends Controller
         $averageRatings = Review::select('productId', DB::raw('ROUND(AVG(rating)) as average_rating'))
         ->groupBy('productId')
         ->get();
-
+ 
     return $averageRatings;
 
     }

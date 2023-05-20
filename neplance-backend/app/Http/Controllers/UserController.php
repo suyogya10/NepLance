@@ -21,8 +21,8 @@ class UserController extends Controller
 
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'password' => 'required|min:5',
-            'phone' => 'required|min:10']);
+            'password' => 'required|min:6',
+            'phone' => 'required|min:10|unique:users,number']);
 
             if ($validator->fails()) {
                 // handle the validation errors here
@@ -64,6 +64,56 @@ class UserController extends Controller
 
         return $user; //returning the user
 
+    }
+
+    function requestOTP(Request $req){
+
+        $user = User::where('number', $req->number)->first();
+        $otpCode = rand(1000,9999);
+
+
+        $args = http_build_query(array(
+            'auth_token'=> '1c2f4c96f4af3cd74a7c9bccf03a4cf6284cc18360dbbce2112f52e9de4446b6/',
+            'to'    => $req->input("number"),
+            'text'  => 'Hi, Your OTP for Password Reset at NepLance is: '.$otpCode));
+        $url = "https://sms.aakashsms.com/sms/v3/send/"; // Aakash SMS Endpoint V3 to send SMS
+
+        # Make the call using API.
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_POST, 1); ///
+        curl_setopt($ch, CURLOPT_POSTFIELDS,$args);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        // Response
+        $response = curl_exec($ch);
+        curl_close($ch);    
+        // send the SMS message
+        if ($user){
+            $user->otp = $otpCode; //getting the otp from the request
+            $user->save();
+            return $otpCode;
+        }else{
+            return ["Invalid Mobile Number"];
+        }     
+        
+    }
+
+    function forgotPasswordChange(Request $req){
+
+        $user = User::where('otp', $req->otp)->first();
+        if($user) {
+            if($user->otp == $req->otp) {
+                $user->password = Hash::make($req->input("newpassword"));
+                $user->isVerified = 'yes';
+                $user->otp = '';
+                $user->save();
+                return $user;
+            } else {
+               return ["OTP does not match"];
+            }
+        } else {
+            return ["OTP does not match"];
+        }
     }
 
     function login(Request $req)
@@ -162,6 +212,19 @@ class UserController extends Controller
         return $user; //returning the product
     }
 
+    function updatePassword($id,Request $req)
+    {
+        $user = User::find($req->id); //finding the user with the id
+        $newpassword = $req->input("newpassword");
+        if (Hash::check($req->input("oldpassword"), $user->password)) {
+            $user->password = Hash::make($newpassword); //getting the password from the request
+            $user->save(); //saving the user to the database
+            return ["result" => "Password has been changed"];
+        } else {
+            return ["result" => "Old password does not match"];
+        }
+    }
+
     function becomeSeller($id,Request $req)
     {
         $user = User::find($req->id); //finding the user with the id
@@ -252,5 +315,16 @@ class UserController extends Controller
         return $products;
     }
 
+    function getRecommendedSellers($userId){
+        $user = User::find($userId);
+        $keywords = explode(',', $user->keywords);
+        $sellers = User::whereIn('occupation', $keywords)->get();
+        return $sellers;
+    }
+
+    function searchUser($key)
+    {
+        return User::where("name", "like", "%".$key."%")->get(); //returning the products with the name that contains the key
+    }
 
 }

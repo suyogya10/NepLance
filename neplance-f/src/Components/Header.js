@@ -7,12 +7,47 @@ import { useNavigate } from "react-router-dom";
 import { MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import img from "./Assets/logo.png";
 import Footer from "./Footer";
+import { useState, useEffect } from "react";
+import { useNotification } from "use-toast-notification";
 import io from "socket.io-client";
 
 const socket = io("http://localhost:3001");
 
 function Header() {
   const navigate = useNavigate();
+
+  const [showA, setShowA] = useState(false);
+  const notification = useNotification();
+
+  const toggleShowA = () => setShowA(!showA);
+
+  let id = "";
+
+  if (localStorage.getItem("user-info") === null) {
+    id = "";
+  } else {
+    id = JSON.parse(localStorage.getItem("user-info")).user.id;
+  }
+
+  useEffect(() => {
+    socket.emit("join-notification", 6969 + id);
+  }, []);
+
+  useEffect(() => {
+    const handleNotification = (data) => {
+      notification.show({
+        message: `Message from ${data.username}`,
+        title: "New Message",
+        variant: "success",
+      });
+    };
+
+    socket.on("notification", handleNotification);
+
+    return () => {
+      socket.off("notification", handleNotification);
+    };
+  }, []);
 
   function login() {
     localStorage.clear();

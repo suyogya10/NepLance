@@ -122,6 +122,7 @@ export default function ViewReviews() {
                 <MDBBtn
                   color="danger"
                   onClick={() => {
+                    setDeleteflag(false);
                     AdminDeleteReview(deleteID);
                     toggleShow();
                   }}

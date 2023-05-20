@@ -270,18 +270,34 @@ function UserRecievedOrders() {
                       }}
                     />
                   </div>
-                  <div className="d-flex justify-content-between">
-                    <br></br>
-                    <MDBBtn
-                      onClick={Delivery}
-                      rounded
-                      color="success"
-                      size="sm"
-                      style={{ maxHeight: "30px", marginTop: "10px" }}
-                    >
-                      <MDBIcon fas icon="check me-2" /> Mark as Delivered
-                    </MDBBtn>
-                  </div>
+                  {comments_seller == "" ? (
+                    <div className="d-flex justify-content-between">
+                      <br></br>
+                      <MDBBtn
+                        onClick={Delivery}
+                        rounded
+                        color="success"
+                        size="sm"
+                        disabled
+                        style={{ maxHeight: "30px", marginTop: "10px" }}
+                      >
+                        <MDBIcon fas icon="check me-2" /> Mark as Delivered
+                      </MDBBtn>
+                    </div>
+                  ) : (
+                    <div className="d-flex justify-content-between">
+                      <br></br>
+                      <MDBBtn
+                        onClick={Delivery}
+                        rounded
+                        color="success"
+                        size="sm"
+                        style={{ maxHeight: "30px", marginTop: "10px" }}
+                      >
+                        <MDBIcon fas icon="check me-2" /> Mark as Delivered
+                      </MDBBtn>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div></div>

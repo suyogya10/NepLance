@@ -26,15 +26,13 @@ import {
 import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-
-import io from "socket.io-client";
-const socket = io("http://localhost:3001");
+import { useNotification } from "use-toast-notification";
 
 export default function ViewProfile() {
-  window.scrollTo(0, 0);
   var sn = 1;
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const notification = useNotification();
   const ApiHandler = async () => {
     let result = await fetch("http://localhost:8000/api/getUser/" + id);
     result = await result.json();
@@ -122,10 +120,20 @@ export default function ViewProfile() {
         console.log("Success:", result);
         toggleShow3();
         ApiHandler4();
+        notification.show({
+          message: `User Review has been posted`,
+          title: "Review Posted",
+          variant: "success",
+        });
       })
       .catch((error) => {
         console.error("Error:", error);
         console.log(error);
+        notification.show({
+          message: `User Review has NOT been posted, try again!`,
+          title: "Error",
+          variant: "error",
+        });
       });
     document.getElementById("reviewuser").disabled = true;
   }

@@ -50,7 +50,7 @@ export default function Checkout() {
     ApiHandler1();
   }, [product]);
 
-  let config = {
+  let configurePay = {
     // replace this key with yours
     publicKey: "test_public_key_71749511005c44e6b247ce9662b5e0c3",
     productIdentity: "1234567890",
@@ -103,10 +103,10 @@ export default function Checkout() {
       "SCT",
     ],
   };
-  let checkout = new KhaltiCheckout(config);
+  let checkout = new KhaltiCheckout(configurePay);
   function pay() {
     // minimum transaction amount must be 10, i.e 1000 in paisa.
-    checkout.show({ amount: 1000 });
+    checkout.show({ amount: 10000 });
   }
 
   return (

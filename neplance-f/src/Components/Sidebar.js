@@ -59,7 +59,7 @@ function SidebarComponent() {
             Reviews
           </MenuItem>
           <MenuItem
-            onClick={() => navigate("/adminhome")}
+            onClick={() => navigate("/faq")}
             icon={<MDBIcon fas icon="question-circle" />}
           >
             FAQ

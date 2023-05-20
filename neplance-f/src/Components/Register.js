@@ -16,7 +16,6 @@ function Register() {
   const [alert, setAlert] = useState(null);
 
   async function SignUp() {
-
     let formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -29,18 +28,16 @@ function Register() {
       body: formData, // used to send the data to the server in JSON format
     })
       .then((response) => response.json())
-      .then((result) => { 
+      .then((result) => {
         if (result.error || result.errors) {
           setError(JSON.stringify(result.error || result.errors));
           setAlert(false);
           navigate("/register");
-        }
-        else {
-        console.log(result);
-        navigate("/otp");
+        } else {
+          console.log(result);
+          navigate("/otp");
         }
       });
-
   }
 
   useEffect(() => {
@@ -57,7 +54,10 @@ function Register() {
     >
       <div class="container-fluid ps-md-0">
         <div class="row g-0">
-          <div class="d-none d-md-flex col-md-4 col-lg-6">
+          <div
+            class="d-none d-md-flex col-md-4 col-lg-6"
+            style={{ maxHeight: "600px" }}
+          >
             <img src={img} alt="Register" class="img-fluid bg-image" />
           </div>
           <div class="col-md-8 col-lg-6">
@@ -134,13 +134,24 @@ function Register() {
                         </div>
                         {alert !== null && alert === false && (
                           <Alert
-                            variant={"warning"}
+                            variant={"danger"}
                             closeLabel="Close alert"
                             closeVariant="black"
                             dismissible
                             onClose={() => setAlert(null)}
                           >
-                            {error}
+                            {JSON.parse(error).name && (
+                              <> {JSON.parse(error).name} </>
+                            )}
+                            {JSON.parse(error).email && (
+                              <> Username already exists </>
+                            )}
+                            {JSON.parse(error).password && (
+                              <> {JSON.parse(error).password} </>
+                            )}
+                            {JSON.parse(error).phone && (
+                              <> {JSON.parse(error).phone} </>
+                            )}
                           </Alert>
                         )}
                       </div>

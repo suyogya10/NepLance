@@ -28,7 +28,8 @@ import UserRecievedOrders from "./UserRecievedOrders";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useEffect } from "react";
-import UserReviews from "./UserReviews";
+import UserReviews from "./ReviewedServices";
+import ReviewedUsers from "./ReviewedUsers";
 import { Alert } from "react-bootstrap";
 import UserListedRequests from "./UserListedRequests";
 import SellerAcceptedRequests from "./SellerAcceptedRequests";
@@ -367,20 +368,23 @@ export default function UserProfile() {
                   <Tab eventKey="services" title="Your Services">
                     <UserListings />
                   </Tab>
-                  <Tab eventKey="orders" title="Ordered Services">
+                  <Tab eventKey="orders" title="Your Orders">
                     <UserOrders />
                   </Tab>
                   <Tab eventKey="recieved" title="Recieved Orders">
                     <UserRecievedOrders />
                   </Tab>
-                  <Tab eventKey="recievedrequests" title="Request Status">
+                  <Tab eventKey="recievedrequests" title="Client Requests">
                     <SellerAcceptedRequests />
                   </Tab>
-                  <Tab eventKey="requests" title="Posted Requests">
+                  <Tab eventKey="requests" title="Your Requests">
                     <UserListedRequests />
                   </Tab>
-                  <Tab eventKey="reviews" title="Your Reviews">
+                  <Tab eventKey="reviews" title="Posted Service Reviews">
                     <UserReviews />
+                  </Tab>
+                  <Tab eventKey="user-reviews" title="Posted User Reviews">
+                    <ReviewedUsers />
                   </Tab>
                 </Tabs>
               ) : (
@@ -396,8 +400,11 @@ export default function UserProfile() {
                   <Tab eventKey="requests" title="Posted Requests">
                     <UserListedRequests />
                   </Tab>
-                  <Tab eventKey="reviews" title="Your Reviews">
+                  <Tab eventKey="reviews" title="Posted Service Reviews">
                     <UserReviews />
+                  </Tab>
+                  <Tab eventKey="user-reviews" title="Posted User Reviews">
+                    <ReviewedUsers />
                   </Tab>
                 </Tabs>
               )}

@@ -17,9 +17,11 @@ import img from "./Assets/banner2.png";
 import img2 from "./Assets/banner3.png";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useNotification } from "use-toast-notification";
 
 function Cara() {
   const navigate = useNavigate();
+  const notification = useNotification();
 
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
@@ -44,6 +46,12 @@ function Cara() {
     }).then((result) => {
       result.json().then((resp) => {
         toggleShow();
+        navigate("/user");
+        notification.show({
+          message: `Request has been posted. Check your profile and select "Posted Request" to see the status of your request.`,
+          title: "Request Posted",
+          variant: "success",
+        });
       });
     });
   }

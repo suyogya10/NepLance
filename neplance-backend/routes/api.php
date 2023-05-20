@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Controllers\UserRequestController;
+use App\Http\Controllers\FrequentlyAskedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,10 @@ Route:: get('getUser/{userid}', [UserController::class, 'getUser']); //get singl
 Route:: get('getUserAll', [UserController::class, 'getUserAll']); //get all user
 Route:: put('putKeywords/{UserId}', [UserController::class, 'putKeywords']); //put keywords
 Route:: get('getRecommended/{userId}', [UserController::class, 'getRecommended']); //get recommended user
-Route:: get('getRecommendedSellers', [UserController::class, 'getRecommendedSellers']); //get all recommended user
+Route:: get('getRecommendedSellers/{userid}', [UserController::class, 'getRecommendedSellers']); //get all recommended user
+Route:: put('requestOTP', [UserController::class, 'requestOTP']);
+Route:: put('forgotPasswordChange', [UserController::class, 'forgotPasswordChange']);
+Route:: put('updatePassword/{id}', [UserController::class, 'updatePassword']);
 
 
 Route:: post('addproduct', [ProductController::class, 'addProduct']); //add product route
@@ -76,6 +80,8 @@ Route::get('getRating/{usid}', [UserReviewController::class, 'getRating']); //ge
 Route:: post('reviewUser', [UserReviewController::class, 'reviewUser']); //review user route
 Route:: get('getUserReviews/{usid}', [UserReviewController::class, 'getUserReviews']); //get user reviews route
 Route:: get('topRated', [UserReviewController::class, 'topRated']); //get top rated route
+Route::get('getUserReviewsbyUser/{usid}', [UserReviewController::class, 'getReviewsbyUser']); //get reviews by user route
+Route::delete('deleteUserReview/{sid}', [UserReviewController::class, 'deleteUserReview']); //delete user review route
 
 
 // Route::post('login', [AuthController::class, 'login']);
@@ -95,6 +101,11 @@ Route::put('userAccept/{id}', [UserRequestController::class, 'userAccept']); //a
 Route::put('userReject/{id}', [UserRequestController::class, 'userReject']); //reject request route
 Route::put('Payment/{id}', [UserRequestController::class, 'Payment']); //payment request route
 Route::put('Delivery/{id}', [UserRequestController::class, 'Delivery']); //delivery request route
+
+
+Route::post('addFAQ',[FrequentlyAskedController::class,'addFAQ']);
+Route::get('getFAQ',[FrequentlyAskedController::class,'getFAQ']);
+Route::delete('deleteFAQ/{id}',[FrequentlyAskedController::class,'deleteFAQ']);
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('logout', 'AuthController@logout');
