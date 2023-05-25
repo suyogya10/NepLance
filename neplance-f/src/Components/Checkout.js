@@ -154,6 +154,7 @@ export default function Checkout() {
                           setClientMessage(e.target.value);
                         }}
                       />
+                      <br />
                       <input
                         type="file"
                         className="form-control"

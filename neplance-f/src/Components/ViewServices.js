@@ -12,6 +12,7 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBTypography,
+  MDBInputGroup,
 } from "mdb-react-ui-kit";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -25,12 +26,14 @@ export default function ViewServices() {
   const [deleteID, setdeleteID] = useState("");
   const [data, setData] = useState([]);
   const [deleteflag, setDeleteflag] = useState(false);
+  const [recipentList, setRecipentList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("http://localhost:8000/api/getProducts");
       const jsonData = await response.json();
       setData(jsonData.reverse());
+      setRecipentList(jsonData);
     };
     fetchData();
   }, [deleteflag]);
@@ -44,7 +47,13 @@ export default function ViewServices() {
       });
     });
   }
-
+  function Search(e) {
+    let search = e.target.value;
+    let result = recipentList.filter((item) => {
+      return item.name.toLowerCase().includes(search.toLowerCase()); //searching by name
+    });
+    setData(result);
+  }
   return (
     <>
       <motion.div
@@ -52,6 +61,15 @@ export default function ViewServices() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
+        <MDBInputGroup className="rounded mb-3">
+          <input
+            className="form-control rounded"
+            placeholder="Search Services"
+            type="search"
+            onChange={(e) => Search(e)}
+          />
+          <span className="input-group-text border-0" id="search-addon"></span>
+        </MDBInputGroup>
         <MDBTable align="middle">
           <MDBTableHead>
             <tr>

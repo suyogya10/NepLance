@@ -2,12 +2,17 @@ import React from "react";
 import about1 from "./Assets/About1.png";
 import about2 from "./Assets/About2.png";
 import about3 from "./Assets/About3.png";
+import about11 from "./Assets/About1.1.png";
 import {
   MDBCol,
   MDBContainer,
   MDBIcon,
   MDBRow,
   MDBTypography,
+  MDBInput,
+  MDBCheckbox,
+  MDBBtn,
+  MDBTextArea,
 } from "mdb-react-ui-kit";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -46,6 +51,26 @@ const AboutUs = () => {
 
       <div className="py-5">
         <div className="container py-5">
+          <div className="row align-items-center mb-5">
+            <div className="col-lg-6 order-2 order-lg-1">
+              <i className="fa  Example of question-circle fa-question-circle fa-2x mb-3 text-success"></i>
+              <h2>How it works?</h2>
+              <p className="text-muted mb-4">
+                There are two types of users in NepLance. One is the client and
+                the other is the freelancer. The client can buy services from
+                the freelancer and the freelancer can sell their services to the
+                client.
+              </p>
+              <p className="text-muted mb-4">
+                The client can post a job and the freelancer can apply for the
+                job. The freelancers can bid for the job and the client can
+                choose the best freelancer for the job.
+              </p>
+            </div>
+            <div className="col-lg-5 px-5 mx-auto order-1 order-lg-2">
+              <img src={about11} alt="" className="img-fluid mb-4 mb-lg-0" />
+            </div>
+          </div>
           <div className="row align-items-center mb-5">
             <div className="col-lg-6 order-2 order-lg-1">
               <i className="fa  fa-location-arrow fa-2x mb-3 text-success"></i>
@@ -115,6 +140,47 @@ const AboutUs = () => {
               </MDBCol>
             ))}
           </MDBRow>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <form
+              id="form"
+              className="text-center"
+              style={{
+                width: "100%",
+                maxWidth: "500px",
+              }}
+            >
+              <h2>Contact us</h2>
+
+              <MDBInput label="Name" v-model="name" wrapperClass="mb-4" />
+
+              <MDBInput
+                type="email"
+                label="Email address"
+                v-model="email"
+                wrapperClass="mb-4"
+              />
+
+              <MDBInput label="Subject" v-model="subject" wrapperClass="mb-4" />
+
+              <MDBTextArea wrapperClass="mb-4" label="Message" />
+
+              <MDBCheckbox
+                wrapperClass="d-flex justify-content-center"
+                label="Send me copy"
+              />
+
+              <MDBBtn color="success" block className="my-4">
+                Send
+              </MDBBtn>
+            </form>
+          </div>
         </section>
       </MDBContainer>
     </>

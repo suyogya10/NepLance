@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 import { useNotification } from "use-toast-notification";
 import Errorpage from "./Errorpage";
 
-function UpdateUser() {
+function AdminUpdateUser() {
   const notification = useNotification();
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
@@ -35,19 +35,11 @@ function UpdateUser() {
   const [designation, setDesignation] = useState("");
   const [bio, setBio] = useState("");
   const [file, setFile] = useState("");
-  const [contact_email, setEmail] = useState("");
   const [accountType, setAccountType] = useState("");
-  const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
+  const [contact_email, setEmail] = useState("");
 
-  if (
-    !localStorage.getItem("user-info") &&
-    !localStorage.getItem("admin-info")
-  ) {
+  if (!localStorage.getItem("admin-info")) {
     navigate("/login");
-  }
-
-  if (userid != id) {
-    navigate("*");
   }
 
   const ApiHandler = async () => {
@@ -58,8 +50,8 @@ function UpdateUser() {
     setDesignation(resp.designation);
     setBio(resp.bio);
     setFile(resp.file_path);
-    setEmail(resp.contact_email);
     setAccountType(resp.registered_as);
+    setEmail(resp.contact_email);
   };
 
   useEffect(() => {
@@ -85,8 +77,8 @@ function UpdateUser() {
     formData.append("file_path", file);
     formData.append("bio", bio);
     formData.append("userid", id);
-    formData.append("contact_email", contact_email);
     formData.append("accountType", accountType);
+    formData.append("contact_email", contact_email);
     fetch("http://localhost:8000/api/updateUser/" + id + "?_method=PUT", {
       method: "POST",
       body: formData,
@@ -185,7 +177,17 @@ function UpdateUser() {
                           onChange={(e) => setDesignation(e.target.value)}
                         />
                         <br></br>
-
+                        <div className="mb-3">
+                          <MDBInput
+                            type="text"
+                            className="form-control"
+                            id="floatingInput"
+                            label="Email"
+                            placeholder={data.contact_email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                        <br></br>
                         <div>
                           <textarea
                             className="form-control"
@@ -196,16 +198,16 @@ function UpdateUser() {
                           />
                         </div>
                         <br></br>
-
-                        <div className="mb-3">
-                          <MDBInput
-                            type="text"
-                            className="form-control"
-                            id="floatingInput"
-                            label="Email"
-                            placeholder={data.contact_email}
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
+                        <div>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={(e) => setAccountType(e.target.value)}
+                          >
+                            <option selected>Account Type</option>
+                            <option value="seller">Freelancer</option>
+                            <option value="client">Client</option>
+                          </select>
                         </div>
                         <br></br>
 
@@ -250,7 +252,7 @@ function UpdateUser() {
           </div>
         </div>
       </div>
-      <div className="col">
+      <div className="col" style={{ marginLeft: "40px" }}>
         <div className="d-flex">
           <div className="container">
             <div className="row">
@@ -270,34 +272,20 @@ function UpdateUser() {
                         type="password"
                         className="form-control mb-3"
                         id="floatingInput"
-                        label="New Password (Min 6 Characters)"
+                        label="New Password"
                         onChange={(e) => setNewPassword(e.target.value)}
                       />
                     </div>
-                    {newpassword.length < 6 ? (
-                      <div className="d-flex gap-3">
-                        <MDBBtn
-                          className="btn btn-success"
-                          onClick={toggleShow3}
-                          type="button"
-                          rounded
-                          disabled
-                        >
-                          Update
-                        </MDBBtn>
-                      </div>
-                    ) : (
-                      <div className="d-flex gap-3">
-                        <MDBBtn
-                          className="btn btn-success"
-                          onClick={toggleShow3}
-                          type="button"
-                          rounded
-                        >
-                          Update
-                        </MDBBtn>
-                      </div>
-                    )}
+                    <div className="d-flex gap-3">
+                      <MDBBtn
+                        className="btn btn-success"
+                        onClick={toggleShow3}
+                        type="button"
+                        rounded
+                      >
+                        Update
+                      </MDBBtn>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -392,4 +380,4 @@ function UpdateUser() {
   );
 }
 
-export default UpdateUser;
+export default AdminUpdateUser;

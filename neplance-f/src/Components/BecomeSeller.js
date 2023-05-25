@@ -22,8 +22,10 @@ import Errorpage from "./Errorpage";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useNotification } from "use-toast-notification";
 
 function BecomeSeller() {
+  const notification = useNotification();
   const navigate = useNavigate();
   const userid = JSON.parse(localStorage.getItem("user-info")).user.id;
   const [data, setData] = useState([]);
@@ -77,7 +79,13 @@ function BecomeSeller() {
       body: formData,
     })
       .then((result) => {
-        result.json().then((resp) => {});
+        result.json().then((resp) => {
+          notification.show({
+            message: `Your Application has been submitted. You will be notified once your application is approved.`,
+            title: "Application Submitted",
+            variant: "success",
+          });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -328,20 +336,37 @@ function BecomeSeller() {
                   </MDBRow>
 
                   <hr className="mx-n3" />
-
-                  <MDBBtn
-                    rounded
-                    type="button"
-                    color="success"
-                    className="my-4"
-                    size="lg"
-                    onClick={() => {
-                      BecomeSeller();
-                      navigate("/userinterest");
-                    }}
-                  >
-                    Submit Application
-                  </MDBBtn>
+                  {designation === "" ||
+                  file_path === "" ||
+                  cv === "" ||
+                  occupation === "" ||
+                  occupation_since === "" ||
+                  degree === "" ||
+                  graduation_date === "" ||
+                  proof === "" ||
+                  ctzn === "" ? (
+                    <MDBBtn
+                      rounded
+                      type="button"
+                      color="success"
+                      className="my-4"
+                      size="lg"
+                      disabled
+                    >
+                      Submit Application
+                    </MDBBtn>
+                  ) : (
+                    <MDBBtn
+                      rounded
+                      type="button"
+                      color="success"
+                      className="my-4"
+                      size="lg"
+                      onClick={toggleShow}
+                    >
+                      Submit Application
+                    </MDBBtn>
+                  )}
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -352,20 +377,38 @@ function BecomeSeller() {
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBModalTitle>Submit Application?</MDBModalTitle>
               <MDBBtn
                 className="btn-close"
                 color="none"
                 onClick={toggleShow}
               ></MDBBtn>
             </MDBModalHeader>
-            <MDBModalBody>...</MDBModalBody>
+            <MDBModalBody>
+              <p>
+                Are you sure you want to submit your application? You will not
+                be able to edit your application once submitted unless you fill
+                out the application again.
+              </p>
+              <p>
+                You will be notified and be able to start selling your services
+                once your application is approved.
+              </p>
+            </MDBModalBody>
 
             <MDBModalFooter>
               <MDBBtn color="secondary" onClick={toggleShow}>
                 Close
               </MDBBtn>
-              <MDBBtn>Save changes</MDBBtn>
+              <MDBBtn
+                color="success"
+                onClick={() => {
+                  BecomeSeller();
+                  navigate("/userinterest");
+                }}
+              >
+                Submit
+              </MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

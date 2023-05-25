@@ -59,6 +59,12 @@ function SidebarComponent() {
             Reviews
           </MenuItem>
           <MenuItem
+            onClick={() => navigate("/viewreportedservices")}
+            icon={<MDBIcon color="danger" far icon="flag" />}
+          >
+            Reported Services
+          </MenuItem>
+          <MenuItem
             onClick={() => navigate("/faq")}
             icon={<MDBIcon fas icon="question-circle" />}
           >

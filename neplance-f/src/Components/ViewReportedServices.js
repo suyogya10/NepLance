@@ -12,34 +12,33 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBTypography,
-  MDBInputGroup,
 } from "mdb-react-ui-kit";
 import { useState } from "react";
 import { useEffect } from "react";
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
-export default function ViewUsers() {
+export default function ViewReportedServices() {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
   const [deleteID, setdeleteID] = useState("");
+  const [data, setData] = useState([]);
   const [deleteflag, setDeleteflag] = useState(false);
-  const [recipentList, setRecipentList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:8000/api/getUserAll");
+      const response = await fetch(
+        "http://localhost:8000/api/getReportedProducts"
+      );
       const jsonData = await response.json();
       setData(jsonData.reverse());
-      setRecipentList(jsonData);
     };
     fetchData();
   }, [deleteflag]);
 
-  function AdminDeleteUser(key) {
-    fetch("http://localhost:8000/api/deleteUser/" + key + "?_method=DELETE", {
+  function AdmindeleteProduct(id) {
+    fetch("http://localhost:8000/api/deleteProduct/" + id + "?_method=DELETE", {
       method: "DELETE",
     }).then((result) => {
       result.json().then((resp) => {
@@ -47,13 +46,7 @@ export default function ViewUsers() {
       });
     });
   }
-  function Search(e) {
-    let search = e.target.value;
-    let result = recipentList.filter((item) => {
-      return item.name.toLowerCase().includes(search.toLowerCase()); //searching by name
-    });
-    setData(result);
-  }
+
   return (
     <>
       <motion.div
@@ -61,21 +54,14 @@ export default function ViewUsers() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        <MDBInputGroup className="rounded mb-3">
-          <input
-            className="form-control rounded"
-            placeholder="Search Users"
-            type="search"
-            onChange={(e) => Search(e)}
-          />
-          <span className="input-group-text border-0" id="search-addon"></span>
-        </MDBInputGroup>
         <MDBTable align="middle">
           <MDBTableHead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Designation</th>
-              <th scope="col">OTP Status</th>
+              <th scope="col">Name & Category</th>
+              <th scope="col">Description & Price</th>
+              <th scope="col" style={{ textAlign: "center" }}>
+                Report Count
+              </th>
               <th scope="col" style={{ textAlign: "center" }}>
                 Actions
               </th>
@@ -89,40 +75,48 @@ export default function ViewUsers() {
                     <img
                       src={"http://localhost:8000/" + item.file_path}
                       alt=""
-                      style={{ width: "45px", height: "45px" }}
+                      style={{
+                        width: "45px",
+                        height: "45px",
+                        cursor: "pointer",
+                      }}
                       className="rounded-circle"
+                      onClick={() => {
+                        navigate(`/product/${item.id}`);
+                      }}
                     />
                     <div className="ms-3">
-                      <p className="fw-bold mb-1">{item.name}</p>
-                      <p className="text-muted mb-0">{item.email}</p>
+                      <p
+                        className="fw-bold mb-1"
+                        onClick={() => {
+                          navigate(`/product/${item.id}`);
+                        }}
+                        style={{ cursor: "pointer", maxWidth: "300px" }}
+                      >
+                        {item.name}
+                      </p>
+                      <p className="text-muted mb-0">{item.category}</p>
                     </div>
                   </div>
                 </td>
-                <td>
-                  <p className="fw-normal mb-1">{item.designation}</p>
-                  <p className="text-muted mb-0">NepLance User</p>
+                <td style={{ maxWidth: "500px" }}>
+                  <p className="fw-normal mb-1">Rs. {item.description}</p>
+                  <p className="text-muted mb-0">Rs. {item.price}</p>
                 </td>
-                <td>
-                  {item.isVerified === "yes" ? (
-                    <MDBBadge color="success" pill>
-                      Verified
-                    </MDBBadge>
-                  ) : (
-                    <MDBBadge color="danger" pill>
-                      Not Verified
-                    </MDBBadge>
-                  )}
+                <td style={{ textAlign: "center" }}>
+                  <MDBBadge color="danger">{item.report}</MDBBadge>
                 </td>
+
                 <td>
                   <MDBBtn
-                    color="link"
+                    onClick={() => {
+                      navigate(`/adminupdateproduct/${item.id}`);
+                    }}
+                    color="primary"
                     rounded
                     size="sm"
-                    onClick={() => {
-                      navigate("/admin/updateuser/" + item.id);
-                    }}
                   >
-                    Edit
+                    <MDBIcon fas icon="edit" />
                   </MDBBtn>
                   <MDBBtn
                     style={{ marginLeft: "5px" }}
@@ -160,7 +154,7 @@ export default function ViewUsers() {
                 <MDBBtn
                   color="danger"
                   onClick={() => {
-                    AdminDeleteUser(deleteID);
+                    AdmindeleteProduct(deleteID);
                     toggleShow();
                   }}
                   style={{ marginLeft: "10px" }}

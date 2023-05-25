@@ -34,6 +34,7 @@ export default function ViewRequests() {
       const response = await fetch("http://localhost:8000/api/viewCtznReq");
       const jsonData = await response.json();
       setData(jsonData.reverse());
+      console.log(jsonData);
     };
     fetchData();
   }, [deleteflag]);
@@ -71,11 +72,10 @@ export default function ViewRequests() {
         <MDBTable align="middle">
           <MDBTableHead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Designation</th>
-              <th scope="col">Citizenship</th>
-              <th scope="col">CV</th>
-              <th scope="col">Degree</th>
+              <th scope="col">Requested By:</th>
+              <th scope="col">Bio</th>
+              <th scope="col">Submitted Files</th>
+
               <th scope="col" style={{ textAlign: "center" }}>
                 Actions
               </th>
@@ -95,38 +95,45 @@ export default function ViewRequests() {
                     <div className="ms-3">
                       <p className="fw-bold mb-1">{item.name}</p>
                       <p className="text-muted mb-0">{item.email}</p>
+                      <p className="text-muted mb-0">{item.designation}</p>
+                      <p className="text-muted mb-0">{item.occupation}</p>
+                      <p className="text-muted mb-0">{item.degree}</p>
                     </div>
                   </div>
                 </td>
-                <td>
-                  <p className="fw-normal mb-1">{item.designation}</p>
-                  <p className="text-muted mb-0">NepLance User</p>
+                <td
+                  className="d-flex align-items-center"
+                  style={{ maxWidth: "500px" }}
+                >
+                  <p className="fw-normal mb-1">{item.bio}</p>
                 </td>
-                <td>
+                <td className="align-items-center">
                   <MDBIcon
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", marginRight: "5px" }}
                     fas
+                    className="text-info"
+                    size="lg"
                     icon="file"
                     onClick={() => {
                       window.open("http://localhost:8000/" + item.ctznship);
                     }}
                   />
-                </td>
-                <td>
                   <MDBIcon
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", marginRight: "5px" }}
                     fas
+                    size="lg"
                     icon="file"
+                    className="text-info"
                     onClick={() => {
                       window.open("http://localhost:8000/" + item.cv);
                     }}
                   />
-                </td>
-                <td>
                   <MDBIcon
                     style={{ cursor: "pointer" }}
                     fas
+                    size="lg"
                     icon="file"
+                    className="text-info"
                     onClick={() => {
                       window.open("http://localhost:8000/" + item.proof_degree);
                     }}

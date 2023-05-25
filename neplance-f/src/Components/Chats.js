@@ -46,6 +46,7 @@ export default function Chats() {
     );
     result4 = await result4.json();
     setRecipentData(result4.recipients.reverse());
+    setRecipentList(result4.recipients);
   };
   useEffect(() => {
     ApiHandler2();
@@ -54,7 +55,7 @@ export default function Chats() {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" }); //scroll to bottom
     messagesEndRef.current.scrollTo(0, messagesEndRef.current.scrollHeight);
   }, []);
 
@@ -120,6 +121,15 @@ export default function Chats() {
     ApiHandler3();
   }, []);
 
+  const [recipentList, setRecipentList] = useState([]);
+  function Search(e) {
+    let search = e.target.value;
+    let result = recipentList.filter((item) => {
+      return item.name.toLowerCase().includes(search.toLowerCase()); //searching by name
+    });
+    setRecipentData(result);
+  }
+
   return (
     <>
       <motion.div
@@ -143,6 +153,7 @@ export default function Chats() {
                             className="form-control rounded"
                             placeholder="Search"
                             type="search"
+                            onChange={(e) => Search(e)}
                           />
                           <span
                             className="input-group-text border-0"

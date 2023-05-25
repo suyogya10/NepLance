@@ -92,7 +92,7 @@ function Register() {
                         <input
                           type="password" // type is set to password so that the password is not visible
                           class="form-control"
-                          placeholder="Password"
+                          placeholder="Password (Min. 6 characters)"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                         />

@@ -17,8 +17,10 @@ import {
   MDBInput,
 } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
+import { useNotification } from "use-toast-notification";
 
 export function Product() {
+  const notification = useNotification();
   const navigate = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -64,6 +66,20 @@ export function Product() {
     }
   }, [data, userData, reviewData]);
 
+  function reportService(key) {
+    fetch("http://localhost:8000/api/reportProduct/" + key + "?_method=PUT", {
+      method: "POST",
+    }).then((result) => {
+      result.json().then((resp) => {
+        notification.show({
+          message: `Service has been reported.`,
+          title: "Service Reported",
+          variant: "success",
+        });
+      });
+    });
+  }
+
   return (
     <>
       <motion.div
@@ -81,7 +97,7 @@ export function Product() {
                 style={{
                   borderRadius: "15px",
                   width: "1300px",
-                  height: "700px",
+                  maxHeight: "800px",
                   marginTop: "20px",
                 }}
               >
@@ -105,8 +121,24 @@ export function Product() {
                         <h1>{data.name}</h1>
                       </MDBCardTitle>
                       <MDBCardText>{data.description}</MDBCardText>
-                      <MDBCardText>Price: Rs. {data.price}</MDBCardText>
+                      <MDBCardText
+                        style={{ fontWeight: "bold", fontSize: "1rem" }}
+                      >
+                        Price: Rs. {data.price}
+                      </MDBCardText>
                       <MDBCardText>Category: {data.category}</MDBCardText>
+                      <MDBCardText>
+                        <MDBIcon color="danger" far icon="flag" />{" "}
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            reportService(data.id);
+                          }}
+                        >
+                          {" "}
+                          Report this service
+                        </span>
+                      </MDBCardText>
                       {localStorage.getItem("user-info") ? (
                         <MDBBtn
                           rounded
@@ -141,7 +173,12 @@ export function Product() {
                       <h6 style={{ marginTop: "20px" }}>Listed By:</h6>
                       <MDBCard
                         className="d-flex"
-                        style={{ borderRadius: "15px", marginTop: "5px" }}
+                        style={{
+                          borderRadius: "15px",
+                          marginTop: "5px",
+                          maxWidth: "500px",
+                          maxHeight: "250px",
+                        }}
                       >
                         <MDBCardBody className="p-4">
                           <div className="d-flex text-black">
@@ -161,7 +198,7 @@ export function Product() {
                             </div>
                             <div className="flex-grow-1 ms-3">
                               <MDBCardTitle>{userData.name}</MDBCardTitle>
-                              <MDBCardText>{userData.designation}</MDBCardText>
+                              <MDBCardText></MDBCardText>
 
                               <div
                                 className="d-flex justify-content-start rounded-3 p-2 mb-2"
@@ -169,23 +206,12 @@ export function Product() {
                               >
                                 <div>
                                   <p className="small text-muted mb-1">
-                                    Rating
+                                    Designation
                                   </p>
-                                  <p className="mb-0">8.5</p>
+                                  <p className="mb-0">{userData.designation}</p>
                                 </div>
                               </div>
                               <div className="d-flex pt-1">
-                                <MDBBtn
-                                  rounded
-                                  outline
-                                  color="success"
-                                  className="me-1 flex-grow-1"
-                                  onClick={() => {
-                                    navigate(`/chat/${userData.id}`);
-                                  }}
-                                >
-                                  Chat
-                                </MDBBtn>
                                 <MDBBtn
                                   rounded
                                   color="success"

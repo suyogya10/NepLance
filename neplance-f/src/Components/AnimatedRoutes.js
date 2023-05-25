@@ -38,6 +38,8 @@ import AboutUs from "./AboutUs";
 import RecommendedPage from "./Collections/RecommendedPage";
 import { io } from "socket.io-client";
 import ForgotPassword from "./ForgotPassword";
+import AdminUpdateUser from "./AdminUpdateUser";
+import ViewReportedServices from "./ViewReportedServices";
 
 import AdminFAQ from "./AdminFAQ";
 
@@ -121,6 +123,14 @@ function AnimatedRoutes() {
             <Route
               path="/adminupdateproduct/:id"
               element={<AdminProtected Cmp={AdminUpdateProduct} />}
+            />
+            <Route
+              path="/admin/updateuser/:id"
+              element={<AdminProtected Cmp={AdminUpdateUser} />}
+            />
+            <Route
+              path="/viewreportedservices"
+              element={<AdminProtected Cmp={ViewReportedServices} />}
             />
           </Route>
         </Routes>

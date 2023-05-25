@@ -15,7 +15,7 @@ function Explore() {
   const navigate = useNavigate();
 
   function a() {
-    navigate("/explore/accounting-finance");
+    navigate("/explore/account-finance");
   }
 
   function b() {
@@ -27,7 +27,7 @@ function Explore() {
   }
 
   function d() {
-    navigate("/explore/customer-service");
+    navigate("/explore/customerservice");
   }
 
   function e() {

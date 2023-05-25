@@ -55,6 +55,8 @@ Route:: delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct']
 Route:: put('updateProduct/{id}', [ProductController::class, 'updateProduct']); //update product route
 Route:: get('getSingleProduct/{id}', [ProductController::class, 'getSingleProduct']); //get single product route
 Route::get('search/{key}', [ProductController::class, 'search']); //search route
+Route::put('reportProduct/{id}', [ProductController::class, 'reportProduct']); //report product route
+Route::get('getReportedProducts', [ProductController::class, 'getReportedProducts']); //get reported products route
 
 
 Route:: post('reviewProduct', [ReviewController::class, 'reviewProduct']); //review product route

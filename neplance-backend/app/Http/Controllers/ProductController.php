@@ -72,5 +72,18 @@ class ProductController extends Controller
         return Product::where("name", "like", "%".$key."%")->get(); //returning the products with the name that contains the key
     }
 
+    function reportProduct($id)
+    {
+        $product = Product::find($id); //finding the product with the id
+        $product->report = $product->report + 1; //incrementing the report by 1
+        $product->save(); //saving the product to the database
+        return $product; //returning the product
+    }
+
+    function getReportedProducts()
+    {
+        return Product::where("report", ">", 0)->get(); //returning the products with the report greater than 0
+    }
+
 }
  

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use App\Models\NotificationHistory;
 
 
 class UserController extends Controller
@@ -46,7 +47,7 @@ class UserController extends Controller
         
 
         $args = http_build_query(array(
-            'auth_token'=> '1c2f4c96f4af3cd74a7c9bccf03a4cf6284cc18360dbbce2112f52e9de4446b6/',
+            'auth_token'=> '1c2f4c96f4af3cd74a7c9bccf03a4cf6284cc18360dbbce2112f52e9de4446b6',
             'to'    => $req->input("phone"),
             'text'  => 'Hi, Your OTP for registration at NepLance is: '.$otpCode));
         $url = "https://sms.aakashsms.com/sms/v3/send/"; // Aakash SMS Endpoint V3 to send SMS
@@ -73,7 +74,7 @@ class UserController extends Controller
 
 
         $args = http_build_query(array(
-            'auth_token'=> '1c2f4c96f4af3cd74a7c9bccf03a4cf6284cc18360dbbce2112f52e9de4446b6/',
+            'auth_token'=> '1c2f4c96f4af3cd74a7c9bccf03a4cf6284cc18360dbbce2112f52e9de4446b6',
             'to'    => $req->input("number"),
             'text'  => 'Hi, Your OTP for Password Reset at NepLance is: '.$otpCode));
         $url = "https://sms.aakashsms.com/sms/v3/send/"; // Aakash SMS Endpoint V3 to send SMS
@@ -204,6 +205,8 @@ class UserController extends Controller
         $user->name = $req->name; //getting the name from the request
         $user->designation = $req->designation; //getting the designation from the request
         $user->bio = $req->bio; //getting bio from request
+        $user->registered_as = $req->accountType; //getting registered_as from request
+        $user->contact_email = $req->contact_email; //getting the email from the request
 
         if ($req->file("file_path")) {
             $user->file_path = $req->file("file_path")-> store("users"); //getting the image from the request
@@ -275,6 +278,11 @@ class UserController extends Controller
         $user->requested = 'no';
         $user->admin_message = null;
         $user->save(); //saving to the database
+        
+        $notification = new NotificationHistory;
+        $notification->user_id = $req->id;
+        $notification->notification = "Your request for 'Become a Freelancer' has been approved";
+        $notification->save();
         return $user; //returning the user
     }
 
@@ -293,8 +301,7 @@ class UserController extends Controller
     function viewCtznReq()
     {
         return User::where('requested', 'yes')
-        // ->where('ctznship', '!=', '')
-        // ->where('requested', 'yes')
+
                     ->get(); //returning all the users in the database
     }
 
@@ -327,4 +334,5 @@ class UserController extends Controller
         return User::where("name", "like", "%".$key."%")->get(); //returning the products with the name that contains the key
     }
 
+    
 }

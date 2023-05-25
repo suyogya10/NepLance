@@ -61,7 +61,12 @@ function UserListings() {
                         {sn++}
                       </MDBBadge>
                     </td>
-                    <td>
+                    <td
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        navigate(`/product/${item.id}`);
+                      }}
+                    >
                       <p className="fw-normal mb-2">{item.name}</p>
                     </td>
                     <td>
