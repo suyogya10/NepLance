@@ -47,7 +47,7 @@ class UserController extends Controller
         
 
         $args = http_build_query(array(
-            'auth_token'=> '1c2f4c96f4af3cd74a7c9bccf03a4cf6284cc18360dbbce2112f52e9de4446b6',
+            'auth_token'=> 'ENTER TOKEN HERE',
             'to'    => $req->input("phone"),
             'text'  => 'Hi, Your OTP for registration at NepLance is: '.$otpCode));
         $url = "https://sms.aakashsms.com/sms/v3/send/"; // Aakash SMS Endpoint V3 to send SMS
